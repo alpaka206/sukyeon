@@ -20,7 +20,7 @@ export default function HeroCarousel() {
   }, []);
 
   return (
-    <div className="relative min-h-[320px] overflow-hidden bg-[#0a1b33] lg:min-h-0">
+    <div className="relative h-full min-h-[260px] overflow-hidden bg-[#0a1b33]">
       {slides.map((s, i) => (
         // eslint-disable-next-line @next/next/no-img-element
         <img
