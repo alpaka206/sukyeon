@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+@theme {
+  --color-navy: #0a1b33;
+  --color-navy-700: #0e2950;
+  --color-navy-600: #13294a;
+  --color-navy-500: #1c3a63;
+  --color-ink: #081628;
+  --color-teal: #0fb0c8;
+  --color-teal-deep: #0a8499;
+  --color-teal-light: #3fd0e6;
+  --font-sans: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: #0a1b33;
+  background: #fff;
+  word-break: keep-all;
+  text-wrap: pretty;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: #0fb0c8;
+  color: #fff;
+}
+
+/* --- shared interaction helpers (inline styles can't do :hover) --- */
+.nav-link {
+  transition: color 0.15s ease, background 0.15s ease;
+}
+.nav-link:hover {
+  color: #0a1b33;
+}
+
+.drop-item {
+  transition: color 0.15s ease, background 0.15s ease;
+}
+.drop-item:hover {
+  background: #f1f5f9;
+  color: #0fb0c8;
+}
+
+.btn-outline {
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.btn-outline:hover {
+  border-color: #0fb0c8 !important;
+  color: #0fb0c8 !important;
+}
+
+.lnb-item {
+  transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+}
+.lnb-item:hover {
+  color: #0a1b33;
+}
+
+.link-teal {
+  transition: opacity 0.15s ease, color 0.15s ease;
+}
+.link-teal:hover {
+  color: #0a1b33;
+}
+
+.card-link {
+  transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+.card-link:hover {
+  box-shadow: 0 18px 44px -14px rgba(10, 27, 51, 0.18);
+  transform: translateY(-2px);
+}
+
+.row-link {
+  transition: background 0.15s ease;
+}
+.row-link:hover {
+  background: #f6f9fb;
+}
+
+/* sections targeted by anchor scroll get offset for the sticky nav */
+.spy-section {
+  scroll-margin-top: 92px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
