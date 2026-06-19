@@ -42,7 +42,7 @@ export default function HeroCarousel() {
             className="h-[9px] rounded-full transition-all duration-300"
             style={{
               width: active === i ? 26 : 9,
-              background: active === i ? "#0fb0c8" : "rgba(255,255,255,0.55)",
+              background: active === i ? "#4f74e6" : "rgba(255,255,255,0.55)",
             }}
           />
         ))}

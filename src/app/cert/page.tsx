@@ -1,38 +1,94 @@
 import type { Metadata } from "next";
 import PageHeader from "@/components/PageHeader";
+import certsData from "@/content/certs.json";
 
 export const metadata: Metadata = { title: "인증·특허" };
 
-const certs = [
-  { title: "ISO 9001", desc: "품질경영시스템 인증" },
-  { title: "특허증", desc: "이형제 조성 관련 특허" },
-  { title: "시험성적서", desc: "공인기관 성능 시험" },
-  { title: "기업 인증", desc: "중소기업·직접생산 확인 등" },
-];
+type Cert = (typeof certsData.items)[number];
+
+const certs = certsData.items;
+
+function CertCard({ cert }: { cert: Cert }) {
+  const images = [
+    { src: cert.imageKo, label: "국문" },
+    { src: cert.imageEn, label: "영문" },
+  ].filter((img) => img.src);
+
+  const rows = [
+    { k: "인증기관", v: cert.issuer },
+    { k: "인증번호", v: cert.number },
+    { k: "인증범위", v: cert.scope },
+    { k: "유효기간", v: cert.validity },
+  ];
+
+  return (
+    <div className="overflow-hidden rounded-2xl border border-[#eaeef3] bg-white">
+      <div className="grid grid-cols-1 gap-2 bg-[#f6f9fb] p-4 sm:grid-cols-2 sm:gap-3 sm:p-5">
+        {images.map((img) => (
+          <a
+            key={img.src}
+            href={img.src}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="card-link group relative block overflow-hidden rounded-xl border border-[#eaeef3] bg-white"
+          >
+            <span className="absolute left-2.5 top-2.5 z-10 rounded-md bg-[#0a1b33]/85 px-2 py-1 text-[11px] font-bold tracking-[1px] text-white">
+              {img.label}
+            </span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={img.src}
+              alt={`${cert.title} ${cert.standard} ${img.label} 인증서`}
+              loading="lazy"
+              className="block h-[340px] w-full object-contain p-3 sm:h-[300px]"
+            />
+          </a>
+        ))}
+      </div>
+
+      <div className="p-[22px] sm:p-7">
+        <div className="mb-2.5 text-[12px] font-bold tracking-[2px] text-[#22409b]">
+          {cert.eyebrow}
+        </div>
+        <h2 className="m-0 mb-1.5 text-[22px] font-extrabold tracking-[-0.5px] text-[#0a1b33]">
+          {cert.title}
+        </h2>
+        <div className="mb-4 text-[14px] font-bold text-[#22409b]">{cert.standard}</div>
+        <p className="m-0 mb-6 text-[15px] leading-[1.7] text-[#5a6680]">{cert.desc}</p>
+
+        <dl className="m-0 grid grid-cols-1 gap-x-6 gap-y-3 border-t border-[#eef1f5] pt-5 sm:grid-cols-2">
+          {rows.map((r) => (
+            <div key={r.k} className="flex flex-col gap-1">
+              <dt className="text-[12px] font-bold tracking-[0.5px] text-[#8a96ab]">{r.k}</dt>
+              <dd className="m-0 text-[15px] font-semibold text-[#0a1b33]">{r.v}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </div>
+  );
+}
 
 export default function CertPage() {
   return (
     <>
       <PageHeader eyebrow="CERTIFICATION" title="인증·특허" breadcrumb="홈 / 인증·특허" />
-      <div className="px-5 py-16 lg:px-[60px] lg:py-[72px]">
+      <div className="shell py-16 lg:py-[72px]">
         <p className="m-0 mb-9 max-w-[760px] text-[16px] leading-[1.7] text-[#5a6680]">
-          석연MRO는 품질경영시스템 인증과 자체 기술 특허를 바탕으로 신뢰할 수 있는 제품을 공급합니다.
+          석연MRO는 국제 표준 품질·환경 경영시스템 인증과 자체 기술 특허를 바탕으로 신뢰할 수 있는
+          제품을 공급합니다. 인증서를 클릭하면 원본 이미지를 확인할 수 있습니다.
         </p>
-        <div className="grid grid-cols-1 gap-[22px] sm:grid-cols-2 lg:grid-cols-4">
+
+        <div className="grid grid-cols-1 gap-[26px] lg:grid-cols-2">
           {certs.map((c) => (
-            <div key={c.title} className="overflow-hidden rounded-2xl border border-[#eaeef3]">
-              <div className="flex h-[230px] items-center justify-center border-b border-[#eaeef3] bg-[#f6f9fb]">
-                <span className="font-mono text-[12px] text-[#aab4c5]">인증서 이미지</span>
-              </div>
-              <div className="p-[22px]">
-                <h3 className="m-0 mb-1.5 text-[17px] font-bold text-[#0a1b33]">{c.title}</h3>
-                <p className="m-0 text-[14px] text-[#5a6680]">{c.desc}</p>
-              </div>
-            </div>
+            <CertCard key={c.title} cert={c} />
           ))}
         </div>
-        <p className="m-0 mt-6 text-[14px] text-[#8a96ab]">
-          ※ 인증서·특허증 이미지와 번호는 보유 자료로 교체 예정입니다.
+
+        <p className="m-0 mt-8 text-[14px] leading-[1.7] text-[#8a96ab]">
+          ※ 특허증·시험성적서 등 추가 인증 자료는 순차적으로 게재될 예정입니다. 자세한 자료는{" "}
+          <span className="font-semibold text-[#5a6680]">자료실(MSDS·시험성적서)</span>에서 확인하실 수
+          있습니다.
         </p>
       </div>
     </>

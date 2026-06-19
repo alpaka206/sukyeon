@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 const inputCls =
-  "h-12 w-full rounded-[10px] border border-[#d4dae4] px-4 text-[15px] text-[#0a1b33] outline-none transition-colors focus:border-[#0fb0c8]";
+  "h-12 w-full rounded-[10px] border border-[#d4dae4] px-4 text-[15px] text-[#0a1b33] outline-none transition-colors focus:border-[#22409b]";
 
 const products = [
   "이형제",
@@ -56,7 +56,7 @@ export default function ContactForm() {
       </p>
 
       {sent && (
-        <div className="mb-5 rounded-[10px] bg-[#e9f8fb] px-4 py-3 text-[14px] font-semibold text-[#0a8499]">
+        <div className="mb-5 rounded-[10px] bg-[#eef2fc] px-4 py-3 text-[14px] font-semibold text-[#22409b]">
           메일 작성 창이 열립니다. 전송이 완료되면 담당자가 확인 후 회신드립니다.
         </div>
       )}
@@ -113,7 +113,7 @@ export default function ContactForm() {
       <div className="mt-5">
         <Field label="문의 내용 *">
           <textarea
-            className="h-[140px] w-full resize-y rounded-[10px] border border-[#d4dae4] p-4 text-[15px] leading-[1.6] text-[#0a1b33] outline-none transition-colors focus:border-[#0fb0c8]"
+            className="h-[140px] w-full resize-y rounded-[10px] border border-[#d4dae4] p-4 text-[15px] leading-[1.6] text-[#0a1b33] outline-none transition-colors focus:border-[#22409b]"
             placeholder="합금 종류, 금형, 생산 사이클 등 공정 정보를 알려주시면 더 정확한 견적이 가능합니다."
             value={form.message}
             onChange={(e) => update("message", e.target.value)}
@@ -124,7 +124,7 @@ export default function ContactForm() {
       <label className="mt-[18px] flex cursor-pointer items-center gap-2.5">
         <input
           type="checkbox"
-          className="h-[18px] w-[18px] accent-[#0fb0c8]"
+          className="h-[18px] w-[18px] accent-[#22409b]"
           checked={form.agree}
           onChange={(e) => update("agree", e.target.checked)}
         />

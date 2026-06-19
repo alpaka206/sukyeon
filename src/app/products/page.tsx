@@ -38,7 +38,7 @@ function DownloadSvg() {
 
 function MsdsLink() {
   return (
-    <Link href="/data" className="link-teal inline-flex items-center gap-2 text-[15px] font-bold text-[#0a8499]">
+    <Link href="/data" className="link-teal inline-flex items-center gap-2 text-[15px] font-bold text-[#22409b]">
       <DownloadSvg />
       MSDS · 시험성적서 다운로드
     </Link>
@@ -48,7 +48,7 @@ function MsdsLink() {
 function Bullet({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex items-start gap-2.5">
-      <span className="mt-0.5 font-extrabold text-[#0fb0c8]">·</span>
+      <span className="mt-0.5 font-extrabold text-[#22409b]">·</span>
       <span className="text-[15px] text-[#42526b]">{children}</span>
     </div>
   );
@@ -68,17 +68,16 @@ function CanGrid({ cans }: { cans: { code: string; img: string }[] }) {
   );
 }
 
-function Placeholder({ label, pos }: { label: string; pos: string }) {
+function Placeholder({ label }: { label: string }) {
   return (
-    <div className="relative flex h-[280px] items-center justify-center overflow-hidden rounded-[18px] bg-[linear-gradient(150deg,#0e2950,#0a1b33)] lg:h-[380px]">
-      <div className="absolute inset-0" style={{ background: `radial-gradient(circle at ${pos},rgba(15,176,200,0.28),transparent 55%)` }} />
-      <span className="relative font-mono text-[12px] text-[#9fb0c9]">{label}</span>
+    <div className="flex h-[280px] items-center justify-center rounded-[18px] border border-[#eaeef3] bg-[#f6f9fb] lg:h-[380px]">
+      <span className="font-mono text-[12px] text-[#8a96ab]">{label}</span>
     </div>
   );
 }
 
-const eyebrowCls = "mb-3.5 font-mono text-[13px] tracking-[2px] text-[#0fb0c8]";
-const h2Cls = "m-0 mb-4 text-[28px] font-extrabold tracking-[-0.8px] text-[#0a1b33] lg:text-[34px]";
+const eyebrowCls = "mb-3.5 font-mono text-[13px] tracking-[2px] text-[#22409b]";
+const h2Cls = "m-0 mb-4 fs-3 font-extrabold tracking-[-0.8px] text-[#0a1b33]";
 const pCls = "m-0 mb-6 text-[16px] leading-[1.8] text-[#5a6680]";
 
 export default function ProductsPage() {
@@ -87,12 +86,12 @@ export default function ProductsPage() {
       <PageHeader eyebrow="PRODUCTS" title="제품안내" breadcrumb="홈 / 제품안내" />
       <SectionLayout eyebrow="PRODUCTS" title="제품안내" items={navItems}>
         {/* 이형제 */}
-        <section id="p-release" className="spy-section grid grid-cols-1 items-center gap-10 px-5 py-16 lg:grid-cols-2 lg:gap-14 lg:px-[60px] lg:py-20">
+        <section id="p-release" className="spy-section grid grid-cols-1 items-center gap-10 shell py-16 lg:grid-cols-2 lg:gap-14 lg:py-20">
           <CanGrid cans={releaseCans} />
           <div>
             <div className={eyebrowCls}>RELEASE AGENT</div>
             <h2 className={h2Cls}>
-              이형제 <span className="text-[18px] font-bold text-[#0fb0c8]">CAST ONE</span>
+              이형제 <span className="text-[18px] font-bold text-[#22409b]">CAST ONE</span>
             </h2>
             <p className={pCls}>
               알루미늄 다이캐스팅용 수성·유성 이형제. 우수한 이형성과 고온 안정성으로 소착과 표면 결함을 방지하고 생산성을 높입니다.
@@ -107,11 +106,11 @@ export default function ProductsPage() {
         </section>
 
         {/* 프란자오일 */}
-        <section id="p-pranza" className="spy-section grid grid-cols-1 items-center gap-10 bg-[#f6f9fb] px-5 py-16 lg:grid-cols-2 lg:gap-14 lg:px-[60px] lg:py-20">
+        <section id="p-pranza" className="spy-section grid grid-cols-1 items-center gap-10 bg-[#f6f9fb] shell py-16 lg:grid-cols-2 lg:gap-14 lg:py-20">
           <div className="lg:order-1">
             <div className={eyebrowCls}>PLUNGER OIL</div>
             <h2 className={h2Cls}>
-              프란자오일 <span className="text-[18px] font-bold text-[#0fb0c8]">LUBE ONE</span>
+              프란자오일 <span className="text-[18px] font-bold text-[#22409b]">LUBE ONE</span>
             </h2>
             <p className={pCls}>
               플런저 슬리브 윤활용 프란자오일. 마찰을 줄여 사출 안정성을 확보하고 플런저·슬리브의 수명을 연장합니다.
@@ -129,8 +128,8 @@ export default function ProductsPage() {
         </section>
 
         {/* 작동유 */}
-        <section id="p-hyd" className="spy-section grid grid-cols-1 items-center gap-10 px-5 py-16 lg:grid-cols-2 lg:gap-14 lg:px-[60px] lg:py-20">
-          <Placeholder label="작동유 제품 이미지" pos="65% 35%" />
+        <section id="p-hyd" className="spy-section grid grid-cols-1 items-center gap-10 shell py-16 lg:grid-cols-2 lg:gap-14 lg:py-20">
+          <Placeholder label="작동유 제품 이미지" />
           <div>
             <div className={eyebrowCls}>HYDRAULIC OIL</div>
             <h2 className={h2Cls}>작동유</h2>
@@ -147,7 +146,7 @@ export default function ProductsPage() {
         </section>
 
         {/* 습동면유 */}
-        <section id="p-slide" className="spy-section grid grid-cols-1 items-center gap-10 bg-[#f6f9fb] px-5 py-16 lg:grid-cols-2 lg:gap-14 lg:px-[60px] lg:py-20">
+        <section id="p-slide" className="spy-section grid grid-cols-1 items-center gap-10 bg-[#f6f9fb] shell py-16 lg:grid-cols-2 lg:gap-14 lg:py-20">
           <div className="lg:order-1">
             <div className={eyebrowCls}>SLIDEWAY OIL</div>
             <h2 className={h2Cls}>습동면유</h2>
@@ -162,13 +161,13 @@ export default function ProductsPage() {
             <MsdsLink />
           </div>
           <div className="lg:order-2">
-            <Placeholder label="습동면유 제품 이미지" pos="35% 65%" />
+            <Placeholder label="습동면유 제품 이미지" />
           </div>
         </section>
 
         {/* 소모성 부자재 */}
-        <section id="p-parts" className="spy-section grid grid-cols-1 items-center gap-10 px-5 py-16 lg:grid-cols-2 lg:gap-14 lg:px-[60px] lg:py-20">
-          <Placeholder label="부자재 이미지" pos="65% 35%" />
+        <section id="p-parts" className="spy-section grid grid-cols-1 items-center gap-10 shell py-16 lg:grid-cols-2 lg:gap-14 lg:py-20">
+          <Placeholder label="부자재 이미지" />
           <div>
             <div className={eyebrowCls}>CONSUMABLES</div>
             <h2 className={h2Cls}>소모성 부자재</h2>
@@ -181,7 +180,7 @@ export default function ProductsPage() {
               <Bullet>호스 · 배관 부속</Bullet>
               <Bullet>기타 현장 운영 자재</Bullet>
             </div>
-            <Link href="/contact" className="link-teal inline-flex items-center gap-2 text-[15px] font-bold text-[#0a8499]">
+            <Link href="/contact" className="link-teal inline-flex items-center gap-2 text-[15px] font-bold text-[#22409b]">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M14 9V5a3 3 0 0 0-6 0v4M5 9h14l1 12H4L5 9z" />
               </svg>
@@ -191,16 +190,15 @@ export default function ProductsPage() {
         </section>
 
         {/* product CTA */}
-        <div className="px-5 pb-20 lg:px-[60px]">
+        <div className="shell pb-20">
           <div className="relative flex flex-col items-start justify-between gap-6 overflow-hidden rounded-[18px] bg-[#0a1b33] p-8 text-white sm:flex-row sm:items-center lg:p-[50px]">
-            <div className="pointer-events-none absolute -right-10 -top-[60px] h-[280px] w-[280px] rounded-full bg-[radial-gradient(circle,rgba(15,176,200,0.3),transparent_65%)]" />
-            <div className="relative">
+            <div>
               <h3 className="m-0 mb-2 text-[22px] font-extrabold lg:text-[26px]">어떤 제품이 맞을지 고민되시나요?</h3>
               <p className="m-0 text-[15px] text-[#b6c3d6]">공정 조건을 알려주시면 최적의 제품을 추천해 드립니다.</p>
             </div>
             <Link
               href="/contact"
-              className="relative shrink-0 cursor-pointer rounded-[10px] bg-[#0fb0c8] px-[30px] py-[15px] text-[16px] font-bold text-white transition-opacity hover:opacity-90"
+              className="shrink-0 cursor-pointer rounded-[10px] bg-[#4f74e6] px-[30px] py-[15px] text-[16px] font-bold text-white transition-opacity hover:opacity-90"
             >
               맞춤 견적 받기
             </Link>

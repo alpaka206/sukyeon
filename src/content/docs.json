@@ -1,0 +1,10 @@
+{
+  "items": [
+    { "name": "작동유·습동면유 MSDS (GHS)", "category": "작동유", "date": "2026.05", "file": "" },
+    { "name": "수성 이형제 MSDS (GHS)", "category": "이형제", "date": "2026.03", "file": "" },
+    { "name": "유성 이형제 MSDS (GHS)", "category": "이형제", "date": "2026.03", "file": "" },
+    { "name": "프란자오일 MSDS (GHS)", "category": "프란자오일", "date": "2026.02", "file": "" },
+    { "name": "제품 시험성적서 (이형성)", "category": "시험성적서", "date": "2026.01", "file": "" },
+    { "name": "제품 카탈로그 (전 품목)", "category": "카탈로그", "date": "2026.01", "file": "/assets/catalog.pdf" }
+  ]
+}

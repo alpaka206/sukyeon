@@ -19,13 +19,13 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50">
       {/* utility bar */}
-      <div className="hidden h-10 items-center justify-between bg-[#081628] px-5 text-[13px] text-[#9fb0c9] sm:flex lg:px-[60px]">
+      <div className="hidden h-10 items-center justify-between bg-[#081628] shell text-[13px] text-[#9fb0c9] sm:flex">
         <span className="font-mono tracking-[1px] truncate pr-4">
           ALUMINUM DIE-CASTING · 이형제 · 프란자오일 · 작동유 · 습동면유 · 부자재 직접 생산
         </span>
         <div className="flex shrink-0 items-center gap-[22px]">
           <span className="flex items-center gap-1.5">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0fb0c8" strokeWidth="2">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#4f74e6" strokeWidth="2">
               <path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.08 4.18 2 2 0 0 1 5 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" />
             </svg>
             {company.tel}
@@ -37,7 +37,7 @@ export default function Header() {
       </div>
 
       {/* nav */}
-      <div className="flex h-[78px] items-center justify-between border-b border-[#eaeef3] bg-white/[0.92] px-5 backdrop-blur-[10px] lg:px-[60px]">
+      <div className="flex h-[78px] items-center justify-between border-b border-[#eaeef3] bg-white/[0.92] shell backdrop-blur-[10px]">
         <Link href="/" className="flex items-center" aria-label="석연MRO 홈">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/assets/logo.jpg" alt="석연MRO" className="block h-[38px] w-auto" />
@@ -102,7 +102,7 @@ export default function Header() {
           </Link>
           <Link
             href="/contact"
-            className="rounded-[9px] bg-[#0fb0c8] px-[22px] py-[11px] text-[15px] font-bold text-white transition-opacity hover:opacity-90"
+            className="rounded-[9px] bg-[#22409b] px-[22px] py-[11px] text-[15px] font-bold text-white transition-colors hover:bg-[#18306f]"
           >
             견적 문의
           </Link>
@@ -169,7 +169,7 @@ export default function Header() {
             <Link
               href="/contact"
               onClick={() => setMobileOpen(false)}
-              className="flex flex-1 items-center justify-center rounded-[9px] bg-[#0fb0c8] py-3 text-[15px] font-bold text-white"
+              className="flex flex-1 items-center justify-center rounded-[9px] bg-[#22409b] py-3 text-[15px] font-bold text-white"
             >
               견적 문의
             </Link>

@@ -45,15 +45,15 @@ function StepCard({ s }: { s: Step }) {
     >
       <div
         className="mx-auto mb-4 flex h-[54px] w-[54px] items-center justify-center rounded-[15px]"
-        style={{ background: s.last ? "rgba(15,176,200,0.18)" : "#eaf6f9" }}
+        style={{ background: s.last ? "rgba(79,116,230,0.18)" : "#eef2fc" }}
       >
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke={s.last ? "#3fd0e6" : "#0a8499"} strokeWidth="1.8">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke={s.last ? "#4f74e6" : "#22409b"} strokeWidth="1.8">
           {s.icon}
         </svg>
       </div>
       <div
         className="mb-[7px] font-mono text-[12px] font-semibold"
-        style={{ color: s.last ? "#3fd0e6" : "#0fb0c8" }}
+        style={{ color: s.last ? "#4f74e6" : "#22409b" }}
       >
         STEP {s.no}
       </div>
@@ -90,9 +90,9 @@ export default function ProcessPage() {
     <>
       <PageHeader eyebrow="PROCESS" title="제조과정" breadcrumb="홈 / 사업분야 / 제조과정" />
 
-      <div className="px-5 py-16 lg:px-[60px] lg:py-20">
-        <div className="mb-3.5 font-mono text-[13px] tracking-[2px] text-[#0fb0c8]">MANUFACTURING FLOW</div>
-        <h2 className="m-0 mb-3 text-[28px] font-extrabold tracking-[-0.8px] text-[#0a1b33] lg:text-[34px]">제조 공정</h2>
+      <div className="shell py-16 lg:py-20">
+        <div className="mb-3.5 font-mono text-[13px] tracking-[2px] text-[#22409b]">MANUFACTURING FLOW</div>
+        <h2 className="m-0 mb-3 fs-3 font-extrabold tracking-[-0.8px] text-[#0a1b33]">제조 공정</h2>
         <p className="m-0 mb-12 max-w-[680px] text-[16px] leading-[1.7] text-[#5a6680]">
           원료 투입부터 제품 출하까지, 석연MRO의 표준 제조 공정입니다. 전 공정에서 품질을 관리하여 균일한 성능의 제품을 생산합니다.
         </p>
@@ -104,9 +104,9 @@ export default function ProcessPage() {
       </div>
 
       {/* equipment */}
-      <div className="bg-[#f6f9fb] px-5 py-16 lg:px-[60px] lg:py-20">
-        <div className="mb-3.5 font-mono text-[13px] tracking-[2px] text-[#0fb0c8]">EQUIPMENT</div>
-        <h2 className="m-0 mb-9 text-[28px] font-extrabold tracking-[-0.8px] text-[#0a1b33] lg:text-[34px]">설비현황</h2>
+      <div className="bg-[#f6f9fb] shell py-16 lg:py-20">
+        <div className="mb-3.5 font-mono text-[13px] tracking-[2px] text-[#22409b]">EQUIPMENT</div>
+        <h2 className="m-0 mb-9 fs-3 font-extrabold tracking-[-0.8px] text-[#0a1b33]">설비현황</h2>
         <div className="overflow-x-auto rounded-2xl border border-[#eaeef3] bg-white">
           <div className="min-w-[560px]">
             <div className="grid grid-cols-[180px_1fr_180px] bg-[#0a1b33] text-center text-[15px] font-bold text-white">
@@ -125,7 +125,7 @@ export default function ProcessPage() {
               >
                 <div className="p-5 font-bold text-[#0a1b33]">{e.no}</div>
                 <div className="p-5 text-[15px] text-[#42526b]">{e.name}</div>
-                <div className="p-5 font-mono font-bold text-[#0fb0c8]">{e.cap}</div>
+                <div className="p-5 font-mono font-bold text-[#22409b]">{e.cap}</div>
               </div>
             ))}
           </div>

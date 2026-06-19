@@ -4,8 +4,8 @@ import PageHeader from "@/components/PageHeader";
 export const metadata: Metadata = { title: "고객사·실적" };
 
 const stats = [
-  { value: <>350<span className="text-[#0fb0c8]">+</span></>, label: "누적 거래처" },
-  { value: <>30<span className="text-[#0fb0c8]">년+</span></>, label: "제조·공급 경력" },
+  { value: <>350<span className="text-[#22409b]">+</span></>, label: "누적 거래처" },
+  { value: <>30<span className="text-[#22409b]">년+</span></>, label: "제조·공급 경력" },
   { value: <>전국</>, label: "납품 네트워크" },
 ];
 
@@ -16,7 +16,7 @@ export default function ClientsPage() {
     <>
       <PageHeader eyebrow="CLIENTS" title="고객사·실적" breadcrumb="홈 / 고객사·실적" />
 
-      <div className="grid grid-cols-1 gap-[22px] px-5 py-16 sm:grid-cols-3 lg:px-[60px] lg:py-[72px]">
+      <div className="grid grid-cols-1 gap-[22px] shell py-16 sm:grid-cols-3 lg:py-[72px]">
         {stats.map((s, i) => (
           <div key={i} className="rounded-2xl bg-[#f6f9fb] p-[34px] text-center">
             <div className="text-[42px] font-extrabold tracking-[-1px] text-[#0a1b33]">{s.value}</div>
@@ -25,7 +25,7 @@ export default function ClientsPage() {
         ))}
       </div>
 
-      <div className="px-5 pb-10 lg:px-[60px]">
+      <div className="shell pb-10">
         <h2 className="m-0 mb-2.5 text-[24px] font-extrabold tracking-[-0.6px] text-[#0a1b33] lg:text-[26px]">
           주요 적용 산업
         </h2>
@@ -34,14 +34,14 @@ export default function ClientsPage() {
         </p>
         <div className="flex flex-wrap gap-3">
           {industries.map((t) => (
-            <span key={t} className="rounded-full bg-[#e9f8fb] px-5 py-2.5 text-[15px] font-semibold text-[#0a1b33]">
+            <span key={t} className="rounded-full bg-[#eef2fc] px-5 py-2.5 text-[15px] font-semibold text-[#0a1b33]">
               {t}
             </span>
           ))}
         </div>
       </div>
 
-      <div className="px-5 pb-20 pt-10 lg:px-[60px]">
+      <div className="shell pb-20 pt-10">
         <h2 className="m-0 mb-7 text-[24px] font-extrabold tracking-[-0.6px] text-[#0a1b33] lg:text-[26px]">
           함께하는 고객사
         </h2>

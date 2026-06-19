@@ -1,0 +1,28 @@
+{
+  "items": [
+    {
+      "eyebrow": "QUALITY",
+      "title": "품질경영시스템",
+      "standard": "ISO 9001:2015 / KS Q ISO 9001:2015",
+      "desc": "제품 기획부터 생산·출하까지 전 과정에 품질경영시스템을 적용해 일관된 품질을 보증합니다.",
+      "issuer": "(주)아이아이씨인증원 (IIC)",
+      "number": "JK-110440",
+      "scope": "다이캐스팅용 이형제의 제조",
+      "validity": "2025.11.12 ~ 2028.11.11",
+      "imageKo": "/assets/cert_iso9001_ko.jpg",
+      "imageEn": "/assets/cert_iso9001_en.jpg"
+    },
+    {
+      "eyebrow": "ENVIRONMENT",
+      "title": "환경경영시스템",
+      "standard": "ISO 14001:2015",
+      "desc": "생산 활동 전반에서 환경 영향을 체계적으로 관리하며 지속 가능한 제조를 실천합니다.",
+      "issuer": "글로벌표준협회 (GSI)",
+      "number": "GE1363",
+      "scope": "다이캐스팅용 이형제의 제조",
+      "validity": "2026.03.17 ~ 2029.03.16",
+      "imageKo": "/assets/cert_iso14001_ko.jpg",
+      "imageEn": "/assets/cert_iso14001_en.jpg"
+    }
+  ]
+}

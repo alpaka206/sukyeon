@@ -51,7 +51,7 @@ export default function SectionLayout({ eyebrow, title, items, children }: Props
                 style={{
                   fontWeight: on ? 700 : 600,
                   color: on ? "#0a1b33" : "#5a6680",
-                  background: on ? "#eaf6f9" : "transparent",
+                  background: on ? "#eef2fc" : "transparent",
                 }}
               >
                 {it.label}
@@ -61,11 +61,11 @@ export default function SectionLayout({ eyebrow, title, items, children }: Props
         </div>
       </div>
 
-      <div className="lg:grid lg:grid-cols-[250px_1fr]">
+      <div className="shell-grid lg:grid lg:grid-cols-[250px_1fr]">
         {/* desktop vertical LNB */}
         <aside className="hidden border-r border-[#eaeef3] bg-[#fbfcfe] lg:block">
           <div className="sticky top-[78px] py-[38px]">
-            <div className="px-8 pb-1.5 font-mono text-[12px] tracking-[2px] text-[#0fb0c8]">
+            <div className="px-8 pb-1.5 font-mono text-[12px] tracking-[2px] text-[#22409b]">
               {eyebrow}
             </div>
             <div className="px-8 pb-[22px] text-[21px] font-extrabold text-[#0a1b33]">{title}</div>
@@ -81,8 +81,8 @@ export default function SectionLayout({ eyebrow, title, items, children }: Props
                     style={{
                       fontWeight: on ? 700 : 600,
                       color: on ? "#0a1b33" : "#5a6680",
-                      borderLeftColor: on ? "#0fb0c8" : "transparent",
-                      background: on ? "#eaf6f9" : "transparent",
+                      borderLeftColor: on ? "#22409b" : "transparent",
+                      background: on ? "#eef2fc" : "transparent",
                     }}
                   >
                     {it.label}

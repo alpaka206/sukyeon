@@ -30,9 +30,9 @@ export default function BusinessPage() {
   return (
     <>
       <PageHeader eyebrow="BUSINESS" title="사업분야" breadcrumb="홈 / 사업분야" />
-      <div className="px-5 py-16 lg:px-[60px] lg:py-[84px]">
+      <div className="shell py-16 lg:py-[84px]">
         <div className="mb-14 max-w-[760px]">
-          <h2 className="m-0 mb-[18px] text-[26px] font-extrabold leading-[1.35] tracking-[-0.8px] text-[#0a1b33] lg:text-[32px]">
+          <h2 className="m-0 mb-[18px] fs-3 font-extrabold leading-[1.35] tracking-[-0.8px] text-[#0a1b33]">
             다이캐스팅 공정을 위한
             <br />
             토탈 솔루션
@@ -44,12 +44,11 @@ export default function BusinessPage() {
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           {cards.map((c) => (
             <div key={c.no} className="overflow-hidden rounded-[18px] border border-[#eaeef3]">
-              <div className="relative flex h-[180px] items-center justify-center bg-[linear-gradient(135deg,#13294a,#0a1b33)]">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_70%,rgba(15,176,200,0.25),transparent_60%)]" />
-                <span className="relative font-mono text-[12px] text-[#7b8aa3]">이미지 영역</span>
+              <div className="relative flex h-[180px] items-center justify-center border border-[#eaeef3] bg-[#f6f9fb]">
+                <span className="relative font-mono text-[12px] text-[#5a6680]">이미지 영역</span>
               </div>
               <div className="p-[30px]">
-                <div className="mb-2.5 font-mono text-[13px] text-[#0fb0c8]">{c.no}</div>
+                <div className="mb-2.5 font-mono text-[13px] text-[#22409b]">{c.no}</div>
                 <h3 className="m-0 mb-2.5 text-[22px] font-bold text-[#0a1b33]">{c.title}</h3>
                 <p className="m-0 text-[15px] leading-[1.7] text-[#5a6680]">{c.desc}</p>
               </div>
