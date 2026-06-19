@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import PageHeader from "@/components/PageHeader";
-import docsData from "@/content/docs.json";
+import { getDocs } from "@/lib/content";
 
 export const metadata: Metadata = { title: "자료실 (MSDS)" };
 
-const rows = docsData.items;
 const cols = "grid-cols-[70px_1fr_160px_130px_130px]";
 
-export default function DataPage() {
+export default async function DataPage() {
+  const rows = await getDocs();
   return (
     <>
       <PageHeader eyebrow="DATA / MSDS (GHS)" title="자료실" breadcrumb="홈 / 자료실(MSDS)" />

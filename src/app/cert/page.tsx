@@ -1,14 +1,10 @@
 import type { Metadata } from "next";
 import PageHeader from "@/components/PageHeader";
-import certsData from "@/content/certs.json";
+import { getCerts, type CertItem } from "@/lib/content";
 
 export const metadata: Metadata = { title: "인증·특허" };
 
-type Cert = (typeof certsData.items)[number];
-
-const certs = certsData.items;
-
-function CertCard({ cert }: { cert: Cert }) {
+function CertCard({ cert }: { cert: CertItem }) {
   const images = [
     { src: cert.imageKo, label: "국문" },
     { src: cert.imageEn, label: "영문" },
@@ -69,7 +65,8 @@ function CertCard({ cert }: { cert: Cert }) {
   );
 }
 
-export default function CertPage() {
+export default async function CertPage() {
+  const certs = await getCerts();
   return (
     <>
       <PageHeader eyebrow="CERTIFICATION" title="인증·특허" breadcrumb="홈 / 인증·특허" />

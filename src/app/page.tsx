@@ -1,6 +1,6 @@
 import Link from "next/link";
 import HeroCarousel from "@/components/HeroCarousel";
-import newsData from "@/content/news.json";
+import { getNews } from "@/lib/content";
 
 const metrics = [
   { label: "제조 경력", value: "30년+", brand: false },
@@ -51,9 +51,8 @@ const whyUs = [
   },
 ];
 
-const news = newsData.items.slice(0, 3);
-
-export default function Home() {
+export default async function Home() {
+  const news = (await getNews()).slice(0, 3);
   return (
     <>
       {/* hero */}

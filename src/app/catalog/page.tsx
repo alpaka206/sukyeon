@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import PageHeader from "@/components/PageHeader";
-import catalog from "@/content/catalog.json";
+import { getCatalog } from "@/lib/content";
 
 export const metadata: Metadata = { title: "카탈로그" };
 
-export default function CatalogPage() {
+export default async function CatalogPage() {
+  const catalog = await getCatalog();
   return (
     <>
       <PageHeader eyebrow="CATALOG" title="카탈로그" breadcrumb="홈 / 카탈로그" />

@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 import PageHeader from "@/components/PageHeader";
-import newsData from "@/content/news.json";
+import { getNews } from "@/lib/content";
 
 export const metadata: Metadata = { title: "공지사항" };
 
-const items = newsData.items;
-
-export default function NewsPage() {
+export default async function NewsPage() {
+  const items = await getNews();
   return (
     <>
       <PageHeader eyebrow="NEWS" title="공지사항" breadcrumb="홈 / 고객지원 / 공지사항" />

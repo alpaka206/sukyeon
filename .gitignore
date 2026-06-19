@@ -43,3 +43,6 @@ next-env.d.ts
 
 # design reference (local only, not deployed)
 /design_handoff_sukyeonmro_website
+
+# 내부 운영 문서 (git/배포 제외, 로컬 참고용)
+/local-docs
