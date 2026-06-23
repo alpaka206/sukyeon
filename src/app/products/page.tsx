@@ -1,31 +1,71 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
+import type { ReactNode } from "react";
 import PageHeader from "@/components/PageHeader";
+import { ProductDetailSelector } from "@/components/ProductDetailSelector";
 import SectionLayout from "@/components/SectionLayout";
+import { pranzaProductDetails, releaseProductDetails } from "./productDetails";
 
 export const metadata: Metadata = { title: "제품안내" };
 
 const navItems = [
   { id: "p-release", label: "이형제" },
   { id: "p-pranza", label: "프란자오일" },
-  { id: "p-hyd", label: "작동유 · 습동면유" },
-  { id: "p-parts", label: "소모성 부자재" },
+  { id: "p-etc-parts", label: "기타 부자재" },
+  { id: "p-spray", label: "스프레이/사출제품" },
 ];
 
-const releaseCans = [
-  { code: "SR-800", img: "/assets/release_SR800.jpg" },
-  { code: "SR-850", img: "/assets/release_SR850.jpg" },
-  { code: "SR-900", img: "/assets/release_SR900.jpg" },
-  { code: "SR-950", img: "/assets/release_SR950.jpg" },
-  { code: "SR-1200", img: "/assets/release_SR1200.jpg" },
-  { code: "ZM-12", img: "/assets/release_ZM12.jpg" },
-];
+type ProductPhoto = {
+  readonly src: string;
+  readonly alt: string;
+  readonly label: string;
+};
 
-const pranzaCans = [
-  { code: "SL-600", img: "/assets/pranza_SL600.jpg" },
-  { code: "SL-600M", img: "/assets/pranza_SL600M.jpg" },
-  { code: "SL-600S", img: "/assets/pranza_SL600S.jpg" },
-];
+type FeatureText = {
+  readonly title: string;
+  readonly desc: string;
+};
+
+const miscPhotos = [
+  {
+    src: "/assets/products/misc-tongs.jpg",
+    alt: "다이캐스팅 현장용 집게 부자재",
+    label: "집게 · 현장 공구",
+  },
+  {
+    src: "/assets/products/misc-hardware.jpg",
+    alt: "하드참바 노즐과 금속 부자재",
+    label: "하드참바 · 노즐 부품",
+  },
+] satisfies readonly ProductPhoto[];
+
+const sprayPhotos = [
+  {
+    src: "/assets/products/spray-cassette.jpg",
+    alt: "스프레이 카세트와 노즐 부품",
+    label: "스프레이 카세트",
+  },
+  {
+    src: "/assets/products/spray-copper-pipes.jpg",
+    alt: "스프레이용 동파이프 부품",
+    label: "스프레이 동파이프",
+  },
+] satisfies readonly ProductPhoto[];
+
+const miscHighlights = [
+  { title: "열전대 · 커버", desc: "AL/Mg용 외장재, 씨스형 측온저항체, 주물·흑연·세라믹 커버" },
+  { title: "레들 · 쪽자", desc: "0.15kg~30kg 레들, 특대·대·1호~8호 쪽자" },
+  { title: "하드참바 부품", desc: "링구, 노즐바디, 노즐콘 등 교체 부품" },
+  { title: "공정 보조재", desc: "다이코트, 라이닝제, 구리스, 세라믹코팅제, 집게, 탈산제, 탈가스제" },
+] satisfies readonly FeatureText[];
+
+const sprayHighlights = [
+  { title: "스프레이건 · 카세트", desc: "BS형/L형 핸드 스프레이건, 블럭형·판재형 카세트" },
+  { title: "노즐 · 동파이프", desc: "7구·12구 노즐, Ø5/Ø6/Ø8 스프레이 동파이프" },
+  { title: "냉각로드 · 부싱", desc: "열처리/비열처리 냉각로드, 표면 열처리 부싱" },
+  { title: "사출부품", desc: "기계 슬리브, 프란자 팁 Ø35~Ø150, 2분할·3분할 카프링" },
+] satisfies readonly FeatureText[];
 
 function DownloadSvg() {
   return (
@@ -45,7 +85,7 @@ function MsdsLink() {
   );
 }
 
-function Bullet({ children }: { children: React.ReactNode }) {
+function Bullet({ children }: { readonly children: ReactNode }) {
   return (
     <div className="flex items-start gap-2.5">
       <span className="mt-0.5 font-extrabold text-[#22409b]">·</span>
@@ -54,25 +94,51 @@ function Bullet({ children }: { children: React.ReactNode }) {
   );
 }
 
-function CanGrid({ cans }: { cans: { code: string; img: string }[] }) {
+function ProductPhotoStack({ images }: { readonly images: readonly ProductPhoto[] }) {
   return (
-    <div className="grid grid-cols-3 gap-3 rounded-[18px] border border-[#eaeef3] bg-[#f6f9fb] p-[18px]">
-      {cans.map((c) => (
-        <div key={c.code} className="rounded-xl border border-[#eef1f5] bg-white p-2 text-center">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={c.img} alt={c.code} className="aspect-square w-full object-contain" />
-          <div className="pt-1 font-mono text-[12px] font-bold text-[#0a1b33]">{c.code}</div>
+    <div className="grid grid-cols-1 gap-3 sm:grid-cols-[1.1fr_0.9fr]">
+      {images.map((image, index) => (
+        <figure
+          key={image.src}
+          className="relative m-0 min-h-[230px] overflow-hidden rounded-[18px] border border-[#e2e6ed] bg-[#f6f9fb] sm:min-h-[360px]"
+        >
+          <Image
+            src={image.src}
+            alt={image.alt}
+            fill
+            sizes={index === 0 ? "(max-width: 768px) 100vw, 45vw" : "(max-width: 768px) 100vw, 36vw"}
+            className="object-contain p-3"
+          />
+          <figcaption className="absolute bottom-3 left-3 rounded-[8px] bg-white/92 px-3 py-2 text-[13px] font-bold text-[#0a1b33] shadow-[0_12px_30px_-18px_rgba(10,27,51,0.45)]">
+            {image.label}
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  );
+}
+
+function FeatureGrid({ items }: { readonly items: readonly FeatureText[] }) {
+  return (
+    <div className="mb-7 grid grid-cols-1 gap-3 sm:grid-cols-2">
+      {items.map((item) => (
+        <div key={item.title} className="rounded-[14px] border border-[#e2e6ed] bg-white p-5">
+          <h3 className="m-0 mb-2 text-[16px] font-extrabold text-[#0a1b33]">{item.title}</h3>
+          <p className="m-0 text-[14.5px] leading-[1.65] text-[#5a6680]">{item.desc}</p>
         </div>
       ))}
     </div>
   );
 }
 
-function Placeholder({ label }: { label: string }) {
+function InquiryLink({ children }: { readonly children: ReactNode }) {
   return (
-    <div className="flex h-[280px] items-center justify-center rounded-[18px] border border-[#eaeef3] bg-[#f6f9fb] lg:h-[380px]">
-      <span className="font-mono text-[12px] text-[#8a96ab]">{label}</span>
-    </div>
+    <Link href="/contact" className="link-teal inline-flex items-center gap-2 text-[15px] font-bold text-[#22409b]">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <path d="M14 9V5a3 3 0 0 0-6 0v4M5 9h14l1 12H4L5 9z" />
+      </svg>
+      {children}
+    </Link>
   );
 }
 
@@ -83,11 +149,9 @@ const pCls = "m-0 mb-6 text-[16px] leading-[1.8] text-[#5a6680]";
 export default function ProductsPage() {
   return (
     <>
-      <PageHeader eyebrow="PRODUCTS" title="제품안내" breadcrumb="홈 / 제품안내" />
-      <SectionLayout eyebrow="PRODUCTS" title="제품안내" items={navItems}>
-        {/* 이형제 */}
-        <section id="p-release" className="spy-section grid grid-cols-1 items-center gap-10 shell py-16 lg:grid-cols-2 lg:gap-14 lg:py-20">
-          <CanGrid cans={releaseCans} />
+      <PageHeader eyebrow="PRODUCTS" title="제품안내" wide />
+      <SectionLayout eyebrow="PRODUCTS" title="제품안내" items={navItems} wide>
+        <section id="p-release" className="spy-section grid grid-cols-1 items-start gap-10 wide-shell py-16 lg:grid-cols-[0.86fr_1.14fr] lg:gap-14 lg:py-20">
           <div>
             <div className={eyebrowCls}>RELEASE AGENT</div>
             <h2 className={h2Cls}>
@@ -103,10 +167,10 @@ export default function ProductsPage() {
             </div>
             <MsdsLink />
           </div>
+          <ProductDetailSelector label="CAST ONE LINEUP" items={releaseProductDetails} />
         </section>
 
-        {/* 프란자오일 */}
-        <section id="p-pranza" className="spy-section grid grid-cols-1 items-center gap-10 bg-[#f6f9fb] shell py-16 lg:grid-cols-2 lg:gap-14 lg:py-20">
+        <section id="p-pranza" className="spy-section grid grid-cols-1 items-start gap-10 bg-[#f6f9fb] wide-shell py-16 lg:grid-cols-[0.86fr_1.14fr] lg:gap-14 lg:py-20">
           <div className="lg:order-1">
             <div className={eyebrowCls}>PLUNGER OIL</div>
             <h2 className={h2Cls}>
@@ -123,74 +187,39 @@ export default function ProductsPage() {
             <MsdsLink />
           </div>
           <div className="lg:order-2">
-            <CanGrid cans={pranzaCans} />
+            <ProductDetailSelector label="LUBE ONE LINEUP" items={pranzaProductDetails} />
           </div>
         </section>
 
-        {/* 작동유 */}
-        <section id="p-hyd" className="spy-section grid grid-cols-1 items-center gap-10 shell py-16 lg:grid-cols-2 lg:gap-14 lg:py-20">
-          <Placeholder label="작동유 제품 이미지" />
+        <section id="p-etc-parts" className="spy-section grid grid-cols-1 items-center gap-10 wide-shell py-16 lg:grid-cols-[1.04fr_0.96fr] lg:gap-14 lg:py-20">
+          <ProductPhotoStack images={miscPhotos} />
           <div>
-            <div className={eyebrowCls}>HYDRAULIC OIL</div>
-            <h2 className={h2Cls}>작동유</h2>
+            <div className={eyebrowCls}>AUXILIARY PARTS</div>
+            <h2 className={h2Cls}>기타 부자재</h2>
             <p className={pCls}>
-              다이캐스팅 설비용 유압 작동유. 안정적인 유압 전달과 산화 안정성으로 설비를 부드럽게 운전합니다.
+              다이캐스팅 라인 운영에 필요한 열전대, 레들, 하드참바, 쪽자, 코팅·처리 자재를 함께 공급합니다. 설비 규격과 공정 조건에 맞춰 필요한 품목을 확인해 드립니다.
             </p>
-            <div className="mb-7 flex flex-col gap-3">
-              <Bullet>우수한 산화·열 안정성으로 교환 주기 연장</Bullet>
-              <Bullet>방청·소포성으로 설비 보호</Bullet>
-              <Bullet>다양한 점도 등급 공급 가능</Bullet>
-            </div>
-            <MsdsLink />
+            <FeatureGrid items={miscHighlights} />
+            <InquiryLink>기타 부자재 견적 문의</InquiryLink>
           </div>
         </section>
 
-        {/* 습동면유 */}
-        <section id="p-slide" className="spy-section grid grid-cols-1 items-center gap-10 bg-[#f6f9fb] shell py-16 lg:grid-cols-2 lg:gap-14 lg:py-20">
+        <section id="p-spray" className="spy-section grid grid-cols-1 items-center gap-10 bg-[#f6f9fb] wide-shell py-16 lg:grid-cols-[0.96fr_1.04fr] lg:gap-14 lg:py-20">
           <div className="lg:order-1">
-            <div className={eyebrowCls}>SLIDEWAY OIL</div>
-            <h2 className={h2Cls}>습동면유</h2>
+            <div className={eyebrowCls}>SPRAY & INJECTION PARTS</div>
+            <h2 className={h2Cls}>스프레이/사출제품</h2>
             <p className={pCls}>
-              공작·다이캐스팅 설비의 습동면 윤활유. 스틱슬립을 방지하고 정밀 이송과 면 보호를 동시에 구현합니다.
+              이형제 도포와 사출부 유지보수에 필요한 스프레이건, 카세트, 노즐, 동파이프, 냉각로드, 슬리브, 프란자 팁을 공급합니다. 표준 규격뿐 아니라 비규격 제품도 상담 가능합니다.
             </p>
-            <div className="mb-7 flex flex-col gap-3">
-              <Bullet>우수한 점착성으로 습동면 유막 유지</Bullet>
-              <Bullet>스틱슬립 방지로 정밀 이송 안정화</Bullet>
-              <Bullet>작동유와의 분리성 우수</Bullet>
-            </div>
-            <MsdsLink />
+            <FeatureGrid items={sprayHighlights} />
+            <InquiryLink>스프레이/사출제품 견적 문의</InquiryLink>
           </div>
           <div className="lg:order-2">
-            <Placeholder label="습동면유 제품 이미지" />
+            <ProductPhotoStack images={sprayPhotos} />
           </div>
         </section>
 
-        {/* 소모성 부자재 */}
-        <section id="p-parts" className="spy-section grid grid-cols-1 items-center gap-10 shell py-16 lg:grid-cols-2 lg:gap-14 lg:py-20">
-          <Placeholder label="부자재 이미지" />
-          <div>
-            <div className={eyebrowCls}>CONSUMABLES</div>
-            <h2 className={h2Cls}>소모성 부자재</h2>
-            <p className={pCls}>
-              다이캐스팅 현장 운영에 필요한 소모성 부자재를 함께 공급합니다. 필요 품목을 한 곳에서 간편하게 조달하세요.
-            </p>
-            <div className="mb-7 grid grid-cols-1 gap-x-6 gap-y-2.5 sm:grid-cols-2">
-              <Bullet>도포 노즐 · 스프레이 부속</Bullet>
-              <Bullet>필터 · 여과 자재</Bullet>
-              <Bullet>호스 · 배관 부속</Bullet>
-              <Bullet>기타 현장 운영 자재</Bullet>
-            </div>
-            <Link href="/contact" className="link-teal inline-flex items-center gap-2 text-[15px] font-bold text-[#22409b]">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M14 9V5a3 3 0 0 0-6 0v4M5 9h14l1 12H4L5 9z" />
-              </svg>
-              부자재 견적 문의
-            </Link>
-          </div>
-        </section>
-
-        {/* product CTA */}
-        <div className="shell pb-20">
+        <div className="wide-shell pb-20">
           <div className="relative flex flex-col items-start justify-between gap-6 overflow-hidden rounded-[18px] bg-[#0a1b33] p-8 text-white sm:flex-row sm:items-center lg:p-[50px]">
             <div>
               <h3 className="m-0 mb-2 text-[22px] font-extrabold lg:text-[26px]">어떤 제품이 맞을지 고민되시나요?</h3>
