@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import PageHeader from "@/components/PageHeader";
 import SectionLayout from "@/components/SectionLayout";
 
@@ -47,26 +48,26 @@ const infoRows = [
 export default function AboutPage() {
   return (
     <>
-      <PageHeader eyebrow="COMPANY" title="회사소개" breadcrumb="홈 / 회사소개" />
-      <SectionLayout eyebrow="COMPANY" title="회사소개" items={navItems}>
+      <PageHeader eyebrow="COMPANY" title="회사소개" wide />
+      <SectionLayout eyebrow="COMPANY" title="회사소개" items={navItems} wide>
         {/* 인사말 */}
-        <section id="sec-greeting" className="spy-section border-b border-[#eef1f5] shell py-16 lg:py-[74px]">
+        <section id="sec-greeting" className="spy-section border-b border-[#eef1f5] wide-shell py-16 lg:py-[74px]">
           <div className="mb-4 font-mono text-[13px] tracking-[2px] text-[#22409b]">GREETING · 인사말</div>
           <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-[52px]">
             <div>
               <h2 className="m-0 mb-[26px] fs-4 font-extrabold leading-[1.32] tracking-[-0.7px] text-[#0a1b33]">
-                고객 여러분께
+                현장의 신뢰에
                 <br />
-                깊은 감사를 드립니다
+                품질로 답하겠습니다
               </h2>
               <p className="m-0 mb-[18px] text-[16px] leading-[1.9] text-[#5a6680]">
-                항상 저희 석연MRO를 성원해주시고 끊임없이 격려해주신 고객 여러분께 깊은 감사를 드립니다. 석연MRO는 1996년 개업 후 다이캐스팅 이형제 및 프란자오일과 각종 다이캐스팅 부자재를 취급·판매해 왔습니다.
+                석연MRO를 믿고 함께해주신 고객 여러분께 감사드립니다. 1996년 석연상사로 시작한 이후 저희는 다이캐스팅 현장에서 필요한 이형제, 프란자오일, 오일류와 부자재를 가까이에서 공급해 왔습니다.
               </p>
               <p className="m-0 mb-[18px] text-[16px] leading-[1.9] text-[#5a6680]">
-                그동안의 성원에 힘입어 2006년 제조설비 확충과 꾸준한 연구 개발을 통해 국산 다이캐스팅 이형제·프란자오일을 생산·판매하며, 다이캐스팅 제품의 생산성 증대와 운용비용 절감, 주조환경 개선에 도움을 드리고 있으며 그 우수성을 인정받고 있습니다.
+                제품 하나가 공정의 안정성과 생산성에 영향을 준다는 마음으로 원료, 배합, 납품, 사후 대응까지 기본을 지켜 왔습니다. 현장의 목소리를 듣고 개선하는 태도가 석연MRO의 가장 중요한 기준입니다.
               </p>
               <p className="m-0 text-[16px] leading-[1.9] text-[#5a6680]">
-                당사는 기술개발을 통한 제품의 품질 향상과 안정적인 공급을 목표로 하고 있으며, 초심을 잃지 않고 다이캐스팅 소모성 자재 제작 공급업체로서 최고 품질을 유지할 것이며, 꾸준한 고객사와의 커뮤니케이션을 통해 고객사의 니즈를 파악하여 고객사의 공정에 도움을 드릴 것을 약속드립니다.
+                앞으로도 초심을 잃지 않고 안정적인 품질과 책임 있는 대응으로 고객사의 공정에 실질적인 도움이 되는 파트너가 되겠습니다.
               </p>
               <div className="mt-[30px] border-t border-[#eaeef3] pt-6 text-[16px] text-[#5a6680]">
                 석연MRO 임직원 일동 · 대표{" "}
@@ -74,45 +75,48 @@ export default function AboutPage() {
               </div>
             </div>
             <div>
-              <div className="relative mb-4 flex min-h-[300px] items-center justify-center overflow-hidden rounded-[18px] border border-[#eaeef3] bg-[#f6f9fb]">
-                <span className="relative font-mono text-[12px] text-[#8a96ab]">대표 / 회사 이미지</span>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="rounded-[14px] border border-[#eaeef3] bg-[#f6f9fb] p-5">
-                  <div className="mb-1.5 font-mono text-[12px] text-[#22409b]">SINCE</div>
-                  <div className="text-[23px] font-extrabold text-[#0a1b33]">1996</div>
-                </div>
-                <div className="rounded-[14px] border border-[#eaeef3] bg-[#f6f9fb] p-5">
-                  <div className="mb-1.5 font-mono text-[12px] text-[#22409b]">CEO</div>
-                  <div className="text-[23px] font-extrabold text-[#0a1b33]">정원재</div>
-                </div>
+              <div className="relative mb-4 min-h-[300px] overflow-hidden rounded-[18px] border border-[#eaeef3] bg-[#f6f9fb]">
+                <Image
+                  src="/assets/company/factory-exterior.jpg"
+                  alt="석연MRO 공장 외관"
+                  fill
+                  loading="eager"
+                  sizes="(max-width: 1024px) calc(100vw - 40px), 430px"
+                  className="object-cover"
+                />
               </div>
             </div>
           </div>
         </section>
 
         {/* 회사소개 */}
-        <section id="sec-info" className="spy-section border-b border-[#eef1f5] bg-[#fbfcfe] shell py-16 lg:py-[74px]">
+        <section id="sec-info" className="spy-section border-b border-[#eef1f5] bg-[#fbfcfe] wide-shell py-16 lg:py-[74px]">
           <div className="mb-4 font-mono text-[13px] tracking-[2px] text-[#22409b]">INFORMATION · 소개</div>
           <div className="mb-14 grid grid-cols-1 items-start gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-[52px]">
             <div>
               <h2 className="m-0 mb-6 fs-4 font-extrabold leading-[1.32] tracking-[-0.7px] text-[#0a1b33]">
-                1996년부터, 다이캐스팅
+                제조 설비와 기술로
                 <br />
-                국산화의 길을 걸어왔습니다
+                품질을 안정화합니다
               </h2>
               <p className="m-0 mb-[18px] text-[16px] leading-[1.85] text-[#5a6680]">
-                저희 석연MRO는 1996년 개업 이후 다이캐스팅 이형제 및 프란자오일과 각종 다이캐스팅 부자재의 국산화를 위해 노력해 왔습니다.
+                석연MRO는 2006년 제조설비 확충 이후 국산 다이캐스팅 이형제와 프란자오일 생산 체계를 구축했습니다. 유화 반응기, 교반기, 고온 반응기 등 설비를 기반으로 제품 특성에 맞는 배합과 생산을 운영합니다.
               </p>
               <p className="m-0 mb-[18px] text-[16px] leading-[1.85] text-[#5a6680]">
-                고객 여러분의 성원과 끊임없는 격려로 2006년도에는 다이캐스팅 이형제와 프란자오일 제조설비 확충으로 국산 다이캐스팅 이형제·프란자오일을 생산·판매하게 되었으며, 꾸준한 연구개발을 통해 다이캐스팅 완제품의 생산성 증대와 운용비용 절감을 위해 노력해 왔습니다.
+                현재는 이형제, 프란자오일, 작동유, 습동면유, 소모성 부자재까지 현장 운영에 필요한 품목을 함께 공급하며 로트별 품질 관리와 납기 대응을 강화하고 있습니다.
               </p>
               <p className="m-0 text-[16px] leading-[1.85] text-[#5a6680]">
-                또한 주조환경 개선에 도움이 되는 제품 생산으로 그 우수성도 인정받고 있습니다. 앞으로도 당사는 꾸준한 기술개발을 통해 제품의 품질 향상과 안정적인 공급을 목표로, 초심을 잃지 않는 다이캐스팅 소모성 부자재 전문 생산업체로서 최고 품질과 고객사와의 소통을 통해 고객사의 니즈를 파악하여 고객사의 공정에 도움을 드릴 것을 약속드립니다.
+                축적된 공정 경험을 바탕으로 도포 조건, 설비 운전 환경, 불량 개선 과제를 함께 검토하고 고객사의 생산 조건에 맞는 제품을 제안합니다.
               </p>
             </div>
-            <div className="relative flex h-[260px] items-center justify-center overflow-hidden rounded-[18px] border border-[#eaeef3] bg-[#f6f9fb] lg:h-[340px]">
-              <span className="relative font-mono text-[12px] text-[#8a96ab]">공장 전경 / 생산 설비 이미지</span>
+            <div className="relative h-[260px] overflow-hidden rounded-[18px] border border-[#eaeef3] bg-[#f6f9fb] lg:h-[340px]">
+              <Image
+                src="/assets/company/production-equipment.jpg"
+                alt="석연MRO 생산 설비와 반응기"
+                fill
+                sizes="(max-width: 1024px) calc(100vw - 40px), 430px"
+                className="object-cover"
+              />
             </div>
           </div>
           <div className="grid grid-cols-1 gap-[18px] sm:grid-cols-3">
@@ -127,7 +131,7 @@ export default function AboutPage() {
         </section>
 
         {/* 연혁 */}
-        <section id="sec-history" className="spy-section shell py-16 lg:py-[74px]">
+        <section id="sec-history" className="spy-section wide-shell py-16 lg:py-[74px]">
           <div className="mb-4 font-mono text-[13px] tracking-[2px] text-[#22409b]">HISTORY · 연혁</div>
           <h2 className="m-0 mb-2 fs-4 font-extrabold leading-[1.3] tracking-[-0.7px] text-[#0a1b33]">
             걸어온 길
@@ -162,7 +166,7 @@ export default function AboutPage() {
         </section>
 
         {/* 오시는 길 */}
-        <section id="sec-location" className="spy-section border-t border-[#eef1f5] shell py-16 lg:py-[74px]">
+        <section id="sec-location" className="spy-section border-t border-[#eef1f5] wide-shell py-16 lg:py-[74px]">
           <div className="mb-4 font-mono text-[13px] tracking-[2px] text-[#22409b]">LOCATION · 오시는 길</div>
           <h2 className="m-0 mb-[30px] fs-4 font-extrabold tracking-[-0.7px] text-[#0a1b33]">
             오시는 길
