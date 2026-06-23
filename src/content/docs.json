@@ -1,10 +1,258 @@
 {
   "items": [
-    { "name": "작동유·습동면유 MSDS (GHS)", "category": "작동유", "date": "2026.05", "file": "" },
-    { "name": "수성 이형제 MSDS (GHS)", "category": "이형제", "date": "2026.03", "file": "" },
-    { "name": "유성 이형제 MSDS (GHS)", "category": "이형제", "date": "2026.03", "file": "" },
-    { "name": "프란자오일 MSDS (GHS)", "category": "프란자오일", "date": "2026.02", "file": "" },
-    { "name": "제품 시험성적서 (이형성)", "category": "시험성적서", "date": "2026.01", "file": "" },
-    { "name": "제품 카탈로그 (전 품목)", "category": "카탈로그", "date": "2026.01", "file": "/assets/catalog.pdf" }
+    {
+      "name": "SR-2400 제품 카탈로그",
+      "slug": "sr-2400-catalog",
+      "category": "카탈로그",
+      "date": "2022-12-29",
+      "summary": "",
+      "body": [],
+      "file": "/assets/docs/cast-one-sr-2400-catalog.pdf",
+      "attachments": [
+        { "name": "CAST ONE SR-2400 카탈로그.pdf", "file": "/assets/docs/cast-one-sr-2400-catalog.pdf" }
+      ]
+    },
+    {
+      "name": "SR-1600 제품 카탈로그",
+      "slug": "sr-1600-catalog",
+      "category": "카탈로그",
+      "date": "2022-12-29",
+      "summary": "",
+      "body": [],
+      "file": "/assets/docs/cast-one-sr-1600-catalog.pdf",
+      "attachments": [
+        { "name": "CAST ONE SR-1600 카탈로그.pdf", "file": "/assets/docs/cast-one-sr-1600-catalog.pdf" }
+      ]
+    },
+    {
+      "name": "루브원 RoHS 6대 유해물질 성적서",
+      "slug": "lube-one-rohs-report",
+      "category": "시험성적서",
+      "notice": true,
+      "date": "2021-05-20",
+      "summary": "LUBE ONE SL-600 제품군의 RoHS 6대 유해물질 검사성적서입니다.",
+      "body": [
+        "RoHS는 전기전자제품 내 납, 카드뮴, 수은, 크롬, PBBs, PBDEs 등 특정 유해물질 사용을 제한하는 지침입니다.",
+        "첨부된 성적서에서 LUBE ONE SL-600 제품군의 6대 유해물질 검사 결과를 확인할 수 있습니다.",
+        "비밀번호 또는 추가 자료가 필요하신 경우 석연MRO 대표번호로 문의해 주세요."
+      ],
+      "file": "/assets/docs/lube-one-sl-600-rohs-report.pdf",
+      "attachments": [
+        { "name": "LUBE ONE SL-600 RoHS 6대 유해물질 검사성적서.pdf", "file": "/assets/docs/lube-one-sl-600-rohs-report.pdf" }
+      ]
+    },
+    {
+      "name": "캐스트원 시리즈 MSDS 자료",
+      "slug": "cast-one-msds",
+      "category": "MSDS (GHS)",
+      "notice": true,
+      "date": "2021-05-20",
+      "summary": "CAST ONE SR 시리즈의 국문·영문 MSDS(GHS) 자료입니다.",
+      "body": [
+        "CAST ONE SR 시리즈 물질안전보건자료(MSDS·GHS)입니다.",
+        "국문 자료와 영문 자료를 함께 제공합니다.",
+        "비밀번호 또는 추가 자료가 필요하신 경우 석연MRO 대표번호로 문의해 주세요."
+      ],
+      "file": "/assets/docs/cast-one-sr-series-msds-eng.pdf",
+      "attachments": [
+        { "name": "CAST ONE SR 시리즈 MSDS(GHS) 영문.pdf", "file": "/assets/docs/cast-one-sr-series-msds-eng.pdf" },
+        { "name": "CAST ONE SR 시리즈 MSDS(GHS) 국문.pdf", "file": "/assets/docs/cast-one-sr-series-msds-kor.pdf" }
+      ]
+    },
+    {
+      "name": "루브원 시리즈 MSDS 자료",
+      "slug": "lube-one-msds",
+      "category": "MSDS (GHS)",
+      "notice": true,
+      "date": "2021-05-20",
+      "summary": "LUBE ONE SL-600 시리즈의 국문·영문 MSDS(GHS) 자료입니다.",
+      "body": [
+        "LUBE ONE SL-600 시리즈 물질안전보건자료(MSDS·GHS)입니다.",
+        "국문 자료와 영문 자료를 함께 제공합니다.",
+        "비밀번호 또는 추가 자료가 필요하신 경우 석연MRO 대표번호로 문의해 주세요."
+      ],
+      "file": "/assets/docs/lube-one-sl-600-series-msds-kor.pdf",
+      "attachments": [
+        { "name": "LUBE ONE SL-600 시리즈 MSDS(GHS) 국문.pdf", "file": "/assets/docs/lube-one-sl-600-series-msds-kor.pdf" },
+        { "name": "LUBE ONE SL-600 시리즈 MSDS(GHS) 영문.pdf", "file": "/assets/docs/lube-one-sl-600-series-msds-eng.pdf" }
+      ]
+    },
+    {
+      "name": "RoHS 6대유해물질 검사 성적서",
+      "slug": "rohs-report",
+      "category": "시험성적서",
+      "notice": true,
+      "date": "2018-11-16",
+      "summary": "CAST ONE SR-850, SR-900, SR-950 제품의 RoHS 검사성적서입니다.",
+      "body": [
+        "RoHS는 전기전자제품 내 납, 카드뮴, 수은, 크롬, PBBs, PBDEs 등 특정 유해물질 사용을 제한하는 지침입니다.",
+        "첨부된 성적서에서 CAST ONE SR-850, SR-900, SR-950 제품의 6대 유해물질 검사 결과를 확인할 수 있습니다.",
+        "비밀번호 또는 추가 자료가 필요하신 경우 석연MRO 대표번호로 문의해 주세요."
+      ],
+      "file": "/assets/docs/cast-one-sr-850-rohs-report.pdf",
+      "attachments": [
+        { "name": "CAST ONE SR-850 RoHS 검사성적서.pdf", "file": "/assets/docs/cast-one-sr-850-rohs-report.pdf" },
+        { "name": "CAST ONE SR-900 RoHS 검사성적서.pdf", "file": "/assets/docs/cast-one-sr-900-rohs-report.pdf" },
+        { "name": "CAST ONE SR-950 RoHS 검사성적서.pdf", "file": "/assets/docs/cast-one-sr-950-rohs-report.pdf" }
+      ]
+    },
+    {
+      "name": "작동유·습동면유 MSDS(GHS)",
+      "slug": "hydraulic-way-oil-msds",
+      "category": "MSDS (GHS)",
+      "notice": true,
+      "date": "2018-04-25",
+      "summary": "HYDRO 및 WAY 계열 작동유·습동면유 MSDS(GHS) 자료입니다.",
+      "body": [
+        "작동유와 습동면유 물질안전보건자료(MSDS·GHS)입니다.",
+        "HYDRO BH-46, HYDRO BH-68, WAY BS-68, WAY BS-220 자료를 첨부했습니다.",
+        "추가 문의사항은 석연MRO 대표번호로 문의해 주세요."
+      ],
+      "file": "/assets/docs/hydraulic-oil-hydro-bh-46-msds.pdf",
+      "attachments": [
+        { "name": "HYDRO BH-46 작동유 MSDS(GHS).pdf", "file": "/assets/docs/hydraulic-oil-hydro-bh-46-msds.pdf" },
+        { "name": "HYDRO BH-68 작동유 MSDS(GHS).pdf", "file": "/assets/docs/hydraulic-oil-hydro-bh-68-msds.pdf" },
+        { "name": "WAY BS-68 습동면유 MSDS(GHS).pdf", "file": "/assets/docs/way-oil-bs-68-msds.pdf" },
+        { "name": "WAY BS-220 습동면유 MSDS(GHS).pdf", "file": "/assets/docs/way-oil-bs-220-msds.pdf" }
+      ]
+    },
+    {
+      "name": "SR-800 제품 카탈로그",
+      "slug": "sr-800-catalog",
+      "category": "카탈로그",
+      "date": "2017-10-20",
+      "summary": "",
+      "body": [],
+      "file": "/assets/docs/cast-one-sr-800-catalog.pdf",
+      "attachments": [
+        { "name": "CAST ONE SR-800 카탈로그.pdf", "file": "/assets/docs/cast-one-sr-800-catalog.pdf" }
+      ]
+    },
+    {
+      "name": "SR-850 제품 카탈로그",
+      "slug": "sr-850-catalog",
+      "category": "카탈로그",
+      "date": "2017-10-20",
+      "summary": "",
+      "body": [],
+      "file": "/assets/docs/cast-one-sr-850-catalog.pdf",
+      "attachments": [
+        { "name": "CAST ONE SR-850 카탈로그.pdf", "file": "/assets/docs/cast-one-sr-850-catalog.pdf" }
+      ]
+    },
+    {
+      "name": "SR-900 제품 카탈로그",
+      "slug": "sr-900-catalog",
+      "category": "카탈로그",
+      "date": "2017-10-20",
+      "summary": "",
+      "body": [],
+      "file": "/assets/docs/cast-one-sr-900-catalog.pdf",
+      "attachments": [
+        { "name": "CAST ONE SR-900 카탈로그.pdf", "file": "/assets/docs/cast-one-sr-900-catalog.pdf" }
+      ]
+    },
+    {
+      "name": "SR-950 제품 카탈로그",
+      "slug": "sr-950-catalog",
+      "category": "카탈로그",
+      "date": "2017-10-20",
+      "summary": "",
+      "body": [],
+      "file": "/assets/docs/cast-one-sr-950-catalog.pdf",
+      "attachments": [
+        { "name": "CAST ONE SR-950 카탈로그.pdf", "file": "/assets/docs/cast-one-sr-950-catalog.pdf" }
+      ]
+    },
+    {
+      "name": "SR-1000 제품 카탈로그",
+      "slug": "sr-1000-catalog",
+      "category": "카탈로그",
+      "date": "2017-10-20",
+      "summary": "",
+      "body": [],
+      "file": "/assets/docs/cast-one-sr-1000-catalog.pdf",
+      "attachments": [
+        { "name": "CAST ONE SR-1000 카탈로그.pdf", "file": "/assets/docs/cast-one-sr-1000-catalog.pdf" }
+      ]
+    },
+    {
+      "name": "SR-1200 제품 카탈로그",
+      "slug": "sr-1200-catalog",
+      "category": "카탈로그",
+      "date": "2017-10-20",
+      "summary": "",
+      "body": [],
+      "file": "/assets/docs/cast-one-sr-1200-catalog.pdf",
+      "attachments": [
+        { "name": "CAST ONE SR-1200 카탈로그.pdf", "file": "/assets/docs/cast-one-sr-1200-catalog.pdf" }
+      ]
+    },
+    {
+      "name": "SL-600 제품 카탈로그",
+      "slug": "sl-600-catalog",
+      "category": "카탈로그",
+      "date": "2017-10-20",
+      "summary": "",
+      "body": [],
+      "file": "/assets/docs/lube-one-sl-600-catalog.pdf",
+      "attachments": [
+        { "name": "LUBE ONE SL-600 카탈로그.pdf", "file": "/assets/docs/lube-one-sl-600-catalog.pdf" }
+      ]
+    },
+    {
+      "name": "SL-600S 제품카탈로그",
+      "slug": "sl-600s-catalog",
+      "category": "카탈로그",
+      "date": "2017-10-20",
+      "summary": "",
+      "body": [],
+      "file": "/assets/docs/lube-one-sl-600s-catalog.pdf",
+      "attachments": [
+        { "name": "LUBE ONE SL-600S 카탈로그.pdf", "file": "/assets/docs/lube-one-sl-600s-catalog.pdf" }
+      ]
+    },
+    {
+      "name": "SL-600M 제품 카탈로그",
+      "slug": "sl-600m-catalog",
+      "category": "카탈로그",
+      "date": "2017-10-20",
+      "summary": "",
+      "body": [],
+      "file": "/assets/docs/lube-one-sl-600m-catalog.pdf",
+      "attachments": [
+        { "name": "LUBE ONE SL-600M 카탈로그.pdf", "file": "/assets/docs/lube-one-sl-600m-catalog.pdf" }
+      ]
+    },
+    {
+      "name": "SR-1200 마그네슘이형제 MSDS(GHS)",
+      "slug": "sr-1200-magnesium-msds",
+      "category": "MSDS (GHS)",
+      "date": "2017-10-20",
+      "summary": "CAST ONE SR-1200 마그네슘 이형제의 국문·영문 MSDS(GHS) 자료입니다.",
+      "body": [
+        "CAST ONE SR-1200 마그네슘 이형제 물질안전보건자료(MSDS·GHS)입니다.",
+        "국문 자료와 영문 자료를 함께 제공합니다.",
+        "비밀번호 또는 추가 자료가 필요하신 경우 석연MRO 대표번호로 문의해 주세요."
+      ],
+      "file": "/assets/docs/cast-one-sr-1200-magnesium-msds-eng.pdf",
+      "attachments": [
+        { "name": "CAST ONE SR-1200 마그네슘 이형제 MSDS(GHS) 영문.pdf", "file": "/assets/docs/cast-one-sr-1200-magnesium-msds-eng.pdf" },
+        { "name": "CAST ONE SR-1200 마그네슘 이형제 MSDS(GHS) 국문.pdf", "file": "/assets/docs/cast-one-sr-1200-magnesium-msds-kor.pdf" }
+      ]
+    },
+    {
+      "name": "PDF뷰어 프로그램 다운로드 링크",
+      "slug": "pdf-viewer-guide",
+      "category": "안내",
+      "date": "2017-10-19",
+      "summary": "PDF 열람이 되지 않을 때 확인할 수 있는 뷰어 설치 안내입니다.",
+      "body": [
+        "브라우저에서 PDF가 열리지 않는 경우 Adobe Acrobat Reader 설치 후 다시 확인해 주세요.",
+        "새 사이트에서는 자료 상세 페이지의 PDF 다운로드 버튼으로 파일을 직접 내려받을 수 있습니다."
+      ],
+      "file": "",
+      "attachments": []
+    }
   ]
 }
