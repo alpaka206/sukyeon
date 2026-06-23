@@ -1,11 +1,12 @@
 import Link from "next/link";
 import HeroCarousel from "@/components/HeroCarousel";
+import { ProductIconCard, ProductImageCard } from "@/components/ProductCards";
 import { getNews } from "@/lib/content";
 
 const metrics = [
   { label: "제조 경력", value: "30년+", brand: false },
   { label: "누적 거래처", value: "350+", brand: false },
-  { label: "취급 품목", value: "5개 분야", brand: false },
+  { label: "취급 품목", value: "4개 분야", brand: false },
   { label: "설립", value: "1996년", brand: true },
 ];
 
@@ -56,23 +57,25 @@ export default async function Home() {
   return (
     <>
       {/* hero */}
-      <section className="grid grid-cols-1 shell lg:min-h-[560px] lg:grid-cols-2">
-        <div className="flex flex-col justify-center bg-[#fbfcfe] py-[60px] lg:py-[90px] lg:pr-[60px]">
-          <h1 className="m-0 mb-[26px] fs-hero font-extrabold leading-[1.4] tracking-[-1.6px] text-[#0a1b33] [text-wrap:balance]">
-            다이캐스팅 완성도를 높이는
-            <br />
-            <span className="text-[#22409b]">이형·윤활 솔루션</span>
+      <section className="wide-shell grid grid-cols-1 lg:min-h-[560px] lg:grid-cols-[minmax(0,1.6fr)_minmax(360px,1fr)]">
+        <div className="flex flex-col justify-center bg-[#fbfcfe] py-[60px] lg:py-[90px] lg:pr-8 xl:pr-10">
+          <h1 className="m-0 mb-[26px] fs-hero font-extrabold leading-[1.32] tracking-[-1.6px] text-[#0a1b33]">
+            <span className="hero-title-line">다이캐스팅 현장을 움직이는</span>
+            <span className="hero-title-line text-[#22409b]">이형·윤활 전문 기업</span>
           </h1>
-          <p className="m-0 mb-[38px] max-w-[480px] text-[17px] leading-[1.8] text-[#5a6680] [text-wrap:pretty] lg:text-[18px]">
-            다이캐스팅 현장에 필요한 이형제·프란자오일·작동유·습동면유·소모성 부자재를{" "}
-            <strong className="font-bold text-[#0a1b33]">직접 생산하고 판매</strong>합니다.
-            <br className="hidden sm:block" />
-            정밀하게 설계된 조성으로 불량률은 낮추고 생산성은 높입니다.
+          <p className="hero-copy m-0 mb-[38px] max-w-[760px] leading-[1.82] text-[#5a6680] [text-wrap:pretty]">
+            <span className="hero-copy-line">
+              이형제·프란자오일·작동유·습동면유 등 다이캐스팅 소모성 제품을{" "}
+              <strong className="font-bold text-[#0a1b33]">직접 생산하고 공급</strong>합니다.
+            </span>
+            <span className="hero-copy-line">
+              오랜 현장 경험과 기술력을 바탕으로 안정적인 품질과 신뢰할 수 있는 제품을 제공합니다.
+            </span>
           </p>
           <div className="flex flex-wrap items-center gap-3.5">
             <Link
               href="/products"
-              className="cursor-pointer rounded-[10px] bg-[#0a1b33] px-[30px] py-[15px] text-[16px] font-bold text-white transition-opacity hover:opacity-90"
+              className="cursor-pointer rounded-[10px] bg-brand px-[30px] py-[15px] text-[16px] font-bold text-white transition-colors hover:bg-brand-deep"
             >
               제품 살펴보기
             </Link>
@@ -123,16 +126,17 @@ export default async function Home() {
           </Link>
         </div>
         <div className="grid grid-cols-1 gap-[22px] sm:grid-cols-2 lg:grid-cols-3">
-          <ProductImageCard href="/products" img="/assets/release_SR800.jpg" alt="CAST ONE 이형제" title="이형제" tag="CAST ONE" desc="수성·유성 다이캐스팅 이형제. 우수한 이형성과 고온 안정성." />
-          <ProductImageCard href="/products" img="/assets/pranza_SL600.jpg" alt="LUBE ONE 프란자오일" title="프란자오일" tag="LUBE ONE" desc="플런저 윤활용 프란자오일. 사출 안정성과 설비 수명 향상." />
-          <ProductIconCard href="/products" title="작동유 · 습동면유" desc="유압 작동유와 습동면유. 안정적 설비 운전을 지원합니다.">
-            <path d="M6 3h12l-1 4H7L6 3z" />
-            <path d="M7 7v13a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V7" />
-            <path d="M9 12h6" />
+          <ProductImageCard href="/products#p-release" img="/assets/release_SR800.jpg" alt="CAST ONE 이형제" title="이형제" tag="CAST ONE" desc="수성·유성 다이캐스팅 이형제. 우수한 이형성과 고온 안정성." />
+          <ProductImageCard href="/products#p-pranza" img="/assets/pranza_SL600.jpg" alt="LUBE ONE 프란자오일" title="프란자오일" tag="LUBE ONE" desc="플런저 윤활용 프란자오일. 사출 안정성과 설비 수명 향상." />
+          <ProductIconCard href="/products#p-etc-parts" title="기타 부자재" desc="열전대·레들·하드참바·쪽자 등 공정 부자재를 함께 공급합니다.">
+            <path d="M4 7h16M7 7v12M17 7v12M6 19h12" />
+            <path d="M8 4h8l1 3H7l1-3z" />
+            <path d="M10 11h4M10 15h4" />
           </ProductIconCard>
-          <ProductIconCard href="/products" title="소모성 부자재" desc="필터·노즐·도포 설비 부속 등 현장 운영 자재를 공급합니다.">
-            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-            <path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12" />
+          <ProductIconCard href="/products#p-spray" title="스프레이/사출제품" desc="스프레이건·카세트·노즐·동파이프·프란자 팁을 공급합니다.">
+            <path d="M4 16h6l8-8" />
+            <path d="M14 8l2 2 4-4-2-2-4 4z" />
+            <path d="M3 18h7M12 14l5 5" />
           </ProductIconCard>
           <Link href="/data" className="card-link overflow-hidden rounded-2xl border border-[#e2e6ed] bg-white">
             <div className="flex h-40 items-center justify-center bg-[#22409b]">
@@ -203,7 +207,7 @@ export default async function Home() {
             {news.map((n) => (
               <Link
                 key={n.title}
-                href="/news"
+                href={`/news/${n.slug}`}
                 className="row-link flex items-center justify-between border-b border-[#eaeef3] px-2 py-5"
               >
                 <span className="text-[15px] font-semibold text-[#0a1b33] sm:text-[16px]">{n.title}</span>
@@ -219,7 +223,7 @@ export default async function Home() {
             지금 문의하세요
           </h3>
           <p className="m-0 mb-[26px] text-[15px] leading-[1.6] text-[#b6c3d6]">
-            24시간 내 담당 엔지니어가 회신드립니다.
+            24시간 내 담당자가 회신드립니다.
           </p>
           <div className="flex flex-col gap-2.5">
             <Link
@@ -238,62 +242,5 @@ export default async function Home() {
         </div>
       </section>
     </>
-  );
-}
-
-function ProductImageCard({
-  href,
-  img,
-  alt,
-  title,
-  tag,
-  desc,
-}: {
-  href: string;
-  img: string;
-  alt: string;
-  title: string;
-  tag: string;
-  desc: string;
-}) {
-  return (
-    <Link href={href} className="card-link overflow-hidden rounded-2xl border border-[#e2e6ed] bg-white">
-      <div className="flex h-[170px] items-center justify-center border-b border-[#eef1f5] bg-white p-3.5">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={img} alt={alt} className="max-h-full max-w-full object-contain" />
-      </div>
-      <div className="p-[26px]">
-        <h3 className="m-0 mb-2 text-[20px] font-bold">
-          {title} <span className="font-mono text-[13px] text-[#22409b]">{tag}</span>
-        </h3>
-        <p className="m-0 text-[15px] leading-[1.6] text-[#5a6680]">{desc}</p>
-      </div>
-    </Link>
-  );
-}
-
-function ProductIconCard({
-  href,
-  title,
-  desc,
-  children,
-}: {
-  href: string;
-  title: string;
-  desc: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <Link href={href} className="card-link overflow-hidden rounded-2xl border border-[#e2e6ed] bg-white">
-      <div className="flex h-[170px] items-center justify-center border-b border-[#eef1f5] bg-[#f3f6f9]">
-        <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#9fb0c9" strokeWidth="1.4">
-          {children}
-        </svg>
-      </div>
-      <div className="p-[26px]">
-        <h3 className="m-0 mb-2 text-[20px] font-bold">{title}</h3>
-        <p className="m-0 text-[15px] leading-[1.6] text-[#5a6680]">{desc}</p>
-      </div>
-    </Link>
   );
 }
