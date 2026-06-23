@@ -52,7 +52,7 @@ export default function ContactForm() {
         견적·문의 작성
       </h2>
       <p className="m-0 mb-[30px] text-[15px] text-[#5a6680]">
-        아래 항목을 작성해 주시면 담당 엔지니어가 24시간 내 회신드립니다.
+        아래 항목을 작성해 주시면 담당자가 24시간 내 회신드립니다.
       </p>
 
       {sent && (

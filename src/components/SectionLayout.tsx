@@ -5,13 +5,14 @@ import { useEffect, useState, useCallback } from "react";
 export type SectionNavItem = { id: string; label: string };
 
 type Props = {
-  eyebrow: string;
-  title: string;
-  items: SectionNavItem[];
-  children: React.ReactNode;
+  readonly eyebrow: string;
+  readonly title: string;
+  readonly items: SectionNavItem[];
+  readonly children: React.ReactNode;
+  readonly wide?: boolean;
 };
 
-export default function SectionLayout({ eyebrow, title, items, children }: Props) {
+export default function SectionLayout({ eyebrow, title, items, children, wide = false }: Props) {
   const [active, setActive] = useState(items[0]?.id ?? "");
 
   useEffect(() => {
@@ -61,7 +62,7 @@ export default function SectionLayout({ eyebrow, title, items, children }: Props
         </div>
       </div>
 
-      <div className="shell-grid lg:grid lg:grid-cols-[250px_1fr]">
+      <div className={`${wide ? "wide-shell-grid" : "shell-grid"} lg:grid lg:grid-cols-[250px_1fr]`}>
         {/* desktop vertical LNB */}
         <aside className="hidden border-r border-[#eaeef3] bg-[#fbfcfe] lg:block">
           <div className="sticky top-[78px] py-[38px]">

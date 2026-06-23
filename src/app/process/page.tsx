@@ -88,7 +88,7 @@ function Fragmentish({ arrow, children }: { arrow: boolean; children: React.Reac
 export default function ProcessPage() {
   return (
     <>
-      <PageHeader eyebrow="PROCESS" title="제조과정" breadcrumb="홈 / 사업분야 / 제조과정" />
+      <PageHeader eyebrow="PROCESS" title="제조과정" />
 
       <div className="shell py-16 lg:py-20">
         <div className="mb-3.5 font-mono text-[13px] tracking-[2px] text-[#22409b]">MANUFACTURING FLOW</div>

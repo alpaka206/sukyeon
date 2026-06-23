@@ -42,7 +42,6 @@ export const nav: NavItem[] = [
     children: [
       { label: "공지사항", href: "/news" },
       { label: "온라인 견적·문의", href: "/contact" },
-      { label: "오시는 길", href: "/about#sec-location" },
     ],
   },
 ];
@@ -64,8 +63,8 @@ export const footerColumns = [
     links: [
       { label: "이형제", href: "/products#p-release" },
       { label: "프란자오일", href: "/products#p-pranza" },
-      { label: "작동유·습동면유", href: "/products#p-hyd" },
-      { label: "소모성 부자재", href: "/products#p-parts" },
+      { label: "기타 부자재", href: "/products#p-etc-parts" },
+      { label: "스프레이/사출제품", href: "/products#p-spray" },
     ],
   },
   {
@@ -74,7 +73,6 @@ export const footerColumns = [
       { label: "자료실(MSDS)", href: "/data" },
       { label: "공지사항", href: "/news" },
       { label: "온라인 견적", href: "/contact" },
-      { label: "오시는 길", href: "/about#sec-location" },
     ],
   },
 ];

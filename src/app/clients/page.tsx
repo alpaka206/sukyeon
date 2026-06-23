@@ -14,7 +14,7 @@ const industries = ["자동차 부품", "전장·전자 부품", "산업기계",
 export default function ClientsPage() {
   return (
     <>
-      <PageHeader eyebrow="CLIENTS" title="고객사·실적" breadcrumb="홈 / 고객사·실적" />
+      <PageHeader eyebrow="CLIENTS" title="고객사·실적" />
 
       <div className="grid grid-cols-1 gap-[22px] shell py-16 sm:grid-cols-3 lg:py-[72px]">
         {stats.map((s, i) => (

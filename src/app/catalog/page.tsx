@@ -8,9 +8,9 @@ export default async function CatalogPage() {
   const catalog = await getCatalog();
   return (
     <>
-      <PageHeader eyebrow="CATALOG" title="카탈로그" breadcrumb="홈 / 카탈로그" />
+      <PageHeader eyebrow="CATALOG" title="카탈로그" />
 
-      <div className="grid grid-cols-1 items-center gap-10 shell py-16 lg:grid-cols-[0.8fr_1.2fr] lg:gap-14">
+      <div className="grid grid-cols-1 items-center gap-10 shell py-16 pb-20 lg:grid-cols-[0.8fr_1.2fr] lg:gap-14">
         <div className="relative mx-auto flex aspect-[3/4] w-full max-w-[360px] flex-col justify-between overflow-hidden rounded-[18px] bg-[linear-gradient(160deg,#13294a,#0a1b33)] p-[38px] text-white shadow-[0_30px_60px_-25px_rgba(10,27,51,0.55)]">
           <div className="relative text-[19px] font-extrabold tracking-[-0.3px]">
             석연<span className="text-[#4f74e6]">MRO</span>
@@ -63,19 +63,6 @@ export default async function CatalogPage() {
             </a>
           </div>
         </div>
-      </div>
-
-      <div className="shell pb-20">
-        <div className="overflow-hidden rounded-2xl border border-[#eaeef3] bg-[#f6f9fb]">
-          <iframe
-            src={`${catalog.file}#view=FitH`}
-            title="석연MRO 제품 카탈로그"
-            className="h-[640px] w-full lg:h-[820px]"
-          />
-        </div>
-        <p className="m-0 mt-[18px] text-[14px] text-[#8a96ab]">
-          ※ 브라우저에서 PDF가 보이지 않으면 위 “온라인으로 보기” 또는 “PDF 다운로드”를 이용해 주세요.
-        </p>
       </div>
     </>
   );

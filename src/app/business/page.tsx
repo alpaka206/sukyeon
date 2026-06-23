@@ -29,7 +29,7 @@ const cards = [
 export default function BusinessPage() {
   return (
     <>
-      <PageHeader eyebrow="BUSINESS" title="사업분야" breadcrumb="홈 / 사업분야" />
+      <PageHeader eyebrow="BUSINESS" title="사업분야" />
       <div className="shell py-16 lg:py-[84px]">
         <div className="mb-14 max-w-[760px]">
           <h2 className="m-0 mb-[18px] fs-3 font-extrabold leading-[1.35] tracking-[-0.8px] text-[#0a1b33]">

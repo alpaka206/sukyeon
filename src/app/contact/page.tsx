@@ -8,7 +8,7 @@ export const metadata: Metadata = { title: "온라인 견적·문의" };
 export default function ContactPage() {
   return (
     <>
-      <PageHeader eyebrow="CONTACT" title="온라인 견적·문의" breadcrumb="홈 / 고객지원 / 온라인 견적" />
+      <PageHeader eyebrow="CONTACT" title="온라인 견적·문의" />
       <div className="grid grid-cols-1 items-start gap-12 shell py-16 pb-20 lg:grid-cols-[1.3fr_0.7fr]">
         <ContactForm />
 

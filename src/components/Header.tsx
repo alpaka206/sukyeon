@@ -19,7 +19,7 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50">
       {/* utility bar */}
-      <div className="hidden h-10 items-center justify-between bg-[#081628] shell text-[13px] text-[#9fb0c9] sm:flex">
+      <div className="hidden h-10 items-center justify-between bg-[#081628] wide-shell text-[13px] text-[#9fb0c9] sm:flex">
         <span className="font-mono tracking-[1px] truncate pr-4">
           ALUMINUM DIE-CASTING · 이형제 · 프란자오일 · 작동유 · 습동면유 · 부자재 직접 생산
         </span>
@@ -30,14 +30,11 @@ export default function Header() {
             </svg>
             {company.tel}
           </span>
-          <Link href="/data" className="nav-link cursor-pointer">
-            자료실(MSDS)
-          </Link>
         </div>
       </div>
 
       {/* nav */}
-      <div className="flex h-[78px] items-center justify-between border-b border-[#eaeef3] bg-white/[0.92] shell backdrop-blur-[10px]">
+      <div className="flex h-[78px] items-center justify-between border-b border-[#eaeef3] bg-white/[0.92] wide-shell backdrop-blur-[10px]">
         <Link href="/" className="flex items-center" aria-label="석연MRO 홈">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/assets/logo.jpg" alt="석연MRO" className="block h-[38px] w-auto" />
@@ -100,12 +97,6 @@ export default function Header() {
             </svg>
             카탈로그
           </Link>
-          <Link
-            href="/contact"
-            className="rounded-[9px] bg-[#22409b] px-[22px] py-[11px] text-[15px] font-bold text-white transition-colors hover:bg-[#18306f]"
-          >
-            견적 문의
-          </Link>
         </div>
 
         {/* mobile hamburger */}
@@ -130,7 +121,7 @@ export default function Header() {
 
       {/* mobile panel */}
       {mobileOpen && (
-        <div className="border-b border-[#eaeef3] bg-white px-5 pb-6 pt-2 lg:hidden">
+        <div className="border-b border-[#eaeef3] bg-white wide-shell pb-6 pt-2 lg:hidden">
           <nav className="flex flex-col">
             {nav.map((item) => (
               <div key={item.label} className="border-b border-[#f0f3f7] py-1">

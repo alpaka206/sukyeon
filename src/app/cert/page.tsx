@@ -69,7 +69,7 @@ export default async function CertPage() {
   const certs = await getCerts();
   return (
     <>
-      <PageHeader eyebrow="CERTIFICATION" title="인증·특허" breadcrumb="홈 / 인증·특허" />
+      <PageHeader eyebrow="CERTIFICATION" title="인증·특허" />
       <div className="shell py-16 lg:py-[72px]">
         <p className="m-0 mb-9 max-w-[760px] text-[16px] leading-[1.7] text-[#5a6680]">
           석연MRO는 국제 표준 품질·환경 경영시스템 인증과 자체 기술 특허를 바탕으로 신뢰할 수 있는

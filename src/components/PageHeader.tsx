@@ -1,20 +1,19 @@
 type Props = {
-  eyebrow: string;
-  title: string;
-  breadcrumb: string;
+  readonly eyebrow: string;
+  readonly title: string;
+  readonly wide?: boolean;
 };
 
-export default function PageHeader({ eyebrow, title, breadcrumb }: Props) {
+export default function PageHeader({ eyebrow, title, wide = false }: Props) {
   return (
-    <div className="relative overflow-hidden bg-[#0a1b33] shell py-[52px] text-white lg:py-[66px]">
+    <div className={`relative overflow-hidden bg-[#0a1b33] py-[52px] text-white lg:py-[66px] ${wide ? "wide-shell" : "shell"}`}>
       <div className="relative">
         <div className="mb-3.5 font-mono text-[13px] tracking-[2px] text-[#4f74e6]">
           {eyebrow}
         </div>
-        <h1 className="m-0 mb-3 fs-1 font-extrabold tracking-[-1px]">
+        <h1 className="m-0 fs-1 font-extrabold tracking-[-1px]">
           {title}
         </h1>
-        <div className="text-[14px] text-[#9fb0c9]">{breadcrumb}</div>
       </div>
     </div>
   );
