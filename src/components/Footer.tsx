@@ -3,7 +3,7 @@ import { company, footerColumns } from "@/lib/site";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#0a1b33] shell pb-10 pt-[60px] text-[#8ea1bd]">
+    <footer className="bg-navy shell pb-10 pt-15 text-[#8ea1bd]">
       <div className="grid grid-cols-2 gap-8 border-b border-white/10 pb-10 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
         <div className="col-span-2 lg:col-span-1">
           <div className="mb-4 text-[22px] font-extrabold text-white">
@@ -16,7 +16,7 @@ export default function Footer() {
             <br />
             대표 {company.ceo} · 사업자등록번호 {company.bizNo}
           </p>
-          <div className="flex flex-wrap gap-x-[18px] gap-y-1.5 text-[14px]">
+          <div className="flex flex-wrap gap-x-4.5 gap-y-1.5 text-[14px]">
             <span>TEL {company.tel}</span>
             <span>FAX {company.fax}</span>
             <span>{company.email}</span>
@@ -26,7 +26,7 @@ export default function Footer() {
         {footerColumns.map((col) => (
           <div key={col.title}>
             <div className="mb-4 text-[15px] font-bold text-white">{col.title}</div>
-            <div className="flex flex-col gap-y-[9px] text-[14px]">
+            <div className="flex flex-col gap-y-2.25 text-[14px]">
               {col.links.map((l) => (
                 <Link key={l.label} href={l.href} className="w-fit transition-colors hover:text-[#4f74e6]">
                   {l.label}

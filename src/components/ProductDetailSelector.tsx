@@ -32,24 +32,24 @@ export function ProductDetailSelector({ label, items }: Props) {
               type="button"
               aria-pressed={isSelected}
               onClick={() => setSelectedCode(item.code)}
-              className={`flex min-h-[118px] cursor-pointer flex-col items-center justify-between rounded-[14px] border p-2.5 text-center transition-colors ${
+              className={`flex min-h-29.5 cursor-pointer flex-col items-center justify-between rounded-[14px] border p-2.5 text-center transition-colors ${
                 isSelected
-                  ? "border-[#22409b] bg-[#eef2fc]"
+                  ? "border-[#22409b] bg-brand-soft"
                   : "border-[#eaeef3] bg-[#fbfcfe] hover:border-[#b8c5da] hover:bg-white"
               }`}
             >
-              <span className="relative block h-[68px] w-full">
+              <span className="relative block h-17 w-full">
                 <Image src={item.image} alt={`${item.code} 제품`} fill sizes="120px" className="object-contain" />
               </span>
-              <span className="font-mono text-[13px] font-extrabold text-[#0a1b33]">{item.code}</span>
+              <span className="font-mono text-[13px] font-extrabold text-navy">{item.code}</span>
             </button>
           );
         })}
       </div>
 
-      <div className="mt-4 min-h-[300px] rounded-[16px] border border-[#eaeef3] bg-[#fbfcfe] p-5">
+      <div className="mt-4 min-h-75 rounded-[16px] border border-[#eaeef3] bg-[#fbfcfe] p-5">
         <div className="mb-2">
-          <h3 className="m-0 font-mono text-[22px] font-extrabold tracking-[-0.3px] text-[#0a1b33]">
+          <h3 className="m-0 font-mono text-[22px] font-extrabold tracking-[-0.3px] text-navy">
             {selected.code}
           </h3>
         </div>
@@ -64,13 +64,13 @@ export function ProductDetailSelector({ label, items }: Props) {
         </ul>
         {selected.documents && (
           <div className="mt-5 border-t border-[#e2e6ed] pt-4">
-            <div className="mb-3 text-[13px] font-extrabold text-[#0a1b33]">관련 자료</div>
+            <div className="mb-3 text-[13px] font-extrabold text-navy">관련 자료</div>
             <div className="flex flex-wrap gap-2">
               {selected.documents.map((document) => (
                 <Link
                   key={document.href}
                   href={document.href}
-                  className="rounded-md bg-[#eef2fc] px-3 py-2 text-[13px] font-bold text-[#22409b] transition-colors hover:bg-[#dfe7fb]"
+                  className="rounded-md bg-brand-soft px-3 py-2 text-[13px] font-bold text-[#22409b] transition-colors hover:bg-[#dfe7fb]"
                 >
                   {document.label}
                 </Link>

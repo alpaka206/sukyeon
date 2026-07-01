@@ -57,47 +57,47 @@ export default async function Home() {
   return (
     <>
       {/* hero */}
-      <section className="wide-shell grid grid-cols-1 lg:min-h-[560px] lg:grid-cols-[minmax(0,1.6fr)_minmax(360px,1fr)]">
-        <div className="flex flex-col justify-center bg-[#fbfcfe] py-[60px] lg:py-[90px] lg:pr-8 xl:pr-10">
-          <h1 className="m-0 mb-[26px] fs-hero font-extrabold leading-[1.32] tracking-[-1.6px] text-[#0a1b33]">
-            <span className="hero-title-line">다이캐스팅 현장을 움직이는</span>
-            <span className="hero-title-line text-[#22409b]">이형·윤활 전문 기업</span>
+      <section className="wide-shell grid grid-cols-1 lg:min-h-140 lg:grid-cols-[minmax(0,1.6fr)_minmax(360px,1fr)]">
+        <div className="flex flex-col justify-center bg-[#fbfcfe] py-15 lg:py-22.5 lg:pr-8 xl:pr-10">
+          <h1 className="m-0 mb-6.5 fs-hero font-bold leading-[1.32] tracking-[-1px] text-navy">
+            <span className="hero-title-line">최고의 기술과 설비로 신뢰를 더하는</span>
+            <span className="hero-title-line text-[#22409b]">다이캐스팅 소모품 전문 제조 기업</span>
           </h1>
-          <p className="hero-copy m-0 mb-[38px] max-w-[760px] leading-[1.82] text-[#5a6680] [text-wrap:pretty]">
+          <p className="hero-copy m-0 mb-9.5 max-w-190 leading-[1.82] text-[#5a6680] text-pretty">
             <span className="hero-copy-line">
-              이형제·프란자오일·작동유·습동면유 등 다이캐스팅 소모성 제품을{" "}
-              <strong className="font-bold text-[#0a1b33]">직접 생산하고 공급</strong>합니다.
+              이형제 · 프란자오일 · 소모성 부자재를{" "}
+              <strong className="font-bold text-navy">전문 생산 공급</strong>합니다.
             </span>
             <span className="hero-copy-line">
-              오랜 현장 경험과 기술력을 바탕으로 안정적인 품질과 신뢰할 수 있는 제품을 제공합니다.
+              다이캐스팅 공정의 생산성과 품질을 향상시키는 최상의 제품을 생산합니다.
             </span>
           </p>
           <div className="flex flex-wrap items-center gap-3.5">
             <Link
               href="/products"
-              className="cursor-pointer rounded-[10px] bg-brand px-[30px] py-[15px] text-[16px] font-bold text-white transition-colors hover:bg-brand-deep"
+              className="cursor-pointer rounded-[10px] bg-brand px-7.5 py-3.75 text-[16px] font-bold text-white transition-colors hover:bg-brand-deep"
             >
               제품 살펴보기
             </Link>
             <Link
               href="/data"
-              className="cursor-pointer border-b-2 border-[#22409b] px-2 py-[15px] text-[16px] font-bold text-[#0a1b33]"
+              className="cursor-pointer rounded-[10px] border-2 border-[#22409b] px-7.5 py-3.75 text-[16px] font-bold text-[#22409b] transition-colors hover:bg-[#22409b] hover:text-white"
             >
               MSDS 자료실
             </Link>
           </div>
         </div>
-        <div className="order-first h-[260px] sm:h-[360px] lg:order-none lg:h-auto">
+        <div className="order-first h-65 sm:h-90 lg:order-0 lg:h-auto">
           <HeroCarousel />
         </div>
       </section>
 
       {/* metric line */}
-      <section className="grid grid-cols-2 shell border-b border-[#eaeef3] lg:grid-cols-4">
+      <section className="grid grid-cols-2 shell border-t border-b border-[#eaeef3] lg:grid-cols-4">
         {metrics.map((m) => (
           <div
             key={m.label}
-            className="border-[#eaeef3] py-[34px] pr-5 lg:pr-10 [&:not(:nth-child(2n+1))]:pl-5 lg:[&:not(:nth-child(4n+1))]:pl-10 [&:not(:nth-child(2n))]:border-r [&:nth-child(-n+2)]:border-b lg:[&:not(:last-child)]:border-r lg:[&:nth-child(-n+2)]:border-b-0"
+            className="border-[#eaeef3] py-8.5 pr-5 lg:pr-10 not-nth-[2n+1]:pl-5 lg:not-nth-[4n+1]:pl-10 not-nth-[2n]:border-r nth-[-n+2]:border-b lg:not-last:border-r lg:nth-[-n+2]:border-b-0"
           >
             <div className="mb-2 text-[14px] font-semibold text-[#8a96ab]">{m.label}</div>
             <div
@@ -111,23 +111,23 @@ export default async function Home() {
       </section>
 
       {/* products preview */}
-      <section className="bg-white shell py-16 lg:py-[88px]">
+      <section className="bg-white shell py-16 lg:py-22">
         <div className="mb-12 flex items-end justify-between">
           <div>
             <div className="mb-3.5 text-[13px] font-bold tracking-[1px] text-[#22409b]">
               PRODUCTS
             </div>
-            <h2 className="m-0 fs-2 font-extrabold tracking-[-1px] text-[#0a1b33]">
-              직접 생산하는 제품
+            <h2 className="m-0 fs-2 font-extrabold tracking-[-1px] text-navy">
+              생산하는 제품
             </h2>
           </div>
           <Link href="/products" className="link-teal shrink-0 cursor-pointer text-[15px] font-bold text-[#22409b]">
             전체 보기 →
           </Link>
         </div>
-        <div className="grid grid-cols-1 gap-[22px] sm:grid-cols-2 lg:grid-cols-3">
-          <ProductImageCard href="/products#p-release" img="/assets/release_SR800.jpg" alt="CAST ONE 이형제" title="이형제" tag="CAST ONE" desc="수성·유성 다이캐스팅 이형제. 우수한 이형성과 고온 안정성." />
-          <ProductImageCard href="/products#p-pranza" img="/assets/pranza_SL600.jpg" alt="LUBE ONE 프란자오일" title="프란자오일" tag="LUBE ONE" desc="플런저 윤활용 프란자오일. 사출 안정성과 설비 수명 향상." />
+        <div className="grid grid-cols-1 gap-5.5 sm:grid-cols-2 lg:grid-cols-3">
+          <ProductImageCard href="/products#p-release" img="/assets/release_SR950.png" alt="CAST ONE 이형제" title="이형제" tag="CAST ONE" desc="수성·유성 다이캐스팅 이형제. 우수한 이형성과 고온 안정성." />
+          <ProductImageCard href="/products#p-pranza" img="/assets/pranza_SL600.png" alt="LUBE ONE 프란자오일" title="프란자오일" tag="LUBE ONE" desc="플런저 윤활용 프란자오일. 사출 안정성과 설비 수명 향상." />
           <ProductIconCard href="/products#p-etc-parts" title="기타 부자재" desc="열전대·레들·하드참바·쪽자 등 공정 부자재를 함께 공급합니다.">
             <path d="M4 7h16M7 7v12M17 7v12M6 19h12" />
             <path d="M8 4h8l1 3H7l1-3z" />
@@ -145,14 +145,14 @@ export default async function Home() {
                 <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" />
               </svg>
             </div>
-            <div className="p-[26px]">
+            <div className="p-6.5">
               <h3 className="m-0 mb-2 text-[20px] font-bold">MSDS · 기술 자료</h3>
               <p className="m-0 text-[15px] leading-[1.6] text-[#5a6680]">
                 전 제품 MSDS(GHS)와 시험성적서를 자료실에서 제공합니다.
               </p>
             </div>
           </Link>
-          <div className="flex flex-col justify-center overflow-hidden rounded-2xl bg-[#0a1b33] p-[30px] text-white">
+          <div className="flex flex-col justify-center overflow-hidden rounded-2xl bg-navy p-7.5 text-white">
             <h3 className="m-0 mb-2.5 text-[21px] font-extrabold leading-[1.4]">
               우리 공정에 맞는
               <br />
@@ -172,17 +172,17 @@ export default async function Home() {
       </section>
 
       {/* why us */}
-      <section className="bg-[#f6f9fb] shell py-16 lg:py-[88px]">
+      <section className="bg-[#f6f9fb] shell py-16 lg:py-22">
         <div className="mb-3.5 text-[13px] font-bold tracking-[1px] text-[#22409b]">
           WHY SUKYEON MRO
         </div>
-        <h2 className="m-0 mb-12 fs-2 font-extrabold tracking-[-1px] text-[#0a1b33]">
+        <h2 className="m-0 mb-12 fs-2 font-extrabold tracking-[-1px] text-navy">
           현장이 신뢰하는 이유
         </h2>
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {whyUs.map((f) => (
             <div key={f.title} className="rounded-2xl border border-[#eaeef3] bg-white px-7 py-8">
-              <div className="mb-5 flex h-[50px] w-[50px] items-center justify-center rounded-[13px] bg-[#eef2fc]">
+              <div className="mb-5 flex h-12.5 w-12.5 items-center justify-center rounded-[13px] bg-brand-soft">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22409b" strokeWidth="2">
                   {f.icon}
                 </svg>
@@ -195,10 +195,10 @@ export default async function Home() {
       </section>
 
       {/* news + cta */}
-      <section className="grid grid-cols-1 items-start gap-10 bg-white shell py-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14 lg:py-[88px]">
+      <section className="grid grid-cols-1 items-start gap-10 bg-white shell py-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14 lg:py-22">
         <div>
           <div className="mb-7 flex items-end justify-between">
-            <h2 className="m-0 fs-4 font-extrabold tracking-[-0.6px] text-[#0a1b33]">공지사항</h2>
+            <h2 className="m-0 fs-4 font-extrabold tracking-[-0.6px] text-navy">공지사항</h2>
             <Link href="/news" className="link-teal cursor-pointer text-[14px] font-bold text-[#22409b]">
               전체 보기 →
             </Link>
@@ -210,19 +210,19 @@ export default async function Home() {
                 href={`/news/${n.slug}`}
                 className="row-link flex items-center justify-between border-b border-[#eaeef3] px-2 py-5"
               >
-                <span className="text-[15px] font-semibold text-[#0a1b33] sm:text-[16px]">{n.title}</span>
+                <span className="text-[15px] font-semibold text-navy sm:text-[16px]">{n.title}</span>
                 <span className="ml-3 shrink-0 font-mono text-[13px] text-[#8a96ab]">{n.date}</span>
               </Link>
             ))}
           </div>
         </div>
-        <div className="overflow-hidden rounded-[18px] bg-[#0a1b33] p-10 text-white">
+        <div className="overflow-hidden rounded-[18px] bg-navy p-10 text-white">
           <h3 className="m-0 mb-3.5 text-[26px] font-extrabold leading-[1.35]">
             견적·기술 상담
             <br />
             지금 문의하세요
           </h3>
-          <p className="m-0 mb-[26px] text-[15px] leading-[1.6] text-[#b6c3d6]">
+          <p className="m-0 mb-6.5 text-[15px] leading-[1.6] text-[#b6c3d6]">
             24시간 내 담당자가 회신드립니다.
           </p>
           <div className="flex flex-col gap-2.5">

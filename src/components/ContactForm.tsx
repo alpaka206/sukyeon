@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 const inputCls =
-  "h-12 w-full rounded-[10px] border border-[#d4dae4] px-4 text-[15px] text-[#0a1b33] outline-none transition-colors focus:border-[#22409b]";
+  "h-12 w-full rounded-[10px] border border-[#d4dae4] px-4 text-[15px] text-navy outline-none transition-colors focus:border-[#22409b]";
 
 const products = [
   "이형제",
@@ -48,15 +48,15 @@ export default function ContactForm() {
 
   return (
     <div className="rounded-[18px] border border-[#eaeef3] p-6 sm:p-10">
-      <h2 className="m-0 mb-2 text-[24px] font-extrabold tracking-[-0.5px] text-[#0a1b33]">
+      <h2 className="m-0 mb-2 text-[24px] font-extrabold tracking-[-0.5px] text-navy">
         견적·문의 작성
       </h2>
-      <p className="m-0 mb-[30px] text-[15px] text-[#5a6680]">
+      <p className="m-0 mb-7.5 text-[15px] text-[#5a6680]">
         아래 항목을 작성해 주시면 담당자가 24시간 내 회신드립니다.
       </p>
 
       {sent && (
-        <div className="mb-5 rounded-[10px] bg-[#eef2fc] px-4 py-3 text-[14px] font-semibold text-[#22409b]">
+        <div className="mb-5 rounded-[10px] bg-brand-soft px-4 py-3 text-[14px] font-semibold text-[#22409b]">
           메일 작성 창이 열립니다. 전송이 완료되면 담당자가 확인 후 회신드립니다.
         </div>
       )}
@@ -113,7 +113,7 @@ export default function ContactForm() {
       <div className="mt-5">
         <Field label="문의 내용 *">
           <textarea
-            className="h-[140px] w-full resize-y rounded-[10px] border border-[#d4dae4] p-4 text-[15px] leading-[1.6] text-[#0a1b33] outline-none transition-colors focus:border-[#22409b]"
+            className="h-35 w-full resize-y rounded-[10px] border border-[#d4dae4] p-4 text-[15px] leading-[1.6] text-navy outline-none transition-colors focus:border-[#22409b]"
             placeholder="합금 종류, 금형, 생산 사이클 등 공정 정보를 알려주시면 더 정확한 견적이 가능합니다."
             value={form.message}
             onChange={(e) => update("message", e.target.value)}
@@ -121,10 +121,10 @@ export default function ContactForm() {
         </Field>
       </div>
 
-      <label className="mt-[18px] flex cursor-pointer items-center gap-2.5">
+      <label className="mt-4.5 flex cursor-pointer items-center gap-2.5">
         <input
           type="checkbox"
-          className="h-[18px] w-[18px] accent-[#22409b]"
+          className="h-4.5 w-4.5 accent-[#22409b]"
           checked={form.agree}
           onChange={(e) => update("agree", e.target.checked)}
         />
@@ -136,7 +136,7 @@ export default function ContactForm() {
       <button
         type="button"
         onClick={submit}
-        className="mt-7 w-full cursor-pointer rounded-[10px] bg-[#0a1b33] py-4 text-center text-[16px] font-bold text-white transition-opacity hover:opacity-90"
+        className="mt-7 w-full cursor-pointer rounded-[10px] bg-navy py-4 text-center text-[16px] font-bold text-white transition-opacity hover:opacity-90"
       >
         견적 문의 보내기
       </button>
@@ -147,7 +147,7 @@ export default function ContactForm() {
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <label className="mb-2 block text-[14px] font-semibold text-[#0a1b33]">{label}</label>
+      <label className="mb-2 block text-[14px] font-semibold text-navy">{label}</label>
       {children}
     </div>
   );

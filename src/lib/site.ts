@@ -24,17 +24,8 @@ export type NavItem = {
 // 메인 GNB
 export const nav: NavItem[] = [
   { label: "회사소개", href: "/about" },
-  {
-    label: "사업분야",
-    href: "/business",
-    children: [
-      { label: "사업분야", href: "/business" },
-      { label: "제조과정", href: "/process" },
-    ],
-  },
   { label: "제품안내", href: "/products" },
   { label: "자료실", href: "/data" },
-  { label: "고객사·실적", href: "/clients" },
   { label: "인증·특허", href: "/cert" },
   {
     label: "고객지원",
@@ -53,9 +44,8 @@ export const footerColumns = [
     links: [
       { label: "인사말", href: "/about#sec-greeting" },
       { label: "회사소개", href: "/about" },
-      { label: "사업분야", href: "/business" },
+      { label: "설비현황", href: "/about#sec-equipment" },
       { label: "인증·특허", href: "/cert" },
-      { label: "고객사·실적", href: "/clients" },
     ],
   },
   {

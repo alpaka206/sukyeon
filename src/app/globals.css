@@ -89,7 +89,7 @@ body {
 
 /* 반응형(유동) 헤딩 크기 — 화면 폭(360~1280px)에 따라 폰트가 연속적으로 줄고 늘어
    어떤 폭에서도 줄바꿈이 자연스럽게 유지된다. 줄간격(leading)·색·굵기는 기존 클래스 유지. */
-.fs-hero { font-size: clamp(1.625rem, 0.81rem + 3.48vw, 3.375rem); }
+.fs-hero { font-size: clamp(1.5rem, 0.73rem + 3.1vw, 3rem); }
 .fs-1 { font-size: clamp(1.75rem, 1.36rem + 1.74vw, 2.75rem); }    /* 28 → 44px */
 .fs-2 { font-size: clamp(1.625rem, 1.28rem + 1.52vw, 2.5rem); }    /* 26 → 40px */
 .fs-3 { font-size: clamp(1.5rem, 1.26rem + 1.09vw, 2.125rem); }    /* 24 → 34px */
@@ -116,7 +116,7 @@ body {
 
 @media (max-width: 380px) {
   .fs-hero {
-    font-size: clamp(1.42rem, 6.4vw, 1.625rem);
+    font-size: clamp(1.3rem, 6vw, 1.5rem);
   }
 }
 

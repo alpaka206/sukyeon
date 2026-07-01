@@ -100,7 +100,7 @@ function ProductPhotoStack({ images }: { readonly images: readonly ProductPhoto[
       {images.map((image, index) => (
         <figure
           key={image.src}
-          className="relative m-0 min-h-[230px] overflow-hidden rounded-[18px] border border-[#e2e6ed] bg-[#f6f9fb] sm:min-h-[360px]"
+          className="relative m-0 min-h-57.5 overflow-hidden rounded-[18px] border border-[#e2e6ed] bg-[#f6f9fb] sm:min-h-90"
         >
           <Image
             src={image.src}
@@ -109,7 +109,7 @@ function ProductPhotoStack({ images }: { readonly images: readonly ProductPhoto[
             sizes={index === 0 ? "(max-width: 768px) 100vw, 45vw" : "(max-width: 768px) 100vw, 36vw"}
             className="object-contain p-3"
           />
-          <figcaption className="absolute bottom-3 left-3 rounded-[8px] bg-white/92 px-3 py-2 text-[13px] font-bold text-[#0a1b33] shadow-[0_12px_30px_-18px_rgba(10,27,51,0.45)]">
+          <figcaption className="absolute bottom-3 left-3 rounded-[8px] bg-white/92 px-3 py-2 text-[13px] font-bold text-navy shadow-[0_12px_30px_-18px_rgba(10,27,51,0.45)]">
             {image.label}
           </figcaption>
         </figure>
@@ -123,7 +123,7 @@ function FeatureGrid({ items }: { readonly items: readonly FeatureText[] }) {
     <div className="mb-7 grid grid-cols-1 gap-3 sm:grid-cols-2">
       {items.map((item) => (
         <div key={item.title} className="rounded-[14px] border border-[#e2e6ed] bg-white p-5">
-          <h3 className="m-0 mb-2 text-[16px] font-extrabold text-[#0a1b33]">{item.title}</h3>
+          <h3 className="m-0 mb-2 text-[16px] font-extrabold text-navy">{item.title}</h3>
           <p className="m-0 text-[14.5px] leading-[1.65] text-[#5a6680]">{item.desc}</p>
         </div>
       ))}
@@ -143,7 +143,7 @@ function InquiryLink({ children }: { readonly children: ReactNode }) {
 }
 
 const eyebrowCls = "mb-3.5 font-mono text-[13px] tracking-[2px] text-[#22409b]";
-const h2Cls = "m-0 mb-4 fs-3 font-extrabold tracking-[-0.8px] text-[#0a1b33]";
+const h2Cls = "m-0 mb-4 fs-3 font-extrabold tracking-[-0.8px] text-navy";
 const pCls = "m-0 mb-6 text-[16px] leading-[1.8] text-[#5a6680]";
 
 export default function ProductsPage() {
@@ -161,8 +161,8 @@ export default function ProductsPage() {
               알루미늄 다이캐스팅용 수성·유성 이형제. 우수한 이형성과 고온 안정성으로 소착과 표면 결함을 방지하고 생산성을 높입니다.
             </p>
             <div className="mb-7 flex flex-col gap-3">
-              <Bullet><strong className="text-[#0a1b33]">수성 이형제</strong> — 희석형 수용성 타입, 쾌적한 작업 환경과 우수한 이형성</Bullet>
-              <Bullet><strong className="text-[#0a1b33]">유성 이형제</strong> — 고온·고압 공정용, 안정적 피막 형성으로 소착 방지</Bullet>
+              <Bullet><strong className="text-navy">수성 이형제</strong> — 희석형 수용성 타입, 쾌적한 작업 환경과 우수한 이형성</Bullet>
+              <Bullet><strong className="text-navy">유성 이형제</strong> — 고온·고압 공정용, 안정적 피막 형성으로 소착 방지</Bullet>
               <Bullet>합금·금형·사이클 조건에 맞춘 맞춤 조성 설계 가능</Bullet>
             </div>
             <MsdsLink />
@@ -220,14 +220,14 @@ export default function ProductsPage() {
         </section>
 
         <div className="wide-shell pb-20">
-          <div className="relative flex flex-col items-start justify-between gap-6 overflow-hidden rounded-[18px] bg-[#0a1b33] p-8 text-white sm:flex-row sm:items-center lg:p-[50px]">
+          <div className="relative flex flex-col items-start justify-between gap-6 overflow-hidden rounded-[18px] bg-navy p-8 text-white sm:flex-row sm:items-center lg:p-12.5">
             <div>
               <h3 className="m-0 mb-2 text-[22px] font-extrabold lg:text-[26px]">어떤 제품이 맞을지 고민되시나요?</h3>
               <p className="m-0 text-[15px] text-[#b6c3d6]">공정 조건을 알려주시면 최적의 제품을 추천해 드립니다.</p>
             </div>
             <Link
               href="/contact"
-              className="shrink-0 cursor-pointer rounded-[10px] bg-[#4f74e6] px-[30px] py-[15px] text-[16px] font-bold text-white transition-opacity hover:opacity-90"
+              className="shrink-0 cursor-pointer rounded-[10px] bg-[#4f74e6] px-7.5 py-3.75 text-[16px] font-bold text-white transition-opacity hover:opacity-90"
             >
               맞춤 견적 받기
             </Link>

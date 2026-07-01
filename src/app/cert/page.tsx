@@ -28,7 +28,7 @@ function CertCard({ cert }: { cert: CertItem }) {
             rel="noopener noreferrer"
             className="card-link group relative block overflow-hidden rounded-xl border border-[#eaeef3] bg-white"
           >
-            <span className="absolute left-2.5 top-2.5 z-10 rounded-md bg-[#0a1b33]/85 px-2 py-1 text-[11px] font-bold tracking-[1px] text-white">
+            <span className="absolute left-2.5 top-2.5 z-10 rounded-md bg-navy/85 px-2 py-1 text-[11px] font-bold tracking-[1px] text-white">
               {img.label}
             </span>
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -36,17 +36,17 @@ function CertCard({ cert }: { cert: CertItem }) {
               src={img.src}
               alt={`${cert.title} ${cert.standard} ${img.label} 인증서`}
               loading="lazy"
-              className="block h-[340px] w-full object-contain p-3 sm:h-[300px]"
+              className="block h-85 w-full object-contain p-3 sm:h-75"
             />
           </a>
         ))}
       </div>
 
-      <div className="p-[22px] sm:p-7">
+      <div className="p-5.5 sm:p-7">
         <div className="mb-2.5 text-[12px] font-bold tracking-[2px] text-[#22409b]">
           {cert.eyebrow}
         </div>
-        <h2 className="m-0 mb-1.5 text-[22px] font-extrabold tracking-[-0.5px] text-[#0a1b33]">
+        <h2 className="m-0 mb-1.5 text-[22px] font-extrabold tracking-[-0.5px] text-navy">
           {cert.title}
         </h2>
         <div className="mb-4 text-[14px] font-bold text-[#22409b]">{cert.standard}</div>
@@ -56,7 +56,7 @@ function CertCard({ cert }: { cert: CertItem }) {
           {rows.map((r) => (
             <div key={r.k} className="flex flex-col gap-1">
               <dt className="text-[12px] font-bold tracking-[0.5px] text-[#8a96ab]">{r.k}</dt>
-              <dd className="m-0 text-[15px] font-semibold text-[#0a1b33]">{r.v}</dd>
+              <dd className="m-0 text-[15px] font-semibold text-navy">{r.v}</dd>
             </div>
           ))}
         </dl>
@@ -70,13 +70,13 @@ export default async function CertPage() {
   return (
     <>
       <PageHeader eyebrow="CERTIFICATION" title="인증·특허" />
-      <div className="shell py-16 lg:py-[72px]">
-        <p className="m-0 mb-9 max-w-[760px] text-[16px] leading-[1.7] text-[#5a6680]">
+      <div className="shell py-16 lg:py-18">
+        <p className="m-0 mb-9 max-w-190 text-[16px] leading-[1.7] text-[#5a6680]">
           석연MRO는 국제 표준 품질·환경 경영시스템 인증과 자체 기술 특허를 바탕으로 신뢰할 수 있는
-          제품을 공급합니다. 인증서를 클릭하면 원본 이미지를 확인할 수 있습니다.
+          제품을 공급합니다.
         </p>
 
-        <div className="grid grid-cols-1 gap-[26px] lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-6.5 lg:grid-cols-2">
           {certs.map((c) => (
             <CertCard key={c.title} cert={c} />
           ))}

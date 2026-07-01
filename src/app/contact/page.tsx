@@ -12,9 +12,9 @@ export default function ContactPage() {
       <div className="grid grid-cols-1 items-start gap-12 shell py-16 pb-20 lg:grid-cols-[1.3fr_0.7fr]">
         <ContactForm />
 
-        <div className="flex flex-col gap-[18px]">
-          <div className="relative overflow-hidden rounded-[18px] bg-[#0a1b33] p-8 text-white">
-            <h3 className="relative m-0 mb-[18px] text-[20px] font-extrabold">전화 문의</h3>
+        <div className="flex flex-col gap-4.5">
+          <div className="relative overflow-hidden rounded-[18px] bg-navy p-8 text-white">
+            <h3 className="relative m-0 mb-4.5 text-[20px] font-extrabold">전화 문의</h3>
             <a href="tel:032-575-2492" className="relative mb-1.5 block text-[26px] font-extrabold text-[#4f74e6]">
               032-575-2492
             </a>
@@ -30,7 +30,7 @@ export default function ContactPage() {
           </div>
 
           <div className="rounded-[18px] border border-[#eaeef3] p-8">
-            <h3 className="m-0 mb-3 text-[18px] font-bold text-[#0a1b33]">찾아오시는 길</h3>
+            <h3 className="m-0 mb-3 text-[18px] font-bold text-navy">찾아오시는 길</h3>
             <p className="m-0 mb-4 text-[15px] leading-[1.7] text-[#5a6680]">
               인천광역시 서구 염곡로 15번길 16
             </p>

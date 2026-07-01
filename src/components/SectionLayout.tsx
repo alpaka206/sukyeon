@@ -39,7 +39,7 @@ export default function SectionLayout({ eyebrow, title, items, children, wide = 
   return (
     <>
       {/* mobile horizontal tab strip */}
-      <div className="sticky top-[78px] z-30 border-b border-[#eaeef3] bg-white/95 backdrop-blur-[10px] lg:hidden">
+      <div className="sticky top-19.5 z-30 border-b border-[#eaeef3] bg-white/95 backdrop-blur-[10px] lg:hidden">
         <div className="flex gap-1 overflow-x-auto px-5 py-2.5">
           {items.map((it) => {
             const on = active === it.id;
@@ -65,11 +65,11 @@ export default function SectionLayout({ eyebrow, title, items, children, wide = 
       <div className={`${wide ? "wide-shell-grid" : "shell-grid"} lg:grid lg:grid-cols-[250px_1fr]`}>
         {/* desktop vertical LNB */}
         <aside className="hidden border-r border-[#eaeef3] bg-[#fbfcfe] lg:block">
-          <div className="sticky top-[78px] py-[38px]">
+          <div className="sticky top-19.5 py-9.5">
             <div className="px-8 pb-1.5 font-mono text-[12px] tracking-[2px] text-[#22409b]">
               {eyebrow}
             </div>
-            <div className="px-8 pb-[22px] text-[21px] font-extrabold text-[#0a1b33]">{title}</div>
+            <div className="px-8 pb-5.5 text-[21px] font-extrabold text-navy">{title}</div>
             <div className="flex flex-col">
               {items.map((it) => {
                 const on = active === it.id;

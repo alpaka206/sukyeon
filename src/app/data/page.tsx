@@ -33,13 +33,13 @@ export default async function DataPage({ searchParams }: Props) {
       <PageHeader eyebrow="DATA / MSDS (GHS)" title="자료실" />
       <div className="shell py-16">
         <div className="overflow-x-auto rounded-[14px] border border-[#eaeef3]">
-          <div className="min-w-[680px]">
-            <div className={`grid ${cols} bg-[#0a1b33] text-[14px] font-bold text-white`}>
-              <div className="px-5 py-[18px]">번호</div>
-              <div className="px-3 py-[18px]">자료명</div>
-              <div className="px-3 py-[18px]">분류</div>
-              <div className="px-3 py-[18px]">등록일</div>
-              <div className="px-3 py-[18px] text-center">다운로드</div>
+          <div className="min-w-170">
+            <div className={`grid ${cols} bg-navy text-[14px] font-bold text-white`}>
+              <div className="px-5 py-4.5">번호</div>
+              <div className="px-3 py-4.5">자료명</div>
+              <div className="px-3 py-4.5">분류</div>
+              <div className="px-3 py-4.5">등록일</div>
+              <div className="px-3 py-4.5 text-center">다운로드</div>
             </div>
             {visibleRows.map((r, i) => (
               <div
@@ -52,7 +52,7 @@ export default async function DataPage({ searchParams }: Props) {
               >
                 <div className="p-5 font-mono text-[#8a96ab]">
                   {r.notice ? (
-                    <span className="rounded-md bg-[#eef2fc] px-2 py-1 text-[12px] font-bold text-[#22409b]">공지</span>
+                    <span className="rounded-md bg-brand-soft px-2 py-1 text-[12px] font-bold text-[#22409b]">공지</span>
                   ) : (
                     String(rows.length - startIndex - i).padStart(2, "0")
                   )}
@@ -60,7 +60,7 @@ export default async function DataPage({ searchParams }: Props) {
                 <div className="px-3 py-5">
                   <Link
                     href={`/data/${r.slug}`}
-                    className="font-semibold text-[#0a1b33] transition-colors hover:text-[#22409b]"
+                    className="font-semibold text-navy transition-colors hover:text-[#22409b]"
                   >
                     {r.name}
                   </Link>
@@ -71,7 +71,7 @@ export default async function DataPage({ searchParams }: Props) {
                   {r.attachments.length > 0 ? (
                     <Link
                       href={`/data/${r.slug}`}
-                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-md bg-[#eef2fc] px-2.5 py-1.5 text-[13px] font-bold text-[#22409b]"
+                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-md bg-brand-soft px-2.5 py-1.5 text-[13px] font-bold text-[#22409b]"
                     >
                       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
@@ -97,7 +97,7 @@ export default async function DataPage({ searchParams }: Props) {
                 <Link
                   key={page}
                   href={page === 1 ? "/data" : `/data?page=${page}`}
-                  className="flex h-[38px] w-[38px] items-center justify-center rounded-lg text-[14px] font-semibold"
+                  className="flex h-9.5 w-9.5 items-center justify-center rounded-lg text-[14px] font-semibold"
                   style={
                     active
                       ? { background: "#0a1b33", color: "#fff", fontWeight: 700 }

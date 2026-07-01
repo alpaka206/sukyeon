@@ -2,7 +2,7 @@ import { defineType, defineField } from "sanity";
 
 export default defineType({
   name: "cert",
-  title: "인증·특허",
+  title: "인증 · 특허",
   type: "document",
   fields: [
     defineField({ name: "title", title: "인증명", type: "string", validation: (r) => r.required() }),
