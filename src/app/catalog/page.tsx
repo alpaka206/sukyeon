@@ -37,31 +37,37 @@ export default async function CatalogPage() {
             </svg>
             PDF 문서 · 석연MRO 제품 카탈로그
           </div>
-          <div className="flex flex-wrap gap-3.5">
-            <a
-              href={catalog.file}
-              target="_blank"
-              rel="noopener"
-              className="inline-flex items-center gap-2 rounded-[10px] bg-[#22409b] px-7 py-3.75 text-[16px] font-bold text-white transition-colors hover:bg-[#18306f]"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z" />
-                <circle cx="12" cy="12" r="3" />
-              </svg>
-              온라인으로 보기
-            </a>
-            <a
-              href={catalog.file}
-              download
-              className="btn-outline inline-flex items-center gap-2 rounded-[10px] border-[1.5px] border-[#d4dae4] px-7 py-3.75 text-[16px] font-bold text-navy"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                <path d="M7 10l5 5 5-5M12 15V3" />
-              </svg>
-              PDF 다운로드
-            </a>
-          </div>
+          {catalog.file ? (
+            <div className="flex flex-wrap gap-3.5">
+              <a
+                href={catalog.file}
+                target="_blank"
+                rel="noopener"
+                className="inline-flex items-center gap-2 rounded-[10px] bg-[#22409b] px-7 py-3.75 text-[16px] font-bold text-white transition-colors hover:bg-[#18306f]"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+                온라인으로 보기
+              </a>
+              <a
+                href={catalog.file}
+                download
+                className="btn-outline inline-flex items-center gap-2 rounded-[10px] border-[1.5px] border-[#d4dae4] px-7 py-3.75 text-[16px] font-bold text-navy"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <path d="M7 10l5 5 5-5M12 15V3" />
+                </svg>
+                PDF 다운로드
+              </a>
+            </div>
+          ) : (
+            <p className="m-0 rounded-lg bg-[#f6f9fb] px-4 py-3 text-[14px] text-[#8a96ab]">
+              카탈로그를 준비 중입니다.
+            </p>
+          )}
         </div>
       </div>
     </>

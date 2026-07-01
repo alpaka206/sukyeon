@@ -1,11 +1,7 @@
 import { sanityClient } from "./sanity";
-import newsJson from "@/content/news.json";
-import docsJson from "@/content/docs.json";
-import catalogJson from "@/content/catalog.json";
-import certsJson from "@/content/certs.json";
 
-// 콘텐츠 어댑터: Sanity가 설정돼 있고 데이터가 있으면 Sanity, 아니면 로컬 JSON(src/content/*).
-// 두 경로 모두 아래 타입과 동일한 형태를 반환하므로 페이지 코드는 출처를 신경 쓸 필요가 없다.
+// 콘텐츠 어댑터: Sanity를 단일 원본으로 사용한다.
+// Sanity가 미설정이거나 조회에 실패하면(크래시 대신) 빈 값을 반환해 페이지가 안전하게 비워진다.
 
 export type NewsItem = {
   readonly category: string;
@@ -73,7 +69,7 @@ type DocRecord = {
 };
 
 const NEWS_Q = `*[_type=="newsPost"]|order(date desc){category,title,date,accent,"slug":coalesce(slug.current,slug),summary,body}`;
-const DOCS_Q = `*[_type=="doc"]|order(date desc){name,category,date,"file":coalesce(file.asset->url,""),"slug":coalesce(slug.current,slug),summary,body,attachments[]{name,"file":coalesce(file.asset->url,file)}}`;
+const DOCS_Q = `*[_type=="doc"]|order(date desc){name,category,date,"file":coalesce(file.asset->url,""),"slug":coalesce(slug.current,slug),summary,body,notice,attachments[]{name,"file":coalesce(file.asset->url,file)}}`;
 const CATALOG_Q = `*[_type=="catalog"]|order(_updatedAt desc)[0]{title,tagline,"file":coalesce(file.asset->url,"")}`;
 const CERTS_Q = `*[_type=="cert"]|order(order asc){eyebrow,title,standard,desc,issuer,number,scope,validity,"imageKo":coalesce(imageKo.asset->url,""),"imageEn":coalesce(imageEn.asset->url,"")}`;
 
@@ -124,11 +120,14 @@ function sortDocs(items: readonly DocItem[]): DocItem[] {
 }
 
 export async function getNews(): Promise<NewsItem[]> {
-  if (sanityClient) {
+  if (!sanityClient) return [];
+  try {
     const r = await sanityClient.fetch<NewsRecord[]>(NEWS_Q);
-    if (r?.length) return r.map(normalizeNewsItem);
+    return (r ?? []).map(normalizeNewsItem);
+  } catch (e) {
+    console.error("[content] Sanity 공지 조회 실패:", e);
+    return [];
   }
-  return newsJson.items.map(normalizeNewsItem);
 }
 
 export async function getNewsBySlug(slug: string): Promise<NewsItem | undefined> {
@@ -137,11 +136,14 @@ export async function getNewsBySlug(slug: string): Promise<NewsItem | undefined>
 }
 
 export async function getDocs(): Promise<DocItem[]> {
-  if (sanityClient) {
+  if (!sanityClient) return [];
+  try {
     const r = await sanityClient.fetch<DocRecord[]>(DOCS_Q);
-    if (r?.length) return sortDocs(r.map(normalizeDocItem));
+    return sortDocs((r ?? []).map(normalizeDocItem));
+  } catch (e) {
+    console.error("[content] Sanity 자료 조회 실패:", e);
+    return [];
   }
-  return sortDocs(docsJson.items.map(normalizeDocItem));
 }
 
 export async function getDocBySlug(slug: string): Promise<DocItem | undefined> {
@@ -149,18 +151,26 @@ export async function getDocBySlug(slug: string): Promise<DocItem | undefined> {
   return items.find((item) => item.slug === slug);
 }
 
+const EMPTY_CATALOG: Catalog = { title: "제품 카탈로그", tagline: "", file: "" };
+
 export async function getCatalog(): Promise<Catalog> {
-  if (sanityClient) {
+  if (!sanityClient) return EMPTY_CATALOG;
+  try {
     const r = await sanityClient.fetch<Catalog | null>(CATALOG_Q);
     if (r?.file) return r;
+  } catch (e) {
+    console.error("[content] Sanity 카탈로그 조회 실패:", e);
   }
-  return catalogJson as Catalog;
+  return EMPTY_CATALOG;
 }
 
 export async function getCerts(): Promise<CertItem[]> {
-  if (sanityClient) {
+  if (!sanityClient) return [];
+  try {
     const r = await sanityClient.fetch<CertItem[]>(CERTS_Q);
-    if (r?.length) return r;
+    return r ?? [];
+  } catch (e) {
+    console.error("[content] Sanity 인증 조회 실패:", e);
+    return [];
   }
-  return certsJson.items as CertItem[];
 }
