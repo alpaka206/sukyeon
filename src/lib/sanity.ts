@@ -1,6 +1,6 @@
 import { createClient, type SanityClient } from "@sanity/client";
 
-// Sanity 프로젝트 ID가 환경변수에 있으면 활성화, 없으면 로컬 JSON 폴백(src/content/*).
+// Sanity를 콘텐츠 단일 원본으로 사용. 프로젝트 ID 미설정이면 클라이언트는 null → 조회 시 빈 값 반환.
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
 
