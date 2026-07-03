@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { getSiteSettings } from "@/lib/content";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.sukyeonmro.co.kr"),
@@ -32,13 +33,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const settings = await getSiteSettings();
   return (
-    <html lang="ko">
+    <html lang="ko" data-scroll-behavior="smooth">
       <head>
         <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="" />
         <link
@@ -47,9 +49,9 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <Header />
+        <Header settings={settings} />
         <main>{children}</main>
-        <Footer />
+        <Footer settings={settings} />
       </body>
     </html>
   );

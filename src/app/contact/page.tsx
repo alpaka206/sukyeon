@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PageHeader from "@/components/PageHeader";
 import ContactForm from "@/components/ContactForm";
+import { getSiteSettings } from "@/lib/content";
 
 export const metadata: Metadata = { title: "온라인 견적·문의" };
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const c = (await getSiteSettings())?.company;
   return (
     <>
       <PageHeader eyebrow="CONTACT" title="온라인 견적·문의" />
@@ -15,22 +17,22 @@ export default function ContactPage() {
         <div className="flex flex-col gap-4.5">
           <div className="relative overflow-hidden rounded-[18px] bg-navy p-8 text-white">
             <h3 className="relative m-0 mb-4.5 text-[20px] font-extrabold">전화 문의</h3>
-            <a href="tel:032-575-2492" className="relative mb-1.5 block text-[26px] font-extrabold text-[#4f74e6]">
-              032-575-2492
+            <a href={`tel:${c?.tel ?? ""}`} className="relative mb-1.5 block text-[26px] font-extrabold text-[#4f74e6]">
+              {c?.tel}
             </a>
-            <div className="relative text-[14px] text-[#b6c3d6]">FAX 032-575-2493</div>
-            <a href="mailto:sukyeonmro@naver.com" className="relative mt-1 block text-[14px] text-[#4f74e6]">
-              sukyeonmro@naver.com
+            <div className="relative text-[14px] text-[#b6c3d6]">FAX {c?.fax}</div>
+            <a href={`mailto:${c?.email ?? ""}`} className="relative mt-1 block text-[14px] text-[#4f74e6]">
+              {c?.email}
             </a>
             <div className="relative mt-3.5 text-[14px] leading-[1.6] text-[#b6c3d6]">
-              평일 08:00 ~ 17:00
+              {c?.hours}
             </div>
           </div>
 
           <div className="rounded-[18px] border border-[#eaeef3] p-8">
             <h3 className="m-0 mb-3 text-[18px] font-bold text-navy">찾아오시는 길</h3>
             <p className="m-0 mb-4 text-[15px] leading-[1.7] text-[#5a6680]">
-              인천광역시 서구 염곡로 15번길 16
+              {c?.address}
             </p>
             <Link href="/about#sec-location" className="link-teal text-[14px] font-bold text-[#22409b]">
               지도 보기 →

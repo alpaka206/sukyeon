@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { nav, company } from "@/lib/site";
+import type { SiteSettings } from "@/lib/content";
 
 function Chevron() {
   return (
@@ -12,23 +12,25 @@ function Chevron() {
   );
 }
 
-export default function Header() {
+export default function Header({ settings }: { readonly settings: SiteSettings | null }) {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const nav = settings?.nav ?? [];
+  const company = settings?.company;
 
   return (
     <header className="sticky top-0 z-50">
       {/* utility bar */}
       <div className="hidden h-10 items-center justify-between bg-ink wide-shell text-[13px] text-[#9fb0c9] sm:flex">
         <span className="font-mono tracking-[1px] truncate pr-4">
-          다이캐스팅 이형제 · 프란자오일 · 부자재 전문 생산업체
+          {settings?.footerTagline}
         </span>
         <div className="flex shrink-0 items-center gap-5.5">
           <span className="flex items-center gap-1.5">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#4f74e6" strokeWidth="2">
               <path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.08 4.18 2 2 0 0 1 5 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" />
             </svg>
-            {company.tel}
+            {company?.tel}
           </span>
           <span className="flex items-center gap-1.5">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#4f74e6" strokeWidth="2">
@@ -36,7 +38,7 @@ export default function Header() {
               <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
               <path d="M6 14h12v8H6z" />
             </svg>
-            {company.fax}
+            {company?.fax}
           </span>
         </div>
       </div>
@@ -45,7 +47,7 @@ export default function Header() {
       <div className="flex h-19.5 items-center justify-between border-b border-[#eaeef3] bg-white/92 wide-shell backdrop-blur-[10px]">
         <Link href="/" className="flex items-center" aria-label="석연MRO 홈">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/logo.png" alt="석연MRO" className="block h-9.5 w-auto" />
+          {settings?.logo && <img src={settings.logo} alt={company?.name ?? "석연MRO"} className="block h-9.5 w-auto" />}
         </Link>
 
         {/* desktop menu */}

@@ -174,3 +174,171 @@ export async function getCerts(): Promise<CertItem[]> {
     return [];
   }
 }
+
+// ─────────────────────────────────────────────────────────────
+// 제품소개 (라인업 = 이형제·프란자오일, 갤러리 = 사출·스프레이·용탕)
+// ─────────────────────────────────────────────────────────────
+export type ProductDoc = { readonly label: string; readonly href: string };
+export type LineupItem = {
+  readonly code: string;
+  readonly image: string;
+  readonly summary: string;
+  readonly points: readonly string[];
+  readonly documents: readonly ProductDoc[];
+};
+export type ProductLineup = {
+  readonly key: string;
+  readonly eyebrow: string;
+  readonly title: string;
+  readonly brand: string;
+  readonly intro: string;
+  readonly bullets: readonly string[];
+  readonly items: readonly LineupItem[];
+};
+export type GalleryProduct = {
+  readonly image: string;
+  readonly title: string;
+  readonly summary: string;
+};
+export type ProductGallery = {
+  readonly key: string;
+  readonly eyebrow: string;
+  readonly title: string;
+  readonly intro: string;
+  readonly items: readonly GalleryProduct[];
+};
+
+const LINEUPS_Q = `*[_type=="productLineup"]|order(order asc){key,eyebrow,title,brand,intro,bullets,items[]{code,"image":image.asset->url,summary,points,documents[]{label,href}}}`;
+const GALLERIES_Q = `*[_type=="productGallery"]|order(order asc){key,eyebrow,title,intro,items[]{"image":image.asset->url,title,summary}}`;
+
+export async function getProductLineups(): Promise<ProductLineup[]> {
+  if (!sanityClient) return [];
+  try {
+    const r = await sanityClient.fetch<ProductLineup[]>(LINEUPS_Q);
+    return r ?? [];
+  } catch (e) {
+    console.error("[content] Sanity 제품 라인업 조회 실패:", e);
+    return [];
+  }
+}
+
+export async function getProductGalleries(): Promise<ProductGallery[]> {
+  if (!sanityClient) return [];
+  try {
+    const r = await sanityClient.fetch<ProductGallery[]>(GALLERIES_Q);
+    return r ?? [];
+  } catch (e) {
+    console.error("[content] Sanity 제품 갤러리 조회 실패:", e);
+    return [];
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// 홈 화면
+// ─────────────────────────────────────────────────────────────
+export type HeroSlide = { readonly desktop: string; readonly mobile: string; readonly alt: string };
+export type HomeCard = { readonly image: string; readonly title: string; readonly tag: string; readonly desc: string; readonly href: string };
+export type HomeWhy = { readonly icon: string; readonly title: string; readonly desc: string };
+export type HomePage = {
+  readonly hero: {
+    readonly titleLine1: string; readonly titleLine2: string;
+    readonly copyLine1: string; readonly copyLine2: string;
+    readonly primaryLabel: string; readonly primaryHref: string;
+    readonly secondaryLabel: string; readonly secondaryHref: string;
+    readonly slides: readonly HeroSlide[];
+  };
+  readonly productsHeading: { readonly eyebrow: string; readonly title: string; readonly moreLabel: string; readonly moreHref: string };
+  readonly productCards: readonly HomeCard[];
+  readonly productsCta: { readonly title: string; readonly desc: string; readonly label: string; readonly href: string };
+  readonly whyHeading: { readonly eyebrow: string; readonly title: string };
+  readonly whyItems: readonly HomeWhy[];
+  readonly contactCta: {
+    readonly title: string; readonly desc: string;
+    readonly primaryLabel: string; readonly primaryHref: string;
+    readonly phoneLabel: string; readonly phoneHref: string;
+  };
+};
+
+const HOME_Q = `*[_type=="homePage"][0]{
+  hero{titleLine1,titleLine2,copyLine1,copyLine2,primaryLabel,primaryHref,secondaryLabel,secondaryHref,slides[]{"desktop":desktopImage.asset->url,"mobile":mobileImage.asset->url,alt}},
+  productsHeading,
+  productCards[]{"image":image.asset->url,title,tag,desc,href},
+  productsCta,
+  whyHeading,
+  whyItems[]{icon,title,desc},
+  contactCta
+}`;
+
+export async function getHomePage(): Promise<HomePage | null> {
+  if (!sanityClient) return null;
+  try {
+    return (await sanityClient.fetch<HomePage | null>(HOME_Q)) ?? null;
+  } catch (e) {
+    console.error("[content] Sanity 홈 조회 실패:", e);
+    return null;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// 사이트 설정 (회사정보·메뉴·푸터)
+// ─────────────────────────────────────────────────────────────
+export type NavChild = { readonly label: string; readonly href: string };
+export type NavItem = { readonly label: string; readonly href: string; readonly children?: readonly NavChild[] };
+export type FooterLink = { readonly label: string; readonly href: string };
+export type FooterColumn = { readonly title: string; readonly links: readonly FooterLink[] };
+export type Company = {
+  readonly name: string; readonly nameEn: string; readonly ceo: string; readonly address: string;
+  readonly tel: string; readonly fax: string; readonly email: string; readonly bizNo: string;
+  readonly hours: string; readonly blog: string;
+};
+export type SiteSettings = {
+  readonly logo: string;
+  readonly company: Company;
+  readonly nav: readonly NavItem[];
+  readonly footerTagline: string;
+  readonly footerColumns: readonly FooterColumn[];
+};
+
+const SETTINGS_Q = `*[_type=="siteSettings"][0]{"logo":logo.asset->url,company,nav[]{label,href,children[]{label,href}},footerTagline,footerColumns[]{title,links[]{label,href}}}`;
+
+export async function getSiteSettings(): Promise<SiteSettings | null> {
+  if (!sanityClient) return null;
+  try {
+    return (await sanityClient.fetch<SiteSettings | null>(SETTINGS_Q)) ?? null;
+  } catch (e) {
+    console.error("[content] Sanity 사이트설정 조회 실패:", e);
+    return null;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// 회사소개
+// ─────────────────────────────────────────────────────────────
+export type AboutValue = { readonly no: string; readonly title: string; readonly desc: string };
+export type EquipRow = { readonly no: string; readonly name: string; readonly cap: string };
+export type HistoryEntry = { readonly year: string; readonly lines: readonly string[] };
+export type AboutPage = {
+  readonly greeting: { readonly heading: string; readonly paragraphs: readonly string[]; readonly signName: string; readonly signLabel: string; readonly image: string };
+  readonly info: { readonly heading: string; readonly paragraphs: readonly string[]; readonly image: string; readonly values: readonly AboutValue[] };
+  readonly equipment: { readonly desc: string; readonly rows: readonly EquipRow[] };
+  readonly history: { readonly desc: string; readonly entries: readonly HistoryEntry[] };
+  readonly location: { readonly mapNote: string };
+};
+
+const ABOUT_Q = `*[_type=="aboutPage"][0]{
+  greeting{heading,paragraphs,signName,signLabel,"image":image.asset->url},
+  info{heading,paragraphs,"image":image.asset->url,values[]{no,title,desc}},
+  equipment{desc,rows[]{no,name,cap}},
+  history{desc,entries[]{year,lines}},
+  location{mapNote}
+}`;
+
+export async function getAboutPage(): Promise<AboutPage | null> {
+  if (!sanityClient) return null;
+  try {
+    return (await sanityClient.fetch<AboutPage | null>(ABOUT_Q)) ?? null;
+  } catch (e) {
+    console.error("[content] Sanity 회사소개 조회 실패:", e);
+    return null;
+  }
+}

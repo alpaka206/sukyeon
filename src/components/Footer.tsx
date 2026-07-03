@@ -1,27 +1,27 @@
 import Link from "next/link";
-import { company, footerColumns } from "@/lib/site";
+import type { SiteSettings } from "@/lib/content";
 
-export default function Footer() {
+export default function Footer({ settings }: { readonly settings: SiteSettings | null }) {
+  const company = settings?.company;
+  const footerColumns = settings?.footerColumns ?? [];
   return (
     <footer className="bg-navy shell pb-10 pt-15 text-[#8ea1bd]">
       <div className="grid grid-cols-2 gap-8 border-b border-white/10 pb-10 md:grid-cols-2 lg:grid-cols-[2.2fr_1fr_1fr_1fr]">
         <div className="col-span-2 lg:col-span-1">
           <div className="mb-4 text-[22px] font-extrabold text-white">
-            석연<span className="text-[#4f74e6]">MRO</span>
+            {company?.name ?? "석연MRO"}
           </div>
           <p className="m-0 mb-4 text-[14px] leading-[1.8]">
-            <span className="lg:whitespace-nowrap">
-              알루미늄 다이캐스팅 이형제·프란자오일·작동유·습동면유·소모성 부자재 전문 제조
-            </span>
+            <span className="lg:whitespace-nowrap">{settings?.footerTagline}</span>
             <br />
-            {company.address}
+            {company?.address}
             <br />
-            대표 {company.ceo} · 사업자등록번호 {company.bizNo}
+            대표 {company?.ceo} · 사업자등록번호 {company?.bizNo}
           </p>
           <div className="flex flex-wrap gap-x-4.5 gap-y-1.5 text-[14px]">
-            <span>TEL {company.tel}</span>
-            <span>FAX {company.fax}</span>
-            <span>{company.email}</span>
+            <span>TEL {company?.tel}</span>
+            <span>FAX {company?.fax}</span>
+            <span>{company?.email}</span>
           </div>
         </div>
 

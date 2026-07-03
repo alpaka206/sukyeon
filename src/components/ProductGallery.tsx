@@ -43,6 +43,7 @@ export function ProductGallery({ items, groupLabel, variant = "wide" }: Props) {
                 alt={item.title}
                 width={280}
                 height={160}
+                style={{ width: "auto", height: "auto" }}
                 className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-[1.04]"
               />
             </div>
@@ -173,6 +174,7 @@ function ProductModal({ items, index, groupLabel, onClose, onIndexChange }: Moda
               alt={item.title}
               width={440}
               height={320}
+              style={{ width: "auto", height: "auto" }}
               className="max-h-full max-w-full object-contain"
             />
           </div>
