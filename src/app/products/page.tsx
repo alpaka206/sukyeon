@@ -1,71 +1,65 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import PageHeader from "@/components/PageHeader";
-import { ProductDetailSelector } from "@/components/ProductDetailSelector";
+import { ProductGallery, type GalleryItem } from "@/components/ProductGallery";
 import SectionLayout from "@/components/SectionLayout";
 import { pranzaProductDetails, releaseProductDetails } from "./productDetails";
 
-export const metadata: Metadata = { title: "제품안내" };
+export const metadata: Metadata = { title: "제품소개" };
 
 const navItems = [
   { id: "p-release", label: "이형제" },
   { id: "p-pranza", label: "프란자오일" },
-  { id: "p-etc-parts", label: "기타 부자재" },
-  { id: "p-spray", label: "스프레이/사출제품" },
+  { id: "p-machine-parts", label: "사출 부품" },
+  { id: "p-spray", label: "스프레이 부품" },
+  { id: "p-crucible", label: "용탕 관리제품" },
 ];
 
-type ProductPhoto = {
-  readonly src: string;
-  readonly alt: string;
-  readonly label: string;
-};
+const machineParts = [
+  { image: "/assets/products/machine-parts/coolingrod.png", title: "냉각로드", summary: "열처리·비열처리 냉각로드" },
+  { image: "/assets/products/machine-parts/sleeve.png", title: "기계 슬리브", summary: "다이캐스팅 슬리브" },
+  { image: "/assets/products/machine-parts/bushing.png", title: "부싱", summary: "표면 열처리 부싱" },
+  { image: "/assets/products/machine-parts/hardchamba.png", title: "하드참바 노즐", summary: "노즐바디 · 노즐콘" },
+  { image: "/assets/products/machine-parts/ring.png", title: "링구", summary: "하드참바 링구" },
+  { image: "/assets/products/machine-parts/pranzatip.png", title: "프란자 팁", summary: "Ø35~Ø150 프란자 팁" },
+  { image: "/assets/products/machine-parts/tip.png", title: "팁", summary: "플런저 팁" },
+  { image: "/assets/products/machine-parts/coupling.png", title: "카프링", summary: "2분할 · 3분할 카프링" },
+  { image: "/assets/products/machine-parts/oilpump.png", title: "오일펌프", summary: "윤활 오일펌프" },
+] satisfies readonly GalleryItem[];
 
-type FeatureText = {
-  readonly title: string;
-  readonly desc: string;
-};
+const crucibleTools = [
+  { image: "/assets/products/crucible/thermocouple.png", title: "열전대 · 커버", summary: "씨스형 측온저항체 · 세라믹 커버" },
+  { image: "/assets/products/crucible/ladle.png", title: "레들", summary: "0.15kg~30kg 레들" },
+  { image: "/assets/products/crucible/jokja.png", title: "쪽자", summary: "특대 · 대 · 1호~8호 쪽자" },
+  { image: "/assets/products/crucible/tongs.png", title: "집게", summary: "현장용 집게" },
+  { image: "/assets/products/crucible/shovel.png", title: "삽", summary: "탕면 정리용 삽" },
+] satisfies readonly GalleryItem[];
 
-const miscPhotos = [
-  {
-    src: "/assets/products/misc-tongs.jpg",
-    alt: "다이캐스팅 현장용 집게 부자재",
-    label: "집게 · 현장 공구",
-  },
-  {
-    src: "/assets/products/misc-hardware.jpg",
-    alt: "하드참바 노즐과 금속 부자재",
-    label: "하드참바 · 노즐 부품",
-  },
-] satisfies readonly ProductPhoto[];
+const sprayParts = [
+  { image: "/assets/products/spray/gun.png", title: "스프레이건", summary: "BS형 · L형 핸드 스프레이건" },
+  { image: "/assets/products/spray/cassette.png", title: "블럭형 카세트", summary: "블럭형 스프레이 카세트" },
+  { image: "/assets/products/spray/cassette-plate.png", title: "판재형 카세트", summary: "판재형 스프레이 카세트" },
+  { image: "/assets/products/spray/nozzle.png", title: "노즐 · 분사노즐", summary: "7구 · 12구 스프레이 노즐" },
+  { image: "/assets/products/spray/mixing-valve.png", title: "도시바 믹싱밸브", summary: "도시바 믹싱밸브" },
+  { image: "/assets/products/spray/copperpipe.png", title: "동파이프", summary: "Ø5 · Ø6 · Ø8 스프레이 동파이프" },
+] satisfies readonly GalleryItem[];
 
-const sprayPhotos = [
-  {
-    src: "/assets/products/spray-cassette.jpg",
-    alt: "스프레이 카세트와 노즐 부품",
-    label: "스프레이 카세트",
-  },
-  {
-    src: "/assets/products/spray-copper-pipes.jpg",
-    alt: "스프레이용 동파이프 부품",
-    label: "스프레이 동파이프",
-  },
-] satisfies readonly ProductPhoto[];
+const releaseGalleryItems: GalleryItem[] = releaseProductDetails.map((detail) => ({
+  image: detail.image,
+  title: detail.code,
+  summary: detail.summary,
+  points: detail.points,
+  documents: detail.documents,
+}));
 
-const miscHighlights = [
-  { title: "열전대 · 커버", desc: "AL/Mg용 외장재, 씨스형 측온저항체, 주물·흑연·세라믹 커버" },
-  { title: "레들 · 쪽자", desc: "0.15kg~30kg 레들, 특대·대·1호~8호 쪽자" },
-  { title: "하드참바 부품", desc: "링구, 노즐바디, 노즐콘 등 교체 부품" },
-  { title: "공정 보조재", desc: "다이코트, 라이닝제, 구리스, 세라믹코팅제, 집게, 탈산제, 탈가스제" },
-] satisfies readonly FeatureText[];
-
-const sprayHighlights = [
-  { title: "스프레이건 · 카세트", desc: "BS형/L형 핸드 스프레이건, 블럭형·판재형 카세트" },
-  { title: "노즐 · 동파이프", desc: "7구·12구 노즐, Ø5/Ø6/Ø8 스프레이 동파이프" },
-  { title: "냉각로드 · 부싱", desc: "열처리/비열처리 냉각로드, 표면 열처리 부싱" },
-  { title: "사출부품", desc: "기계 슬리브, 프란자 팁 Ø35~Ø150, 2분할·3분할 카프링" },
-] satisfies readonly FeatureText[];
+const pranzaGalleryItems: GalleryItem[] = pranzaProductDetails.map((detail) => ({
+  image: detail.image,
+  title: detail.code,
+  summary: detail.summary,
+  points: detail.points,
+  documents: detail.documents,
+}));
 
 function DownloadSvg() {
   return (
@@ -94,54 +88,6 @@ function Bullet({ children }: { readonly children: ReactNode }) {
   );
 }
 
-function ProductPhotoStack({ images }: { readonly images: readonly ProductPhoto[] }) {
-  return (
-    <div className="grid grid-cols-1 gap-3 sm:grid-cols-[1.1fr_0.9fr]">
-      {images.map((image, index) => (
-        <figure
-          key={image.src}
-          className="relative m-0 min-h-57.5 overflow-hidden rounded-[18px] border border-[#e2e6ed] bg-[#f6f9fb] sm:min-h-90"
-        >
-          <Image
-            src={image.src}
-            alt={image.alt}
-            fill
-            sizes={index === 0 ? "(max-width: 768px) 100vw, 45vw" : "(max-width: 768px) 100vw, 36vw"}
-            className="object-contain p-3"
-          />
-          <figcaption className="absolute bottom-3 left-3 rounded-[8px] bg-white/92 px-3 py-2 text-[13px] font-bold text-navy shadow-[0_12px_30px_-18px_rgba(10,27,51,0.45)]">
-            {image.label}
-          </figcaption>
-        </figure>
-      ))}
-    </div>
-  );
-}
-
-function FeatureGrid({ items }: { readonly items: readonly FeatureText[] }) {
-  return (
-    <div className="mb-7 grid grid-cols-1 gap-3 sm:grid-cols-2">
-      {items.map((item) => (
-        <div key={item.title} className="rounded-[14px] border border-[#e2e6ed] bg-white p-5">
-          <h3 className="m-0 mb-2 text-[16px] font-extrabold text-navy">{item.title}</h3>
-          <p className="m-0 text-[14.5px] leading-[1.65] text-[#5a6680]">{item.desc}</p>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function InquiryLink({ children }: { readonly children: ReactNode }) {
-  return (
-    <Link href="/contact" className="link-teal inline-flex items-center gap-2 text-[15px] font-bold text-[#22409b]">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <path d="M14 9V5a3 3 0 0 0-6 0v4M5 9h14l1 12H4L5 9z" />
-      </svg>
-      {children}
-    </Link>
-  );
-}
-
 const eyebrowCls = "mb-3.5 font-mono text-[13px] tracking-[2px] text-[#22409b]";
 const h2Cls = "m-0 mb-4 fs-3 font-extrabold tracking-[-0.8px] text-navy";
 const pCls = "m-0 mb-6 text-[16px] leading-[1.8] text-[#5a6680]";
@@ -149,8 +95,8 @@ const pCls = "m-0 mb-6 text-[16px] leading-[1.8] text-[#5a6680]";
 export default function ProductsPage() {
   return (
     <>
-      <PageHeader eyebrow="PRODUCTS" title="제품안내" wide />
-      <SectionLayout eyebrow="PRODUCTS" title="제품안내" items={navItems} wide>
+      <PageHeader eyebrow="PRODUCTS" title="제품소개" wide />
+      <SectionLayout eyebrow="PRODUCTS" title="제품소개" items={navItems} wide>
         <section id="p-release" className="spy-section grid grid-cols-1 items-start gap-10 wide-shell py-16 lg:grid-cols-[0.86fr_1.14fr] lg:gap-14 lg:py-20">
           <div>
             <div className={eyebrowCls}>RELEASE AGENT</div>
@@ -167,7 +113,7 @@ export default function ProductsPage() {
             </div>
             <MsdsLink />
           </div>
-          <ProductDetailSelector label="CAST ONE LINEUP" items={releaseProductDetails} />
+          <ProductGallery groupLabel="이형제 CAST ONE" variant="panel" items={releaseGalleryItems} />
         </section>
 
         <section id="p-pranza" className="spy-section grid grid-cols-1 items-start gap-10 bg-[#f6f9fb] wide-shell py-16 lg:grid-cols-[0.86fr_1.14fr] lg:gap-14 lg:py-20">
@@ -187,36 +133,47 @@ export default function ProductsPage() {
             <MsdsLink />
           </div>
           <div className="lg:order-2">
-            <ProductDetailSelector label="LUBE ONE LINEUP" items={pranzaProductDetails} />
+            <ProductGallery groupLabel="프란자오일 LUBE ONE" variant="panel" items={pranzaGalleryItems} />
           </div>
         </section>
 
-        <section id="p-etc-parts" className="spy-section grid grid-cols-1 items-center gap-10 wide-shell py-16 lg:grid-cols-[1.04fr_0.96fr] lg:gap-14 lg:py-20">
-          <ProductPhotoStack images={miscPhotos} />
-          <div>
-            <div className={eyebrowCls}>AUXILIARY PARTS</div>
-            <h2 className={h2Cls}>기타 부자재</h2>
+        <section id="p-machine-parts" className="spy-section wide-shell py-16 lg:py-20">
+          <div className="mb-9 max-w-220">
+            <div className={eyebrowCls}>INJECTION PARTS</div>
+            <h2 className={h2Cls}>사출 부품</h2>
             <p className={pCls}>
-              다이캐스팅 라인 운영에 필요한 열전대, 레들, 하드참바, 쪽자, 코팅·처리 자재를 함께 공급합니다. 설비 규격과 공정 조건에 맞춰 필요한 품목을 확인해 드립니다.
+              사출부 유지보수에 필요한 냉각로드, 슬리브, 부싱, 하드참바, 프란자 팁 등 정밀 가공 부품을 공급합니다.
+              <br />
+              표준 규격뿐 아니라 비규격 제품도 상담 가능합니다.
             </p>
-            <FeatureGrid items={miscHighlights} />
-            <InquiryLink>기타 부자재 견적 문의</InquiryLink>
           </div>
+          <ProductGallery groupLabel="사출 부품" items={machineParts} />
         </section>
 
-        <section id="p-spray" className="spy-section grid grid-cols-1 items-center gap-10 bg-[#f6f9fb] wide-shell py-16 lg:grid-cols-[0.96fr_1.04fr] lg:gap-14 lg:py-20">
-          <div className="lg:order-1">
-            <div className={eyebrowCls}>SPRAY & INJECTION PARTS</div>
-            <h2 className={h2Cls}>스프레이/사출제품</h2>
+        <section id="p-spray" className="spy-section bg-[#f6f9fb] wide-shell py-16 lg:py-20">
+          <div className="mb-9 max-w-220">
+            <div className={eyebrowCls}>SPRAY PARTS</div>
+            <h2 className={h2Cls}>스프레이 부품</h2>
             <p className={pCls}>
-              이형제 도포와 사출부 유지보수에 필요한 스프레이건, 카세트, 노즐, 동파이프, 냉각로드, 슬리브, 프란자 팁을 공급합니다. 표준 규격뿐 아니라 비규격 제품도 상담 가능합니다.
+              이형제 도포에 필요한 스프레이건, 카세트, 노즐, 동파이프, 믹싱밸브를 공급합니다.
+              <br />
+              표준 규격뿐 아니라 비규격 제품도 상담 가능합니다.
             </p>
-            <FeatureGrid items={sprayHighlights} />
-            <InquiryLink>스프레이/사출제품 견적 문의</InquiryLink>
           </div>
-          <div className="lg:order-2">
-            <ProductPhotoStack images={sprayPhotos} />
+          <ProductGallery groupLabel="스프레이 부품" items={sprayParts} />
+        </section>
+
+        <section id="p-crucible" className="spy-section wide-shell py-16 lg:py-20">
+          <div className="mb-9 max-w-220">
+            <div className={eyebrowCls}>MOLTEN METAL HANDLING</div>
+            <h2 className={h2Cls}>용탕 관리제품</h2>
+            <p className={pCls}>
+              용탕 계량·이송·측온에 필요한 레들, 쪽자, 열전대, 집게, 삽 등 현장 공구를 함께 공급합니다.
+              <br />
+              설비 규격과 공정 조건에 맞춰 필요한 품목을 확인해 드립니다.
+            </p>
           </div>
+          <ProductGallery groupLabel="용탕 관리제품" items={crucibleTools} />
         </section>
 
         <div className="wide-shell pb-20">

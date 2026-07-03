@@ -51,7 +51,7 @@ const infoRows = [
   { k: "팩스", v: "032-575-2493" },
   { k: "이메일", v: "sukyeonmro@naver.com" },
   { k: "상호", v: "석연MRO · 대표 정원재" },
-  { k: "영업시간", v: "평일 09:00 – 18:00 (점심 12:00 – 13:00)" },
+  { k: "영업시간", v: "평일 08:00 ~ 17:00" },
 ];
 
 export default function AboutPage() {

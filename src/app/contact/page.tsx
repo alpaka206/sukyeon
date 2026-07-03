@@ -23,9 +23,7 @@ export default function ContactPage() {
               sukyeonmro@naver.com
             </a>
             <div className="relative mt-3.5 text-[14px] leading-[1.6] text-[#b6c3d6]">
-              평일 09:00 – 18:00
-              <br />
-              점심 12:00 – 13:00
+              평일 08:00 ~ 17:00
             </div>
           </div>
 

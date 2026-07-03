@@ -9,7 +9,7 @@ export const company = {
   fax: "032-575-2493",
   email: "sukyeonmro@naver.com",
   bizNo: "137-11-73397",
-  hours: "평일 09:00 – 18:00 (점심 12:00 – 13:00)",
+  hours: "평일 08:00 ~ 17:00",
   since: "1996",
   blog: "http://blog.naver.com/sukyuen2492",
 } as const;
@@ -24,7 +24,7 @@ export type NavItem = {
 // 메인 GNB
 export const nav: NavItem[] = [
   { label: "회사소개", href: "/about" },
-  { label: "제품안내", href: "/products" },
+  { label: "제품소개", href: "/products" },
   { label: "자료실", href: "/data" },
   { label: "인증·특허", href: "/cert" },
   {
@@ -53,8 +53,9 @@ export const footerColumns = [
     links: [
       { label: "이형제", href: "/products#p-release" },
       { label: "프란자오일", href: "/products#p-pranza" },
-      { label: "기타 부자재", href: "/products#p-etc-parts" },
-      { label: "스프레이/사출제품", href: "/products#p-spray" },
+      { label: "사출 부품", href: "/products#p-machine-parts" },
+      { label: "스프레이 부품", href: "/products#p-spray" },
+      { label: "용탕 관리제품", href: "/products#p-crucible" },
     ],
   },
   {

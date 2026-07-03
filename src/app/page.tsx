@@ -1,14 +1,7 @@
 import Link from "next/link";
 import HeroCarousel from "@/components/HeroCarousel";
-import { ProductIconCard, ProductImageCard } from "@/components/ProductCards";
+import { ProductImageCard } from "@/components/ProductCards";
 import { getNews } from "@/lib/content";
-
-const metrics = [
-  { label: "제조 경력", value: "30년+", brand: false },
-  { label: "누적 거래처", value: "350+", brand: false },
-  { label: "취급 품목", value: "4개 분야", brand: false },
-  { label: "설립", value: "1996년", brand: true },
-];
 
 const whyUs = [
   {
@@ -92,24 +85,6 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* metric line */}
-      <section className="grid grid-cols-2 shell border-t border-b border-[#eaeef3] lg:grid-cols-4">
-        {metrics.map((m) => (
-          <div
-            key={m.label}
-            className="border-[#eaeef3] py-8.5 pr-5 lg:pr-10 not-nth-[2n+1]:pl-5 lg:not-nth-[4n+1]:pl-10 not-nth-[2n]:border-r nth-[-n+2]:border-b lg:not-last:border-r lg:nth-[-n+2]:border-b-0"
-          >
-            <div className="mb-2 text-[14px] font-semibold text-[#8a96ab]">{m.label}</div>
-            <div
-              className="text-[28px] font-extrabold tracking-[-0.5px] lg:text-[32px]"
-              style={{ color: m.brand ? "#22409b" : "#0a1b33" }}
-            >
-              {m.value}
-            </div>
-          </div>
-        ))}
-      </section>
-
       {/* products preview */}
       <section className="bg-white shell py-16 lg:py-22">
         <div className="mb-12 flex items-end justify-between">
@@ -118,7 +93,7 @@ export default async function Home() {
               PRODUCTS
             </div>
             <h2 className="m-0 fs-2 font-extrabold tracking-[-1px] text-navy">
-              생산하는 제품
+              제품소개
             </h2>
           </div>
           <Link href="/products" className="link-teal shrink-0 cursor-pointer text-[15px] font-bold text-[#22409b]">
@@ -126,32 +101,11 @@ export default async function Home() {
           </Link>
         </div>
         <div className="grid grid-cols-1 gap-5.5 sm:grid-cols-2 lg:grid-cols-3">
-          <ProductImageCard href="/products#p-release" img="/assets/release_SR950.png" alt="CAST ONE 이형제" title="이형제" tag="CAST ONE" desc="수성·유성 다이캐스팅 이형제. 우수한 이형성과 고온 안정성." />
-          <ProductImageCard href="/products#p-pranza" img="/assets/pranza_SL600.png" alt="LUBE ONE 프란자오일" title="프란자오일" tag="LUBE ONE" desc="플런저 윤활용 프란자오일. 사출 안정성과 설비 수명 향상." />
-          <ProductIconCard href="/products#p-etc-parts" title="기타 부자재" desc="열전대·레들·하드참바·쪽자 등 공정 부자재를 함께 공급합니다.">
-            <path d="M4 7h16M7 7v12M17 7v12M6 19h12" />
-            <path d="M8 4h8l1 3H7l1-3z" />
-            <path d="M10 11h4M10 15h4" />
-          </ProductIconCard>
-          <ProductIconCard href="/products#p-spray" title="스프레이/사출제품" desc="스프레이건·카세트·노즐·동파이프·프란자 팁을 공급합니다.">
-            <path d="M4 16h6l8-8" />
-            <path d="M14 8l2 2 4-4-2-2-4 4z" />
-            <path d="M3 18h7M12 14l5 5" />
-          </ProductIconCard>
-          <Link href="/data" className="card-link overflow-hidden rounded-2xl border border-[#e2e6ed] bg-white">
-            <div className="flex h-40 items-center justify-center bg-[#22409b]">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.6">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" />
-              </svg>
-            </div>
-            <div className="p-6.5">
-              <h3 className="m-0 mb-2 text-[20px] font-bold">MSDS · 기술 자료</h3>
-              <p className="m-0 text-[15px] leading-[1.6] text-[#5a6680]">
-                전 제품 MSDS(GHS)와 시험성적서를 자료실에서 제공합니다.
-              </p>
-            </div>
-          </Link>
+          <ProductImageCard href="/products#p-release" img="/assets/categories/release.png" alt="CAST ONE 이형제" title="이형제" tag="CAST ONE" desc="수성·유성 다이캐스팅 이형제. 우수한 이형성과 고온 안정성." />
+          <ProductImageCard href="/products#p-pranza" img="/assets/categories/pranza.png" alt="LUBE ONE 프란자오일" title="프란자오일" tag="LUBE ONE" desc="플런저 윤활용 프란자오일. 사출 안정성과 설비 수명 향상." />
+          <ProductImageCard href="/products#p-machine-parts" img="/assets/categories/machine-parts.png" alt="사출 부품" title="사출 부품" desc="냉각로드·슬리브·부싱·하드참바·프란자 팁 등 정밀 가공 부품." />
+          <ProductImageCard href="/products#p-spray" img="/assets/categories/spray.png" alt="스프레이 부품" title="스프레이 부품" desc="스프레이건·카세트·노즐·동파이프 등 이형제 도포 부품." />
+          <ProductImageCard href="/products#p-crucible" img="/assets/categories/crucible.png" alt="용탕 관리제품" title="용탕 관리제품" desc="레들·쪽자·열전대·집게·삽 등 용탕 관리 현장 공구." />
           <div className="flex flex-col justify-center overflow-hidden rounded-2xl bg-navy p-7.5 text-white">
             <h3 className="m-0 mb-2.5 text-[21px] font-extrabold leading-[1.4]">
               우리 공정에 맞는
