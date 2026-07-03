@@ -4,16 +4,19 @@ import { visionTool } from "@sanity/vision";
 import { schemaTypes } from "./schemaTypes";
 import { structure, SINGLETONS } from "./structure";
 
-// projectId/dataset 은 studio/.env 의 SANITY_STUDIO_PROJECT_ID / SANITY_STUDIO_DATASET 로 주입.
+const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "";
+const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
+
 export default defineConfig({
-  name: "default",
+  basePath: "/studio",
+  name: "sukyeon",
   title: "석연MRO 콘텐츠",
-  projectId: process.env.SANITY_STUDIO_PROJECT_ID || "",
-  dataset: process.env.SANITY_STUDIO_DATASET || "production",
+  projectId,
+  dataset,
   plugins: [structureTool({ structure }), visionTool()],
   schema: {
     types: schemaTypes,
-    // 싱글톤은 "새로 만들기" 목록에서 숨김 (구조에서 단일 문서로만 편집)
+    // 싱글톤은 "새로 만들기" 목록에서 숨김
     templates: (prev) => prev.filter((t) => !SINGLETONS.includes(t.schemaType)),
   },
   document: {

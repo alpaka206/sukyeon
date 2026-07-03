@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import { getSiteSettings } from "@/lib/content";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.sukyeonmro.co.kr"),
@@ -33,12 +30,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const settings = await getSiteSettings();
   return (
     <html lang="ko" data-scroll-behavior="smooth">
       <head>
@@ -48,11 +44,7 @@ export default async function RootLayout({
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
         />
       </head>
-      <body>
-        <Header settings={settings} />
-        <main>{children}</main>
-        <Footer settings={settings} />
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
