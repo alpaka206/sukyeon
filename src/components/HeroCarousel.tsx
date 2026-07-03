@@ -11,7 +11,7 @@ export default function HeroCarousel({ slides }: { readonly slides: readonly Her
     if (slides.length <= 1) return;
     const t = setInterval(() => {
       setActive((s) => (s + 1) % slides.length);
-    }, 4500);
+    }, 3000);
     return () => clearInterval(t);
   }, [slides.length]);
 

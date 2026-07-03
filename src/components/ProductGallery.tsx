@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 export type GalleryItem = {
@@ -9,7 +8,7 @@ export type GalleryItem = {
   readonly title: string;
   readonly summary?: string;
   readonly points?: readonly string[];
-  readonly documents?: readonly { readonly label: string; readonly href: string }[];
+  readonly documents?: readonly { readonly label: string; readonly url: string }[];
 };
 
 type Props = {
@@ -195,18 +194,24 @@ function ProductModal({ items, index, groupLabel, onClose, onIndexChange }: Moda
                 ))}
               </ul>
             )}
-            {item.documents && (
+            {item.documents && item.documents.filter((d) => d.url).length > 0 && (
               <div className="mt-5 border-t border-[#e2e6ed] pt-4">
                 <div className="mb-3 text-[13px] font-extrabold text-navy">관련 자료</div>
                 <div className="flex flex-wrap gap-2">
-                  {item.documents.map((document) => (
-                    <Link
-                      key={document.href}
-                      href={document.href}
-                      className="rounded-md bg-brand-soft px-3 py-2 text-[13px] font-bold text-[#22409b] transition-colors hover:bg-[#dfe7fb]"
+                  {item.documents.filter((d) => d.url).map((document) => (
+                    <a
+                      key={document.url}
+                      href={document.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 rounded-md bg-brand-soft px-3 py-2 text-[13px] font-bold text-[#22409b] transition-colors hover:bg-[#dfe7fb]"
                     >
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <path d="M14 2v6h6" />
+                      </svg>
                       {document.label}
-                    </Link>
+                    </a>
                   ))}
                 </div>
               </div>

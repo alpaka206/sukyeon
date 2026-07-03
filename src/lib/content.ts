@@ -178,7 +178,7 @@ export async function getCerts(): Promise<CertItem[]> {
 // ─────────────────────────────────────────────────────────────
 // 제품소개 (라인업 = 이형제·프란자오일, 갤러리 = 사출·스프레이·용탕)
 // ─────────────────────────────────────────────────────────────
-export type ProductDoc = { readonly label: string; readonly href: string };
+export type ProductDoc = { readonly label: string; readonly url: string };
 export type LineupItem = {
   readonly code: string;
   readonly image: string;
@@ -208,7 +208,7 @@ export type ProductGallery = {
   readonly items: readonly GalleryProduct[];
 };
 
-const LINEUPS_Q = `*[_type=="productLineup"]|order(order asc){key,eyebrow,title,brand,intro,bullets,items[]{code,"image":image.asset->url,summary,points,documents[]{label,href}}}`;
+const LINEUPS_Q = `*[_type=="productLineup"]|order(order asc){key,eyebrow,title,brand,intro,bullets,items[]{code,"image":image.asset->url,summary,points,documents[]{"label":coalesce(label,doc->name),"url":coalesce(doc->file.asset->url,href)}}}`;
 const GALLERIES_Q = `*[_type=="productGallery"]|order(order asc){key,eyebrow,title,intro,items[]{"image":image.asset->url,title,summary}}`;
 
 export async function getProductLineups(): Promise<ProductLineup[]> {

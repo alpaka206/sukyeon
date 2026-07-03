@@ -46,10 +46,11 @@ export default defineType({
               of: [{
                 type: "object",
                 fields: [
-                  { name: "label", title: "이름", type: "string" },
-                  { name: "href", title: "링크", type: "string" },
+                  { name: "label", title: "표시 이름", type: "string", description: "비우면 자료실 문서명 사용" },
+                  { name: "doc", title: "자료실 문서 (PDF로 바로 연결)", type: "reference", to: [{ type: "doc" }] },
+                  { name: "href", title: "또는 직접 링크(URL)", type: "string", description: "자료실 문서 대신 외부/직접 링크" },
                 ],
-                preview: { select: { title: "label", subtitle: "href" } },
+                preview: { select: { title: "label", subtitle: "doc.name" } },
               }],
             },
           ],
