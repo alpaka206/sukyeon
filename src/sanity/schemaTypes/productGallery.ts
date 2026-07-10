@@ -28,11 +28,25 @@ export default defineType({
         {
           type: "object",
           fields: [
+            {
+              name: "visible",
+              title: "사이트에 노출",
+              type: "boolean",
+              initialValue: true,
+              description: "끄면 사이트에서만 숨겨지고 Studio에는 그대로 남습니다",
+            },
             { name: "image", title: "이미지", type: "image", options: { hotspot: true } },
             { name: "title", title: "품목명", type: "string", validation: (r) => r.required() },
             { name: "summary", title: "설명", type: "string" },
           ],
-          preview: { select: { title: "title", subtitle: "summary", media: "image" } },
+          preview: {
+            select: { title: "title", subtitle: "summary", media: "image", visible: "visible" },
+            prepare: ({ title, subtitle, media, visible }) => ({
+              title: visible === false ? `${title} (숨김)` : title,
+              subtitle,
+              media,
+            }),
+          },
         },
       ],
     }),

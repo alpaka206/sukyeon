@@ -208,8 +208,9 @@ export type ProductGallery = {
   readonly items: readonly GalleryProduct[];
 };
 
-const LINEUPS_Q = `*[_type=="productLineup"]|order(order asc){key,eyebrow,title,brand,intro,bullets,items[]{code,"image":image.asset->url,summary,points,documents[]{"label":coalesce(label,doc->name),"url":coalesce(doc->file.asset->url,href)}}}`;
-const GALLERIES_Q = `*[_type=="productGallery"]|order(order asc){key,eyebrow,title,intro,items[]{"image":image.asset->url,title,summary}}`;
+// items[visible != false]: 노출 토글이 꺼진 제품만 제외 (필드가 없는 기존 제품은 노출로 취급)
+const LINEUPS_Q = `*[_type=="productLineup"]|order(order asc){key,eyebrow,title,brand,intro,bullets,"items":items[visible != false]{code,"image":image.asset->url,summary,points,documents[]{"label":coalesce(label,doc->name),"url":coalesce(doc->file.asset->url,href)}}}`;
+const GALLERIES_Q = `*[_type=="productGallery"]|order(order asc){key,eyebrow,title,intro,"items":items[visible != false]{"image":image.asset->url,title,summary}}`;
 
 export async function getProductLineups(): Promise<ProductLineup[]> {
   if (!sanityClient) return [];
