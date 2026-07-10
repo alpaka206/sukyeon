@@ -23,6 +23,13 @@ export default async function AdminHome() {
       )}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Link
+          href="/admin/content"
+          className="rounded-2xl border border-[#e2e6ed] bg-white p-6 transition-colors hover:border-[#22409b]"
+        >
+          <div className="text-[15px] font-semibold text-[#8a96ab]">전체 콘텐츠</div>
+          <div className="mt-1 text-[18px] font-extrabold">홈·회사·제품·카탈로그·인증 관리</div>
+        </Link>
+        <Link
           href="/admin/news"
           className="rounded-2xl border border-[#e2e6ed] bg-white p-6 transition-colors hover:border-[#22409b]"
         >

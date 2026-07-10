@@ -1,9 +1,9 @@
-import Studio from "./Studio";
+import { redirect } from "next/navigation";
 
 export const dynamic = "force-static";
 
 export { metadata, viewport } from "next-sanity/studio";
 
-export default function StudioPage() {
-  return <Studio />;
+export default async function StudioPage() {
+  redirect("/admin/content");
 }

@@ -16,6 +16,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         <header className="border-b border-[#e2e6ed] bg-white">
           <div className="mx-auto flex max-w-[1000px] items-center justify-between px-5 py-3">
             <nav className="flex items-center gap-4 text-[15px] font-semibold">
+              <Link href="/admin/content" className="text-[#42526b] hover:text-[#22409b]">전체 콘텐츠</Link>
               <Link href="/admin" className="font-extrabold">석연MRO 관리자</Link>
               <Link href="/admin/news" className="text-[#42526b] hover:text-[#22409b]">공지사항</Link>
               <Link href="/admin/docs" className="text-[#42526b] hover:text-[#22409b]">자료실</Link>
