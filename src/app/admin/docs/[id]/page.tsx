@@ -1,21 +1,24 @@
 import { notFound, redirect } from "next/navigation";
 import { isAdmin } from "@/lib/adminSession";
 import { adminGetDocById } from "@/lib/adminData";
+import { safeContentHref } from "@/lib/adminUrl";
 import DocForm from "../DocForm";
 import { addAttachmentAction, removeAttachmentAction } from "../../actions";
 
 const input = "w-full rounded-lg border border-[#d4dae4] px-3 py-2.5 text-[15px]";
 
-export default async function EditDocPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function EditDocPage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ error?: string }> }) {
   if (!(await isAdmin())) redirect("/admin/login");
   const { id } = await params;
   const item = await adminGetDocById(id);
+  const { error } = await searchParams;
   if (!item) notFound();
 
   return (
     <div className="flex flex-col gap-10">
       <div>
         <h1 className="m-0 mb-6 text-[26px] font-extrabold">자료 수정</h1>
+        {error && <p role="alert" className="mb-4 rounded-lg border border-[#f0c9c9] bg-[#fff7f7] p-3 text-[14px] font-semibold text-[#b3261e]">{error}</p>}
         <DocForm item={item} />
       </div>
 
@@ -31,7 +34,7 @@ export default async function EditDocPage({ params }: { params: Promise<{ id: st
                 <span className="text-[15px] font-semibold">{a.name}</span>
                 {a.fileUrl && (
                   <a
-                    href={a.fileUrl}
+                    href={safeContentHref(a.fileUrl)}
                     target="_blank"
                     rel="noreferrer"
                     className="ml-3 text-[13px] font-semibold text-[#22409b]"
@@ -42,6 +45,7 @@ export default async function EditDocPage({ params }: { params: Promise<{ id: st
               </div>
               <form action={removeAttachmentAction}>
                 <input type="hidden" name="_id" value={item._id} />
+                <input type="hidden" name="_rev" value={item._rev} />
                 <input type="hidden" name="_key" value={a._key} />
                 <button
                   type="submit"
@@ -60,6 +64,7 @@ export default async function EditDocPage({ params }: { params: Promise<{ id: st
           className="flex flex-col gap-3 rounded-2xl border border-[#e2e6ed] bg-white p-4 sm:flex-row sm:items-end"
         >
           <input type="hidden" name="_id" value={item._id} />
+          <input type="hidden" name="_rev" value={item._rev} />
           <div className="flex-1">
             <label className="mb-1 block text-[13px] font-bold text-[#42526b]">이름</label>
             <input name="name" placeholder="예: 국문 MSDS" className={input} />

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import PageHeader from "@/components/PageHeader";
+import { safeContentHref } from "@/lib/adminUrl";
 import { getDocBySlug, getDocs } from "@/lib/content";
 
 type Props = {
@@ -30,6 +31,9 @@ export default async function DataDetailPage({ params }: Props) {
   }
 
   const paragraphs = item.body.length > 0 ? item.body : item.summary ? [item.summary] : [];
+  const attachments = item.attachments
+    .map((attachment) => ({ ...attachment, href: safeContentHref(attachment.file) }))
+    .filter((attachment) => attachment.href !== "#");
 
   return (
     <>
@@ -59,12 +63,12 @@ export default async function DataDetailPage({ params }: Props) {
 
           <section className="mt-10 rounded-[14px] border border-[#e2e6ed] bg-[#fbfcfe] p-6 sm:p-8">
             <h3 className="m-0 mb-5 text-[20px] font-extrabold text-navy">첨부 PDF</h3>
-            {item.attachments.length > 0 ? (
+            {attachments.length > 0 ? (
               <div className="grid gap-3">
-                {item.attachments.map((attachment) => (
+                {attachments.map((attachment) => (
                   <a
                     key={attachment.file}
-                    href={attachment.file}
+                    href={attachment.href}
                     target="_blank"
                     rel="noopener"
                     className="flex flex-col gap-3 rounded-[10px] border border-[#eaeef3] bg-white p-4 text-navy transition-colors hover:border-[#22409b] sm:flex-row sm:items-center sm:justify-between"

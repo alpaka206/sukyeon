@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import PageHeader from "@/components/PageHeader";
+import { safeContentHref } from "@/lib/adminUrl";
 import { getCerts, type CertItem } from "@/lib/content";
 
 export const metadata: Metadata = { title: "인증·특허" };
@@ -8,7 +9,10 @@ function CertCard({ cert }: { cert: CertItem }) {
   const images = [
     { src: cert.imageKo, label: "국문" },
     { src: cert.imageEn, label: "영문" },
-  ].filter((img) => img.src);
+  ].flatMap((image) => {
+    const href = safeContentHref(image.src);
+    return href === "#" ? [] : [{ ...image, href }];
+  });
 
   const rows = [
     { k: "인증기관", v: cert.issuer },
@@ -23,7 +27,7 @@ function CertCard({ cert }: { cert: CertItem }) {
         {images.map((img) => (
           <a
             key={img.src}
-            href={img.src}
+            href={img.href}
             target="_blank"
             rel="noopener noreferrer"
             className="card-link group relative block overflow-hidden rounded-xl border border-[#eaeef3] bg-white"

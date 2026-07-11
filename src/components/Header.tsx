@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import type { SiteSettings } from "@/lib/content";
+import { safeContentHref } from "@/lib/adminUrl";
 
 function Chevron() {
   return (
@@ -61,7 +62,7 @@ export default function Header({ settings }: { readonly settings: SiteSettings |
                 onMouseLeave={() => setOpenMenu(null)}
               >
                 <Link
-                  href={item.href}
+                  href={safeContentHref(item.href)}
                   className="nav-link inline-flex cursor-pointer items-center gap-1.25 rounded-lg px-3.5 py-2.5"
                 >
                   {item.label}
@@ -73,7 +74,7 @@ export default function Header({ settings }: { readonly settings: SiteSettings |
                       {item.children.map((c) => (
                         <Link
                           key={c.label}
-                          href={c.href}
+                          href={safeContentHref(c.href)}
                           className="drop-item whitespace-nowrap rounded-lg px-4 py-2.75 text-[15px] font-semibold text-[#42526b]"
                         >
                           {c.label}
@@ -86,7 +87,7 @@ export default function Header({ settings }: { readonly settings: SiteSettings |
             ) : (
               <Link
                 key={item.label}
-                href={item.href}
+                href={safeContentHref(item.href)}
                 className="nav-link cursor-pointer rounded-lg px-3.5 py-2.5"
               >
                 {item.label}
@@ -136,7 +137,7 @@ export default function Header({ settings }: { readonly settings: SiteSettings |
             {nav.map((item) => (
               <div key={item.label} className="border-b border-[#f0f3f7] py-1">
                 <Link
-                  href={item.href}
+                  href={safeContentHref(item.href)}
                   onClick={() => setMobileOpen(false)}
                   className="block py-2.5 text-[16px] font-bold text-navy"
                 >
@@ -147,7 +148,7 @@ export default function Header({ settings }: { readonly settings: SiteSettings |
                     {item.children.map((c) => (
                       <Link
                         key={c.label}
-                        href={c.href}
+                        href={safeContentHref(c.href)}
                         onClick={() => setMobileOpen(false)}
                         className="py-1.5 text-[14px] font-semibold text-[#5a6680]"
                       >

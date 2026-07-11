@@ -1,4 +1,6 @@
+import Link from "next/link";
 import type { AdminDoc } from "@/lib/adminData";
+import { safeContentHref } from "@/lib/adminUrl";
 import { saveDocAction } from "../actions";
 
 const input = "w-full rounded-lg border border-[#d4dae4] px-3 py-2.5 text-[15px]";
@@ -8,6 +10,7 @@ export default function DocForm({ item }: { item?: AdminDoc }) {
   return (
     <form action={saveDocAction} encType="multipart/form-data" className="flex flex-col gap-4">
       {item && <input type="hidden" name="_id" value={item._id} />}
+      {item && <input type="hidden" name="_rev" value={item._rev} />}
       <div>
         <label className={label}>자료명</label>
         <input name="name" required defaultValue={item?.name ?? ""} className={input} />
@@ -33,7 +36,7 @@ export default function DocForm({ item }: { item?: AdminDoc }) {
         <label className={label}>
           대표 PDF
           {item?.fileUrl && (
-            <a href={item.fileUrl} target="_blank" rel="noreferrer" className="ml-2 font-semibold text-[#22409b]">
+            <a href={safeContentHref(item.fileUrl)} target="_blank" rel="noreferrer" className="ml-2 font-semibold text-[#22409b]">
               현재 파일 보기
             </a>
           )}
@@ -58,9 +61,9 @@ export default function DocForm({ item }: { item?: AdminDoc }) {
         >
           저장
         </button>
-        <a href="/admin/docs" className="rounded-lg border border-[#d4dae4] px-5 py-2.5 text-[15px] font-semibold">
+        <Link href="/admin/docs" className="rounded-lg border border-[#d4dae4] px-5 py-2.5 text-[15px] font-semibold">
           취소
-        </a>
+        </Link>
       </div>
     </form>
   );

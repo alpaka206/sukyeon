@@ -122,6 +122,25 @@ All spacing derives from a base of 4px.
 - **Responsive rule**: keep each sentence on one line at desktop widths; allow natural wrapping below desktop.
 - **Tone**: concise manufacturing credibility, avoiding long company-introduction phrasing in the first viewport.
 
+### Admin Editor Section
+
+- **Structure**: collapsible white section with a pale-blue header tint, compact eyebrow, title, optional helper text, and a right-aligned disclosure control.
+- **Spacing**: 16px mobile padding, 20px desktop padding, 12-16px gaps inside forms.
+- **Purpose**: make long content forms scannable without turning every input into a separate card.
+- **States**: hover only on the section header and disclosure control; focus ring uses `--accent-primary`.
+
+### Admin Repeater Card
+
+- **Structure**: nested white card with a small numbered chip, title, compact move controls, and a red destructive action.
+- **Depth**: border-first, with a very restrained tinted shadow only on hover/focus-within.
+- **Responsive rule**: action labels can collapse after icons on narrow screens, but controls must remain at least 44px tall.
+
+### Admin Sticky Save Bar
+
+- **Structure**: sticky bottom toolbar with status text on the left and cancel/save actions on the right.
+- **States**: neutral when unchanged, accent-tinted when edits are pending, disabled save state when saving.
+- **Purpose**: keep the save action visible on long admin forms without obscuring form fields.
+
 ## 6. Motion & Interaction
 
 | Type | Duration | Easing | Usage |

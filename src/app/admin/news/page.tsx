@@ -4,9 +4,10 @@ import { isAdmin } from "@/lib/adminSession";
 import { adminGetNews } from "@/lib/adminData";
 import { deleteNewsAction } from "../actions";
 
-export default async function NewsListPage() {
+export default async function NewsListPage({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
   if (!(await isAdmin())) redirect("/admin/login");
   const items = await adminGetNews();
+  const { error } = await searchParams;
 
   return (
     <div>
@@ -19,6 +20,7 @@ export default async function NewsListPage() {
           + 새 공지
         </Link>
       </div>
+      {error && <p role="alert" className="mb-4 rounded-lg border border-[#f0c9c9] bg-[#fff7f7] p-3 text-[14px] font-semibold text-[#b3261e]">{error}</p>}
       <div className="divide-y divide-[#eef1f5] rounded-2xl border border-[#e2e6ed] bg-white">
         {items.length === 0 && (
           <p className="m-0 p-6 text-[14px] text-[#8a96ab]">등록된 공지가 없습니다.</p>
@@ -40,6 +42,7 @@ export default async function NewsListPage() {
               </Link>
               <form action={deleteNewsAction}>
                 <input type="hidden" name="_id" value={n._id} />
+                <input type="hidden" name="_rev" value={n._rev} />
                 <button
                   type="submit"
                   className="rounded-md border border-[#f0c9c9] px-3 py-1.5 text-[13px] font-semibold text-[#b3261e]"

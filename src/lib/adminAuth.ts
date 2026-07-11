@@ -31,6 +31,13 @@ export function verifyCredentials(username: string, password: string): boolean {
   return safeEqual(username, u) && safeEqual(password, p);
 }
 
+export function adminLoginRateLimitKey(): string | null {
+  const username = process.env.ADMIN_USERNAME || "";
+  const sessionSecret = secret();
+  if (!username || !sessionSecret) return null;
+  return crypto.createHmac("sha256", sessionSecret).update(`admin-login-v1\u0000${username}`).digest("hex");
+}
+
 function sign(data: string): string {
   return crypto.createHmac("sha256", secret()).update(data).digest("base64url");
 }

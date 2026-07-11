@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { safeContentHref } from "@/lib/adminUrl";
 
 export type GalleryItem = {
   readonly image: string;
@@ -130,6 +131,10 @@ function ProductModal({ items, index, groupLabel, onClose, onIndexChange }: Moda
 
   if (!item) return null;
 
+  const documents = (item.documents ?? [])
+    .map((document) => ({ ...document, href: safeContentHref(document.url) }))
+    .filter((document) => document.href !== "#");
+
   return (
     <div
       className="fixed inset-0 z-[100] flex items-center justify-center p-4"
@@ -194,14 +199,14 @@ function ProductModal({ items, index, groupLabel, onClose, onIndexChange }: Moda
                 ))}
               </ul>
             )}
-            {item.documents && item.documents.filter((d) => d.url).length > 0 && (
+            {documents.length > 0 && (
               <div className="mt-5 border-t border-[#e2e6ed] pt-4">
                 <div className="mb-3 text-[13px] font-extrabold text-navy">관련 자료</div>
                 <div className="flex flex-wrap gap-2">
-                  {item.documents.filter((d) => d.url).map((document) => (
+                  {documents.map((document) => (
                     <a
                       key={document.url}
-                      href={document.url}
+                      href={document.href}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1.5 rounded-md bg-brand-soft px-3 py-2 text-[13px] font-bold text-[#22409b] transition-colors hover:bg-[#dfe7fb]"

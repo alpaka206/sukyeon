@@ -23,7 +23,11 @@ export default async function ContentHomePage() {
       )}
       <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {CONTENT_TYPES.map((type) => (
-          <Link key={type} href={`/admin/content/${type}`} className="rounded-2xl border border-[#e2e6ed] bg-white p-5 transition-colors hover:border-[#22409b]">
+          <Link
+            key={type}
+            href={type === "newsPost" ? "/admin/news" : type === "doc" ? "/admin/docs" : `/admin/content/${type}`}
+            className="rounded-2xl border border-[#e2e6ed] bg-white p-5 transition-colors hover:border-[#22409b]"
+          >
             <div className="text-[15px] font-bold">{CONTENT_TYPE_LABELS[type]}</div>
             <div className="mt-2 text-[14px] text-[#8a96ab]">{countByType.get(type) ?? 0}개 문서</div>
           </Link>

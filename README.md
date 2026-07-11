@@ -6,19 +6,19 @@ First, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result. The `dev` script is pinned to `localhost:3000` for local viewing.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+
+## Admin login security
+
+Set `ADMIN_USERNAME`, `ADMIN_PASSWORD`, `ADMIN_SESSION_SECRET`, and `SANITY_API_WRITE_TOKEN` in the deployment environment. Failed administrator logins are recorded in the configured Sanity dataset with a keyed hash only; no password or client IP is stored. Five failed attempts in 15 minutes block further attempts for one minute, with backoff up to 30 minutes. A successful login removes the record.
+
+The application intentionally does not trust `X-Forwarded-For` or other client-supplied IP headers for this control. Configure a CDN/WAF or reverse-proxy rate limit for `/admin/login` as an additional network-level safeguard.
 
 ## Learn More
 

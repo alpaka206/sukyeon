@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { SiteSettings } from "@/lib/content";
+import { safeContentHref } from "@/lib/adminUrl";
 
 export default function Footer({ settings }: { readonly settings: SiteSettings | null }) {
   const company = settings?.company;
@@ -30,7 +31,7 @@ export default function Footer({ settings }: { readonly settings: SiteSettings |
             <div className="mb-4 text-[15px] font-bold text-white">{col.title}</div>
             <div className="flex flex-col gap-y-2.25 text-[14px]">
               {col.links.map((l) => (
-                <Link key={l.label} href={l.href} className="w-fit transition-colors hover:text-[#4f74e6]">
+                <Link key={l.label} href={safeContentHref(l.href)} className="w-fit transition-colors hover:text-[#4f74e6]">
                   {l.label}
                 </Link>
               ))}

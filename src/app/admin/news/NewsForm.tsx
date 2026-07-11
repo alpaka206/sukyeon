@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { AdminNews } from "@/lib/adminData";
 import { saveNewsAction } from "../actions";
 
@@ -8,6 +9,7 @@ export default function NewsForm({ item }: { item?: AdminNews }) {
   return (
     <form action={saveNewsAction} className="flex flex-col gap-4">
       {item && <input type="hidden" name="_id" value={item._id} />}
+      {item && <input type="hidden" name="_rev" value={item._rev} />}
       <div>
         <label className={label}>제목</label>
         <input name="title" required defaultValue={item?.title ?? ""} className={input} />
@@ -50,9 +52,9 @@ export default function NewsForm({ item }: { item?: AdminNews }) {
         >
           저장
         </button>
-        <a href="/admin/news" className="rounded-lg border border-[#d4dae4] px-5 py-2.5 text-[15px] font-semibold">
+        <Link href="/admin/news" className="rounded-lg border border-[#d4dae4] px-5 py-2.5 text-[15px] font-semibold">
           취소
-        </a>
+        </Link>
       </div>
     </form>
   );

@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import HeroCarousel from "@/components/HeroCarousel";
 import { ProductImageCard } from "@/components/ProductCards";
+import { safeContentHref } from "@/lib/adminUrl";
 import { getHomePage, getNews } from "@/lib/content";
 
 const WHY_ICONS: Record<string, ReactNode> = {
@@ -65,13 +66,13 @@ export default async function Home() {
           </p>
           <div className="flex flex-wrap items-center gap-3.5">
             <Link
-              href={hero.primaryHref}
+              href={safeContentHref(hero.primaryHref)}
               className="cursor-pointer rounded-[10px] bg-brand px-7.5 py-3.75 text-[16px] font-bold text-white transition-colors hover:bg-brand-deep"
             >
               {hero.primaryLabel}
             </Link>
             <Link
-              href={hero.secondaryHref}
+              href={safeContentHref(hero.secondaryHref)}
               className="cursor-pointer rounded-[10px] border-2 border-[#22409b] px-7.5 py-3.75 text-[16px] font-bold text-[#22409b] transition-colors hover:bg-[#22409b] hover:text-white"
             >
               {hero.secondaryLabel}
@@ -90,7 +91,7 @@ export default async function Home() {
             <div className="mb-3.5 text-[13px] font-bold tracking-[1px] text-[#22409b]">{productsHeading.eyebrow}</div>
             <h2 className="m-0 fs-2 font-extrabold tracking-[-1px] text-navy">{productsHeading.title}</h2>
           </div>
-          <Link href={productsHeading.moreHref} className="link-teal shrink-0 cursor-pointer text-[15px] font-bold text-[#22409b]">
+          <Link href={safeContentHref(productsHeading.moreHref)} className="link-teal shrink-0 cursor-pointer text-[15px] font-bold text-[#22409b]">
             {productsHeading.moreLabel}
           </Link>
         </div>
@@ -104,7 +105,7 @@ export default async function Home() {
             </h3>
             <p className="m-0 mb-5 text-[14px] leading-[1.6] text-[#b6c3d6]">{productsCta.desc}</p>
             <Link
-              href={productsCta.href}
+              href={safeContentHref(productsCta.href)}
               className="w-fit cursor-pointer rounded-[9px] bg-[#4f74e6] px-5 py-3 text-[15px] font-bold text-white transition-opacity hover:opacity-90"
             >
               {productsCta.label}
@@ -163,13 +164,13 @@ export default async function Home() {
           <p className="m-0 mb-6.5 text-[15px] leading-[1.6] text-[#b6c3d6]">{contactCta.desc}</p>
           <div className="flex flex-col gap-2.5">
             <Link
-              href={contactCta.primaryHref}
+              href={safeContentHref(contactCta.primaryHref)}
               className="cursor-pointer rounded-[10px] bg-[#4f74e6] px-6 py-3.5 text-center text-[15px] font-bold text-white transition-opacity hover:opacity-90"
             >
               {contactCta.primaryLabel}
             </Link>
             <a
-              href={contactCta.phoneHref}
+              href={safeContentHref(contactCta.phoneHref)}
               className="rounded-[10px] border-[1.5px] border-white/25 px-6 py-3.5 text-center text-[15px] font-bold text-white"
             >
               {contactCta.phoneLabel}

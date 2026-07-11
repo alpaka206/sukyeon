@@ -3,6 +3,7 @@ import { writeClient } from "./sanityWrite";
 
 export type AdminNews = {
   _id: string;
+  _rev: string;
   title: string;
   category: string;
   date: string;
@@ -16,6 +17,7 @@ export type AdminAttachment = { _key: string; name: string; fileUrl: string | nu
 
 export type AdminDoc = {
   _id: string;
+  _rev: string;
   name: string;
   category: string;
   date: string;
@@ -27,8 +29,8 @@ export type AdminDoc = {
   attachments: AdminAttachment[];
 };
 
-const NEWS_FIELDS = `_id,title,category,date,accent,"slug":coalesce(slug.current,slug),summary,body`;
-const DOC_FIELDS = `_id,name,category,date,notice,"slug":coalesce(slug.current,slug),summary,body,"fileUrl":file.asset->url,attachments[]{_key,name,"fileUrl":file.asset->url}`;
+const NEWS_FIELDS = `_id,_rev,title,category,date,accent,"slug":coalesce(slug.current,slug),summary,body`;
+const DOC_FIELDS = `_id,_rev,name,category,date,notice,"slug":coalesce(slug.current,slug),summary,body,"fileUrl":file.asset->url,attachments[]{_key,name,"fileUrl":file.asset->url}`;
 
 export async function adminGetNews(): Promise<AdminNews[]> {
   if (!writeClient) return [];

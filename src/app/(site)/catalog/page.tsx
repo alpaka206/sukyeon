@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import PageHeader from "@/components/PageHeader";
+import { safeContentHref } from "@/lib/adminUrl";
 import { getCatalog } from "@/lib/content";
 
 export const metadata: Metadata = { title: "카탈로그" };
 
 export default async function CatalogPage() {
   const catalog = await getCatalog();
+  const catalogHref = safeContentHref(catalog.file);
   return (
     <>
       <PageHeader eyebrow="CATALOG" title="카탈로그" />
@@ -37,10 +39,10 @@ export default async function CatalogPage() {
             </svg>
             PDF 문서 · 석연MRO 제품 카탈로그
           </div>
-          {catalog.file ? (
+          {catalogHref !== "#" ? (
             <div className="flex flex-wrap gap-3.5">
               <a
-                href={catalog.file}
+                href={catalogHref}
                 target="_blank"
                 rel="noopener"
                 className="inline-flex items-center gap-2 rounded-[10px] bg-[#22409b] px-7 py-3.75 text-[16px] font-bold text-white transition-colors hover:bg-[#18306f]"
@@ -52,7 +54,7 @@ export default async function CatalogPage() {
                 온라인으로 보기
               </a>
               <a
-                href={catalog.file}
+                href={catalogHref}
                 download
                 className="btn-outline inline-flex items-center gap-2 rounded-[10px] border-[1.5px] border-[#d4dae4] px-7 py-3.75 text-[16px] font-bold text-navy"
               >
