@@ -18,17 +18,18 @@ export function adminConfigured(): boolean {
 }
 
 function safeEqual(a: string, b: string): boolean {
-  const ab = Buffer.from(a);
-  const bb = Buffer.from(b);
-  if (ab.length !== bb.length) return false;
-  return crypto.timingSafeEqual(ab, bb);
+  const aDigest = crypto.createHash("sha256").update(a, "utf8").digest();
+  const bDigest = crypto.createHash("sha256").update(b, "utf8").digest();
+  return crypto.timingSafeEqual(aDigest, bDigest);
 }
 
 export function verifyCredentials(username: string, password: string): boolean {
   const u = process.env.ADMIN_USERNAME || "";
   const p = process.env.ADMIN_PASSWORD || "";
   if (!u || !p) return false;
-  return safeEqual(username, u) && safeEqual(password, p);
+  const usernameMatches = safeEqual(username, u);
+  const passwordMatches = safeEqual(password, p);
+  return usernameMatches && passwordMatches;
 }
 
 export function adminLoginRateLimitKey(): string | null {
@@ -38,8 +39,18 @@ export function adminLoginRateLimitKey(): string | null {
   return crypto.createHmac("sha256", sessionSecret).update(`admin-login-v1\u0000${username}`).digest("hex");
 }
 
+function sessionSigningKey(): Buffer {
+  return crypto
+    .createHmac("sha256", secret())
+    .update("admin-session-signing-key-v1\u0000username\u0000")
+    .update(process.env.ADMIN_USERNAME || "", "utf8")
+    .update("\u0000password\u0000")
+    .update(process.env.ADMIN_PASSWORD || "", "utf8")
+    .digest();
+}
+
 function sign(data: string): string {
-  return crypto.createHmac("sha256", secret()).update(data).digest("base64url");
+  return crypto.createHmac("sha256", sessionSigningKey()).update(data).digest("base64url");
 }
 
 export function createSessionToken(): string {
