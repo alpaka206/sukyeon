@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import "./pretendard.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -38,11 +39,7 @@ export default function RootLayout({
   return (
     <html lang="ko" data-scroll-behavior="smooth">
       <head>
-        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="" />
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
-        />
+        <link rel="preconnect" href="https://cdn.sanity.io" crossOrigin="anonymous" />
       </head>
       <body>{children}</body>
     </html>
