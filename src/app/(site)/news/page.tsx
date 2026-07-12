@@ -50,7 +50,7 @@ export default async function NewsPage({ searchParams }: Props) {
                 <span className="block text-[16px] font-semibold text-navy sm:text-[17px]">{n.title}</span>
                 <span className="mt-1 block text-[14px] leading-[1.6] text-[#5a6680]">{n.summary}</span>
               </span>
-              <span className="shrink-0 font-mono text-[13px] text-[#8a96ab]">{n.date}</span>
+              <span className="shrink-0 font-mono text-[13px] text-muted">{n.date}</span>
             </Link>
           ))}
         </div>

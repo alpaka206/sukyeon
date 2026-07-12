@@ -29,7 +29,7 @@ export default async function ContentHomePage() {
             className="rounded-2xl border border-[#e2e6ed] bg-white p-5 transition-colors hover:border-[#22409b]"
           >
             <div className="text-[15px] font-bold">{CONTENT_TYPE_LABELS[type]}</div>
-            <div className="mt-2 text-[14px] text-[#8a96ab]">{countByType.get(type) ?? 0}개 문서</div>
+            <div className="mt-2 text-[14px] text-muted">{countByType.get(type) ?? 0}개 문서</div>
           </Link>
         ))}
       </div>

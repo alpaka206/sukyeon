@@ -26,27 +26,27 @@ export default async function AdminHome() {
           href="/admin/content"
           className="rounded-2xl border border-[#e2e6ed] bg-white p-6 transition-colors hover:border-[#22409b]"
         >
-          <div className="text-[15px] font-semibold text-[#8a96ab]">전체 콘텐츠</div>
+          <div className="text-[15px] font-semibold text-muted">전체 콘텐츠</div>
           <div className="mt-1 text-[18px] font-extrabold">홈·회사·제품·카탈로그·인증 관리</div>
         </Link>
         <Link
           href="/admin/news"
           className="rounded-2xl border border-[#e2e6ed] bg-white p-6 transition-colors hover:border-[#22409b]"
         >
-          <div className="text-[15px] font-semibold text-[#8a96ab]">공지사항</div>
+          <div className="text-[15px] font-semibold text-muted">공지사항</div>
           <div className="mt-1 text-[32px] font-extrabold">
             {news.length}
-            <span className="text-[16px] font-semibold text-[#8a96ab]"> 건</span>
+            <span className="text-[16px] font-semibold text-muted"> 건</span>
           </div>
         </Link>
         <Link
           href="/admin/docs"
           className="rounded-2xl border border-[#e2e6ed] bg-white p-6 transition-colors hover:border-[#22409b]"
         >
-          <div className="text-[15px] font-semibold text-[#8a96ab]">자료실(PDF)</div>
+          <div className="text-[15px] font-semibold text-muted">자료실(PDF)</div>
           <div className="mt-1 text-[32px] font-extrabold">
             {docs.length}
-            <span className="text-[16px] font-semibold text-[#8a96ab]"> 건</span>
+            <span className="text-[16px] font-semibold text-muted"> 건</span>
           </div>
         </Link>
       </div>

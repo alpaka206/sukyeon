@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import PageHeader from "@/components/PageHeader";
 import { safeContentHref } from "@/lib/adminUrl";
 import { getCerts, type CertItem } from "@/lib/content";
@@ -35,10 +36,12 @@ function CertCard({ cert }: { cert: CertItem }) {
             <span className="absolute left-2.5 top-2.5 z-10 rounded-md bg-navy/85 px-2 py-1 text-[11px] font-bold tracking-[1px] text-white">
               {img.label}
             </span>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={img.src}
+            <Image
+              src={img.href}
               alt={`${cert.title} ${cert.standard} ${img.label} 인증서`}
+              width={900}
+              height={1200}
+              sizes="(min-width: 1024px) 50vw, (min-width: 640px) 50vw, 100vw"
               loading="lazy"
               className="block h-85 w-full object-contain p-3 sm:h-75"
             />
@@ -59,7 +62,7 @@ function CertCard({ cert }: { cert: CertItem }) {
         <dl className="m-0 grid grid-cols-1 gap-x-6 gap-y-3 border-t border-[#eef1f5] pt-5 sm:grid-cols-2">
           {rows.map((r) => (
             <div key={r.k} className="flex flex-col gap-1">
-              <dt className="text-[12px] font-bold tracking-[0.5px] text-[#8a96ab]">{r.k}</dt>
+              <dt className="text-[12px] font-bold tracking-[0.5px] text-muted">{r.k}</dt>
               <dd className="m-0 text-[15px] font-semibold text-navy">{r.v}</dd>
             </div>
           ))}
@@ -86,7 +89,7 @@ export default async function CertPage() {
           ))}
         </div>
 
-        <p className="m-0 mt-8 text-[14px] leading-[1.7] text-[#8a96ab]">
+        <p className="m-0 mt-8 text-[14px] leading-[1.7] text-muted">
           ※ 특허증·시험성적서 등 추가 인증 자료는 순차적으로 게재될 예정입니다. 자세한 자료는{" "}
           <span className="font-semibold text-[#5a6680]">자료실(MSDS·시험성적서)</span>에서 확인하실 수
           있습니다.

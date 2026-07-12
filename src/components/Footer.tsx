@@ -31,7 +31,7 @@ export default function Footer({ settings }: { readonly settings: SiteSettings |
             <div className="mb-4 text-[15px] font-bold text-white">{col.title}</div>
             <div className="flex flex-col gap-y-2.25 text-[14px]">
               {col.links.map((l) => (
-                <Link key={l.label} href={safeContentHref(l.href)} className="w-fit transition-colors hover:text-[#4f74e6]">
+                <Link key={l.label} href={safeContentHref(l.href)} prefetch={false} className="w-fit transition-colors hover:text-accent-on-dark">
                   {l.label}
                 </Link>
               ))}
@@ -39,7 +39,7 @@ export default function Footer({ settings }: { readonly settings: SiteSettings |
           </div>
         ))}
       </div>
-      <div className="pt-6 font-mono text-[13px] text-[#5d6f88]">
+      <div className="pt-6 font-mono text-[13px] text-muted-dark">
         © 2026 SUKYEON MRO. ALL RIGHTS RESERVED.
       </div>
     </footer>

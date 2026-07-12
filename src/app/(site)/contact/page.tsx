@@ -18,11 +18,11 @@ export default async function ContactPage() {
         <div className="flex flex-col gap-4.5">
           <div className="relative overflow-hidden rounded-[18px] bg-navy p-8 text-white">
             <h3 className="relative m-0 mb-4.5 text-[20px] font-extrabold">전화 문의</h3>
-            <a href={safeContentHref(`tel:${c?.tel ?? ""}`)} className="relative mb-1.5 block text-[26px] font-extrabold text-[#4f74e6]">
+            <a href={safeContentHref(`tel:${c?.tel ?? ""}`)} className="relative mb-1.5 block text-[26px] font-extrabold text-accent-on-dark">
               {c?.tel}
             </a>
             <div className="relative text-[14px] text-[#b6c3d6]">FAX {c?.fax}</div>
-            <a href={safeContentHref(`mailto:${c?.email ?? ""}`)} className="relative mt-1 block text-[14px] text-[#4f74e6]">
+            <a href={safeContentHref(`mailto:${c?.email ?? ""}`)} className="relative mt-1 block text-[14px] text-accent-on-dark">
               {c?.email}
             </a>
             <div className="relative mt-3.5 text-[14px] leading-[1.6] text-[#b6c3d6]">

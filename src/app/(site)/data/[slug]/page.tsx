@@ -44,7 +44,7 @@ export default async function DataDetailPage({ params }: Props) {
             <span className="rounded-md bg-brand-soft px-2.5 py-1.25 text-[12px] font-bold text-[#22409b]">
               {item.category}
             </span>
-            <span className="font-mono text-[13px] text-[#8a96ab]">{item.date}</span>
+            <span className="font-mono text-[13px] text-muted">{item.date}</span>
           </div>
           <h2 className="m-0 mb-5 text-[30px] font-extrabold leading-[1.35] tracking-[-0.6px] text-navy sm:text-[36px]">
             {item.name}

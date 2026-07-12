@@ -108,7 +108,7 @@ export default async function AboutPage() {
         <section id="sec-equipment" className="spy-section border-b border-[#eef1f5] wide-shell py-16 lg:py-18.5">
           <div className="mb-4 font-mono text-[13px] tracking-[2px] text-[#22409b]">EQUIPMENT · 설비현황</div>
           <h2 className="m-0 mb-2 fs-4 font-extrabold leading-[1.3] tracking-[-0.7px] text-navy">설비현황</h2>
-          <p className="m-0 mb-11 text-[15px] leading-[1.7] text-[#8a96ab]">{equipment.desc}</p>
+          <p className="m-0 mb-11 text-[15px] leading-[1.7] text-muted">{equipment.desc}</p>
           <div className="overflow-x-auto rounded-2xl border border-[#eaeef3] bg-white">
             <div className="min-w-140">
               <div className="grid grid-cols-[180px_1fr_180px] bg-navy text-center text-[15px] font-bold text-white">
@@ -138,7 +138,7 @@ export default async function AboutPage() {
         <section id="sec-history" className="spy-section wide-shell py-16 lg:py-18.5">
           <div className="mb-4 font-mono text-[13px] tracking-[2px] text-[#22409b]">HISTORY · 연혁</div>
           <h2 className="m-0 mb-2 fs-4 font-extrabold leading-[1.3] tracking-[-0.7px] text-navy">걸어온 길</h2>
-          <p className="m-0 mb-11 text-[15px] leading-[1.7] text-[#8a96ab]">{history.desc}</p>
+          <p className="m-0 mb-11 text-[15px] leading-[1.7] text-muted">{history.desc}</p>
           <div className="max-w-170 border-l-2 border-[#eaeef3] pl-9">
             {history.entries.map((h, idx) => {
               const last = idx === history.entries.length - 1;
@@ -174,7 +174,7 @@ export default async function AboutPage() {
                 <circle cx="12" cy="10" r="3" />
               </svg>
               <div className="text-[16px] font-bold text-navy">{c?.address}</div>
-              <div className="mt-1.5 font-mono text-[13px] text-[#8a96ab]">{location.mapNote}</div>
+              <div className="mt-1.5 font-mono text-[13px] text-muted">{location.mapNote}</div>
             </div>
           </div>
           <div className="rounded-2xl border border-[#eaeef3] px-6 py-6 sm:px-9">

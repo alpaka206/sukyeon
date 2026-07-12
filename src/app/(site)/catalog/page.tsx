@@ -15,10 +15,10 @@ export default async function CatalogPage() {
       <div className="grid grid-cols-1 items-center gap-10 shell py-16 pb-20 lg:grid-cols-[0.8fr_1.2fr] lg:gap-14">
         <div className="relative mx-auto flex aspect-[3/4] w-full max-w-90 flex-col justify-between overflow-hidden rounded-[18px] bg-[linear-gradient(160deg,#13294a,#0a1b33)] p-9.5 text-white shadow-[0_30px_60px_-25px_rgba(10,27,51,0.55)]">
           <div className="relative text-[19px] font-extrabold tracking-[-0.3px]">
-            석연<span className="text-[#4f74e6]">MRO</span>
+            석연<span className="text-accent-on-dark">MRO</span>
           </div>
           <div className="relative">
-            <div className="mb-2.5 font-mono text-[12px] tracking-[2px] text-[#4f74e6]">PRODUCT CATALOG</div>
+            <div className="mb-2.5 font-mono text-[12px] tracking-[2px] text-accent-on-dark">PRODUCT CATALOG</div>
             <div className="fs-4 font-extrabold leading-tight tracking-[-0.6px]">{catalog.title}</div>
             <div className="mt-3 text-[14px] text-[#9fb0c9]">{catalog.tagline}</div>
           </div>
@@ -32,7 +32,7 @@ export default async function CatalogPage() {
           <p className="m-0 mb-7 max-w-130 text-[16px] leading-[1.8] text-[#5a6680]">
             석연MRO의 다이캐스팅 이형제(CAST ONE), 프란자오일(LUBE ONE), 작동유·습동면유, 소모성 부자재 전 제품 정보를 한 권에 담았습니다. 온라인으로 열람하거나 PDF로 내려받으세요.
           </p>
-          <div className="mb-6.5 flex items-center gap-2.5 text-[14px] text-[#8a96ab]">
+          <div className="mb-6.5 flex items-center gap-2.5 text-[14px] text-muted">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22409b" strokeWidth="2">
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
               <path d="M14 2v6h6" />
@@ -66,7 +66,7 @@ export default async function CatalogPage() {
               </a>
             </div>
           ) : (
-            <p className="m-0 rounded-lg bg-[#f6f9fb] px-4 py-3 text-[14px] text-[#8a96ab]">
+            <p className="m-0 rounded-lg bg-[#f6f9fb] px-4 py-3 text-[14px] text-muted">
               카탈로그를 준비 중입니다.
             </p>
           )}

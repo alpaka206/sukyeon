@@ -20,7 +20,7 @@ export function ProductImageCard({
   desc,
 }: ProductImageCardProps) {
   return (
-    <Link href={safeContentHref(href)} className="card-link overflow-hidden rounded-2xl border border-[#e2e6ed] bg-white">
+    <Link href={safeContentHref(href)} prefetch={false} className="card-link overflow-hidden rounded-2xl border border-[#e2e6ed] bg-white">
       <div className="flex h-42.5 items-center justify-center border-b border-[#eef1f5] bg-white p-3.5">
         <Image src={img} alt={alt} width={320} height={170} style={{ width: "auto", height: "auto" }} className="max-h-full max-w-full object-contain" />
       </div>

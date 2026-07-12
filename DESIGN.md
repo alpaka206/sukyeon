@@ -16,18 +16,22 @@ Sukyeon MRO should feel like a dependable manufacturing partner: technical, dire
 | Surface/tint | `--surface-tint` | `#eef2fc` | N/A | Icon and accent backgrounds |
 | Text/primary | `--text-primary` | `#0a1b33` | N/A | Headlines, important copy |
 | Text/body | `--text-body` | `#5a6680` | N/A | Paragraphs |
-| Text/muted | `--text-muted` | `#8a96ab` | N/A | Labels, secondary metadata |
+| Text/muted/light | `--color-muted` | `#5e6c84` | N/A | Labels and secondary metadata on white, secondary, or muted light surfaces |
+| Text/muted/dark | `--color-muted-dark` | N/A | `#9fb0c9` | Footer and secondary metadata on navy |
 | Border/default | `--border-default` | `#eaeef3` | N/A | Section dividers |
 | Border/card | `--border-card` | `#e2e6ed` | N/A | Product card outlines |
 | Accent/primary | `--accent-primary` | `#22409b` | N/A | Links, active accents, brand emphasis |
 | Accent/deep | `--accent-deep` | `#18306f` | N/A | Hover and deep emphasis |
-| Accent/bright | `--accent-bright` | `#4f74e6` | N/A | CTAs on dark navy |
+| Accent/bright | `--accent-bright` | `#4f74e6` | N/A | Decorative blue that is not used for normal text or white-text CTA backgrounds |
+| Accent/on-dark | `--color-accent-on-dark` | N/A | `#89a7ff` | Eyebrows, links, and hover text on navy |
 
 ### Rules
 
 - Blue is functional, not decorative: use it for emphasis, links, and calls to action.
 - Text-heavy areas stay on white or pale blue surfaces.
 - Raw color usage in existing Tailwind classes should map back to the palette above.
+- Normal text must reach at least 4.5:1 on its actual surface. `--color-muted` measures 5.02:1 or better on the three declared light surfaces, `--color-muted-dark` measures 7.83:1 on navy, and `--color-accent-on-dark` measures 7.42:1 on navy.
+- White-text CTAs use `--accent-primary` (`#22409b`, 9.23:1) rather than `--accent-bright` (`#4f74e6`, 4.22:1).
 
 ## 3. Typography
 
@@ -122,6 +126,21 @@ All spacing derives from a base of 4px.
 - **Responsive rule**: keep each sentence on one line at desktop widths; allow natural wrapping below desktop.
 - **Tone**: concise manufacturing credibility, avoiding long company-introduction phrasing in the first viewport.
 
+### Hero Carousel
+
+- **Structure**: a labelled carousel group with only the active image mounted, previous/next buttons, and one indicator button per slide. Inactive remote images are fetched only after the user selects them.
+- **State**: the active indicator exposes `aria-current`; inactive images are hidden from assistive technology; a polite status announces the active slide number and description.
+- **Keyboard**: every control is a native button, and Left/Right Arrow keys move between slides while focus remains within the carousel.
+- **Motion**: a 200ms opacity entrance communicates a user-requested slide change and is disabled for reduced-motion users. The carousel is manual-first and does not autoplay.
+- **Targets**: indicator buttons expose at least a 24px square hit target while retaining a compact 10px visual dot.
+
+### Data Mobile Card
+
+- **Structure**: below `sm`, each document is one article with a single full-card link containing its notice or sequence, title, category, date, and attachment status.
+- **Responsive rule**: mobile cards and the `sm`-and-up table are mutually exclusive; narrow screens must never expose a clipped or horizontally scrolling table.
+- **States**: the whole card is the only interactive target and keeps a visible browser focus ring; use existing brand, muted-text, and brand-soft tokens.
+- **Accessibility**: the list has a Korean label, each title is a heading, and the full card keeps one unambiguous accessible name and a minimum 44px target.
+
 ### Admin Editor Section
 
 - **Structure**: collapsible white section with a pale-blue header tint, compact eyebrow, title, optional helper text, and a right-aligned disclosure control.
@@ -152,6 +171,8 @@ All spacing derives from a base of 4px.
 
 - Animate only `opacity`, `transform`, `color`, `background`, `border-color`, and `box-shadow`.
 - Every link styled as a button needs a hover state and visible focus behavior through browser defaults or explicit styling.
+- Public navigation links defer Next route prefetch until hover instead of prefetching every route as soon as it enters the viewport. This protects the first render while retaining intent-driven navigation warming.
+- The earlier timer-driven hero rotation is explicitly superseded. Slides change only after a user presses Previous, Next, an indicator, or the corresponding Left/Right Arrow key; this preserves reading time, accessibility, and stable first-paint performance.
 
 ## 7. Depth & Surface
 

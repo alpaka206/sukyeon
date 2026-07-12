@@ -31,12 +31,12 @@ export default async function ContentListPage({ params }: { readonly params: Pro
         )}
       </div>
       <div className="divide-y divide-[#eef1f5] rounded-2xl border border-[#e2e6ed] bg-white">
-        {documents.length === 0 && <p className="m-0 p-6 text-[14px] text-[#8a96ab]">등록된 문서가 없습니다.</p>}
+        {documents.length === 0 && <p className="m-0 p-6 text-[14px] text-muted">등록된 문서가 없습니다.</p>}
         {documents.map((document) => (
           <div key={document.id} className="flex flex-wrap items-center justify-between gap-4 p-4">
             <div className="min-w-0">
               <div className="truncate text-[15px] font-bold">{document.title}</div>
-              <div className="mt-1 text-[13px] text-[#8a96ab]">최근 수정 {new Date(document.updatedAt).toLocaleString("ko-KR")}</div>
+              <div className="mt-1 text-[13px] text-muted">최근 수정 {new Date(document.updatedAt).toLocaleString("ko-KR")}</div>
             </div>
             <div className="flex shrink-0 gap-2">
               <Link href={`/admin/content/${type}/${document.id}`} className="rounded-md border border-[#d4dae4] px-3 py-1.5 text-[13px] font-semibold">수정</Link>

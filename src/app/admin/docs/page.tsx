@@ -23,7 +23,7 @@ export default async function DocsListPage({ searchParams }: { searchParams: Pro
       {error && <p role="alert" className="mb-4 rounded-lg border border-[#f0c9c9] bg-[#fff7f7] p-3 text-[14px] font-semibold text-[#b3261e]">{error}</p>}
       <div className="divide-y divide-[#eef1f5] rounded-2xl border border-[#e2e6ed] bg-white">
         {items.length === 0 && (
-          <p className="m-0 p-6 text-[14px] text-[#8a96ab]">등록된 자료가 없습니다.</p>
+          <p className="m-0 p-6 text-[14px] text-muted">등록된 자료가 없습니다.</p>
         )}
         {items.map((d) => {
           const pdfCount = (d.fileUrl ? 1 : 0) + d.attachments.length;
@@ -38,7 +38,7 @@ export default async function DocsListPage({ searchParams }: { searchParams: Pro
                   )}
                   <span className="truncate text-[15px] font-bold">{d.name}</span>
                 </div>
-                <div className="text-[13px] text-[#8a96ab]">
+                <div className="text-[13px] text-muted">
                   {d.category || "분류 없음"} · {d.date || "날짜 없음"} · PDF {pdfCount}개
                 </div>
               </div>

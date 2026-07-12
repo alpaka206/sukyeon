@@ -32,7 +32,43 @@ export default async function DataPage({ searchParams }: Props) {
     <>
       <PageHeader eyebrow="DATA / MSDS (GHS)" title="자료실" />
       <div className="shell py-16">
-        <div className="overflow-x-auto rounded-[14px] border border-[#eaeef3]">
+        <section aria-label="자료 목록" className="grid gap-3 sm:hidden">
+          {visibleRows.map((r, i) => (
+            <article key={r.slug} className="overflow-hidden rounded-xl border border-brand/10 bg-white">
+              <Link
+                href={`/data/${r.slug}`}
+                className="block min-h-11 p-5 transition-colors hover:bg-brand-soft/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+              >
+                <div className="flex items-center justify-between gap-3">
+                  {r.notice ? (
+                    <span className="rounded-md bg-brand-soft px-2 py-1 text-[12px] font-bold text-brand">공지</span>
+                  ) : (
+                    <span className="font-mono text-[13px] text-muted">
+                      {String(rows.length - startIndex - i).padStart(2, "0")}
+                    </span>
+                  )}
+                  <span className="font-mono text-[13px] text-muted">{r.date}</span>
+                </div>
+                <h2 className="m-0 mt-3 text-[16px] font-bold leading-[1.5] text-navy">{r.name}</h2>
+                <div className="mt-4 flex items-center justify-between gap-3 text-[13px]">
+                  <span className="text-muted">{r.category || "분류 없음"}</span>
+                  <span className="inline-flex shrink-0 items-center gap-1.5 rounded-md bg-brand-soft px-2.5 py-1.5 font-bold text-brand">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                      <path d="M14 2v6h6" />
+                    </svg>
+                    {r.attachments.length === 0
+                      ? "상세 안내"
+                      : r.attachments.length === 1
+                        ? "PDF"
+                        : `PDF ${r.attachments.length}개`}
+                  </span>
+                </div>
+              </Link>
+            </article>
+          ))}
+        </section>
+        <div className="hidden overflow-x-auto rounded-[14px] border border-[#eaeef3] sm:block">
           <div className="min-w-170">
             <div className={`grid ${cols} bg-navy text-[14px] font-bold text-white`}>
               <div className="px-5 py-4.5">번호</div>
@@ -50,7 +86,7 @@ export default async function DataPage({ searchParams }: Props) {
                   borderBottom: i < visibleRows.length - 1 ? "1px solid #eef1f5" : "none",
                 }}
               >
-                <div className="p-5 font-mono text-[#8a96ab]">
+                <div className="p-5 font-mono text-muted">
                   {r.notice ? (
                     <span className="rounded-md bg-brand-soft px-2 py-1 text-[12px] font-bold text-[#22409b]">공지</span>
                   ) : (
@@ -66,7 +102,7 @@ export default async function DataPage({ searchParams }: Props) {
                   </Link>
                 </div>
                 <div className="px-3 py-5 text-[#5a6680]">{r.category}</div>
-                <div className="px-3 py-5 font-mono text-[13px] text-[#8a96ab]">{r.date}</div>
+                <div className="px-3 py-5 font-mono text-[13px] text-muted">{r.date}</div>
                 <div className="px-3 py-5 text-center">
                   {r.attachments.length > 0 ? (
                     <Link
@@ -80,7 +116,7 @@ export default async function DataPage({ searchParams }: Props) {
                       {r.attachments.length > 1 ? `${r.attachments.length}개` : "PDF"}
                     </Link>
                   ) : (
-                    <Link href={`/data/${r.slug}`} className="text-[13px] font-bold text-[#8a96ab]">
+                    <Link href={`/data/${r.slug}`} className="text-[13px] font-bold text-muted">
                       안내
                     </Link>
                   )}
@@ -111,7 +147,7 @@ export default async function DataPage({ searchParams }: Props) {
             })}
           </div>
         )}
-        <p className="m-0 mt-5 text-[14px] text-[#8a96ab]">
+        <p className="m-0 mt-5 text-[14px] text-muted">
           ※ 일부 PDF는 열람 비밀번호가 설정되어 있을 수 있습니다. 필요한 경우 대표번호로 문의해 주세요.
         </p>
       </div>

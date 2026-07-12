@@ -42,7 +42,7 @@ export default function DocForm({ item }: { item?: AdminDoc }) {
           )}
         </label>
         <input type="file" name="file" accept="application/pdf" className="text-[14px]" />
-        <p className="mt-1 text-[12px] text-[#8a96ab]">
+        <p className="mt-1 text-[12px] text-muted">
           {item ? "새 PDF를 올리면 교체됩니다(비우면 기존 파일 유지)." : "PDF를 선택하면 업로드됩니다."}
         </p>
       </div>

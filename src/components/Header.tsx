@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import type { SiteSettings } from "@/lib/content";
 import { safeContentHref } from "@/lib/adminUrl";
@@ -46,9 +47,18 @@ export default function Header({ settings }: { readonly settings: SiteSettings |
 
       {/* nav */}
       <div className="flex h-19.5 items-center justify-between border-b border-[#eaeef3] bg-white/92 wide-shell backdrop-blur-[10px]">
-        <Link href="/" className="flex items-center" aria-label="석연MRO 홈">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          {settings?.logo && <img src={settings.logo} alt={company?.name ?? "석연MRO"} className="block h-9.5 w-auto" />}
+        <Link href="/" prefetch={false} className="flex items-center" aria-label="석연MRO 홈">
+          {settings?.logo && (
+            <Image
+              src={`${settings.logo}?w=450&auto=format`}
+              alt={company?.name ?? "석연MRO"}
+              width={150}
+              height={40}
+              sizes="150px"
+              quality={85}
+              className="block h-9.5 w-auto"
+            />
+          )}
         </Link>
 
         {/* desktop menu */}
@@ -60,9 +70,16 @@ export default function Header({ settings }: { readonly settings: SiteSettings |
                 className="relative"
                 onMouseEnter={() => setOpenMenu(item.label)}
                 onMouseLeave={() => setOpenMenu(null)}
+                onFocus={() => setOpenMenu(item.label)}
+                onBlur={(event) => {
+                  if (!event.currentTarget.contains(event.relatedTarget)) setOpenMenu(null);
+                }}
               >
                 <Link
                   href={safeContentHref(item.href)}
+                  prefetch={false}
+                  aria-haspopup="true"
+                  aria-expanded={openMenu === item.label}
                   className="nav-link inline-flex cursor-pointer items-center gap-1.25 rounded-lg px-3.5 py-2.5"
                 >
                   {item.label}
@@ -75,6 +92,7 @@ export default function Header({ settings }: { readonly settings: SiteSettings |
                         <Link
                           key={c.label}
                           href={safeContentHref(c.href)}
+                          prefetch={false}
                           className="drop-item whitespace-nowrap rounded-lg px-4 py-2.75 text-[15px] font-semibold text-[#42526b]"
                         >
                           {c.label}
@@ -88,6 +106,7 @@ export default function Header({ settings }: { readonly settings: SiteSettings |
               <Link
                 key={item.label}
                 href={safeContentHref(item.href)}
+                prefetch={false}
                 className="nav-link cursor-pointer rounded-lg px-3.5 py-2.5"
               >
                 {item.label}
@@ -100,6 +119,7 @@ export default function Header({ settings }: { readonly settings: SiteSettings |
         <div className="hidden items-center gap-2.5 lg:flex">
           <Link
             href="/catalog"
+            prefetch={false}
             className="btn-outline inline-flex items-center gap-1.75 rounded-[9px] border-[1.5px] border-[#d4dae4] px-4 py-2.25 text-[14px] font-bold text-navy"
           >
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -113,7 +133,7 @@ export default function Header({ settings }: { readonly settings: SiteSettings |
         {/* mobile hamburger */}
         <button
           type="button"
-          aria-label="메뉴 열기"
+          aria-label={mobileOpen ? "메뉴 닫기" : "메뉴 열기"}
           aria-expanded={mobileOpen}
           onClick={() => setMobileOpen((v) => !v)}
           className="flex h-10 w-10 items-center justify-center rounded-lg text-navy lg:hidden"
@@ -138,6 +158,7 @@ export default function Header({ settings }: { readonly settings: SiteSettings |
               <div key={item.label} className="border-b border-[#f0f3f7] py-1">
                 <Link
                   href={safeContentHref(item.href)}
+                  prefetch={false}
                   onClick={() => setMobileOpen(false)}
                   className="block py-2.5 text-[16px] font-bold text-navy"
                 >
@@ -149,6 +170,7 @@ export default function Header({ settings }: { readonly settings: SiteSettings |
                       <Link
                         key={c.label}
                         href={safeContentHref(c.href)}
+                        prefetch={false}
                         onClick={() => setMobileOpen(false)}
                         className="py-1.5 text-[14px] font-semibold text-[#5a6680]"
                       >
@@ -163,6 +185,7 @@ export default function Header({ settings }: { readonly settings: SiteSettings |
           <div className="mt-4 flex gap-2.5">
             <Link
               href="/catalog"
+              prefetch={false}
               onClick={() => setMobileOpen(false)}
               className="flex flex-1 items-center justify-center rounded-[9px] border-[1.5px] border-[#d4dae4] py-3 text-[14px] font-bold text-navy"
             >
@@ -170,6 +193,7 @@ export default function Header({ settings }: { readonly settings: SiteSettings |
             </Link>
             <Link
               href="/contact"
+              prefetch={false}
               onClick={() => setMobileOpen(false)}
               className="flex flex-1 items-center justify-center rounded-[9px] bg-[#22409b] py-3 text-[15px] font-bold text-white"
             >

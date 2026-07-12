@@ -157,7 +157,7 @@ function ProductModal({ items, index, groupLabel, onClose, onIndexChange }: Moda
         <div className="sticky top-0 z-10 flex items-center justify-between gap-4 border-b border-[#eef1f5] bg-white px-6 py-4">
           <div className="font-mono text-[12px] font-bold tracking-[1.5px] text-[#22409b]">
             {groupLabel}
-            {many && <span className="ml-2 text-[#8a96ab]">{index + 1} / {items.length}</span>}
+            {many && <span className="ml-2 text-muted">{index + 1} / {items.length}</span>}
           </div>
           <button
             type="button"

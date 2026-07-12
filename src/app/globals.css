@@ -1,5 +1,18 @@
 @import "tailwindcss";
 
+@keyframes hero-slide-enter {
+  from { opacity: 0.72; }
+  to { opacity: 1; }
+}
+
+.hero-slide-enter {
+  animation: hero-slide-enter 200ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide-enter { animation: none; }
+}
+
 @theme {
   --color-navy: #0a1b33;
   --color-navy-700: #0e2950;
@@ -11,11 +24,14 @@
   --color-brand-deep: #18306f;   /* hover/짙은 강조 */
   --color-brand-bright: #4f74e6; /* 어두운 네이비 위에서 또렷한 액센트 */
   --color-brand-soft: #eef2fc;   /* 옅은 틴트 배경 */
+  --color-muted: #5e6c84;
+  --color-muted-dark: #9fb0c9;
+  --color-accent-on-dark: #89a7ff;
   /* legacy 토큰을 브랜드로 매핑해 잔여 시안 방지 */
   --color-teal: #22409b;
   --color-teal-deep: #18306f;
   --color-teal-light: #4f74e6;
-  --font-sans: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-sans: "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   /* 누가 어떤 기기로 접속하든 모든 텍스트를 Pretendard로 통일 (mono 토큰도 Pretendard로 매핑) */
   --font-mono: var(--font-sans);
 }

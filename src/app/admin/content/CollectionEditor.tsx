@@ -61,7 +61,7 @@ function Strings({ path, label, value }: { readonly path: string; readonly label
         <h3 className="m-0 text-[15px] font-extrabold text-[#0a1b33]">{label}</h3>
         <AddRepeaterButton label={label} onClick={() => setRows((current) => [...current, row({ item: "" })])} />
       </div>
-      {rows.length === 0 && <p className="m-0 rounded-xl bg-white px-3 py-3 text-[13px] font-semibold text-[#8a96ab]">아직 등록된 항목이 없습니다.</p>}
+      {rows.length === 0 && <p className="m-0 rounded-xl bg-white px-3 py-3 text-[13px] font-semibold text-muted">아직 등록된 항목이 없습니다.</p>}
       {rows.map((entry, index) => (
         <div key={entry.clientId} className="flex gap-2">
           <input aria-label={`${label} ${index + 1}`} name={name(`${path}.${index}`)} defaultValue={text(entry.value.item)} className={controlClassName} />

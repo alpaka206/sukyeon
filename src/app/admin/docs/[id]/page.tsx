@@ -26,7 +26,7 @@ export default async function EditDocPage({ params, searchParams }: { params: Pr
         <h2 className="m-0 mb-4 text-[18px] font-extrabold">첨부 PDF (여러 개)</h2>
         <div className="mb-4 divide-y divide-[#eef1f5] rounded-2xl border border-[#e2e6ed] bg-white">
           {item.attachments.length === 0 && (
-            <p className="m-0 p-4 text-[14px] text-[#8a96ab]">첨부된 PDF가 없습니다.</p>
+            <p className="m-0 p-4 text-[14px] text-muted">첨부된 PDF가 없습니다.</p>
           )}
           {item.attachments.map((a) => (
             <div key={a._key} className="flex items-center justify-between gap-4 p-4">

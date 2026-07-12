@@ -44,6 +44,13 @@ function MultiLine({ text }: { readonly text: string }) {
   );
 }
 
+function keepTogether(text: string): string {
+  return ["전문 생산", "최상의 제품"].reduce(
+    (result, phrase) => result.replaceAll(phrase, phrase.replaceAll(" ", "\u00a0")),
+    text,
+  );
+}
+
 export default async function Home() {
   const [home, news] = await Promise.all([getHomePage(), getNews()]);
   if (!home) return null;
@@ -60,19 +67,21 @@ export default async function Home() {
             <span className="hero-title-line">{hero.titleLine1}</span>
             <span className="hero-title-line text-[#22409b]">{hero.titleLine2}</span>
           </h1>
-          <p className="hero-copy m-0 mb-9.5 max-w-190 leading-[1.82] text-[#5a6680] text-pretty">
-            <span className="hero-copy-line">{hero.copyLine1}</span>
-            <span className="hero-copy-line">{hero.copyLine2}</span>
+          <p className="hero-copy m-0 mb-9.5 max-w-[300px] leading-[1.82] text-[#5a6680] text-pretty sm:max-w-190">
+            <span className="hero-copy-line">{keepTogether(hero.copyLine1)}</span>
+            <span className="hero-copy-line">{keepTogether(hero.copyLine2)}</span>
           </p>
           <div className="flex flex-wrap items-center gap-3.5">
             <Link
               href={safeContentHref(hero.primaryHref)}
+              prefetch={false}
               className="cursor-pointer rounded-[10px] bg-brand px-7.5 py-3.75 text-[16px] font-bold text-white transition-colors hover:bg-brand-deep"
             >
               {hero.primaryLabel}
             </Link>
             <Link
               href={safeContentHref(hero.secondaryHref)}
+              prefetch={false}
               className="cursor-pointer rounded-[10px] border-2 border-[#22409b] px-7.5 py-3.75 text-[16px] font-bold text-[#22409b] transition-colors hover:bg-[#22409b] hover:text-white"
             >
               {hero.secondaryLabel}
@@ -91,7 +100,7 @@ export default async function Home() {
             <div className="mb-3.5 text-[13px] font-bold tracking-[1px] text-[#22409b]">{productsHeading.eyebrow}</div>
             <h2 className="m-0 fs-2 font-extrabold tracking-[-1px] text-navy">{productsHeading.title}</h2>
           </div>
-          <Link href={safeContentHref(productsHeading.moreHref)} className="link-teal shrink-0 cursor-pointer text-[15px] font-bold text-[#22409b]">
+          <Link href={safeContentHref(productsHeading.moreHref)} prefetch={false} className="link-teal shrink-0 cursor-pointer text-[15px] font-bold text-[#22409b]">
             {productsHeading.moreLabel}
           </Link>
         </div>
@@ -106,7 +115,8 @@ export default async function Home() {
             <p className="m-0 mb-5 text-[14px] leading-[1.6] text-[#b6c3d6]">{productsCta.desc}</p>
             <Link
               href={safeContentHref(productsCta.href)}
-              className="w-fit cursor-pointer rounded-[9px] bg-[#4f74e6] px-5 py-3 text-[15px] font-bold text-white transition-opacity hover:opacity-90"
+              prefetch={false}
+              className="w-fit cursor-pointer rounded-[9px] bg-brand px-5 py-3 text-[15px] font-bold text-white transition-opacity hover:opacity-90"
             >
               {productsCta.label}
             </Link>
@@ -140,7 +150,7 @@ export default async function Home() {
         <div>
           <div className="mb-7 flex items-end justify-between">
             <h2 className="m-0 fs-4 font-extrabold tracking-[-0.6px] text-navy">공지사항</h2>
-            <Link href="/news" className="link-teal cursor-pointer text-[14px] font-bold text-[#22409b]">
+            <Link href="/news" prefetch={false} className="link-teal cursor-pointer text-[14px] font-bold text-[#22409b]">
               전체 보기 →
             </Link>
           </div>
@@ -149,10 +159,11 @@ export default async function Home() {
               <Link
                 key={n.title}
                 href={`/news/${n.slug}`}
+                prefetch={false}
                 className="row-link flex items-center justify-between border-b border-[#eaeef3] px-2 py-5"
               >
                 <span className="text-[15px] font-semibold text-navy sm:text-[16px]">{n.title}</span>
-                <span className="ml-3 shrink-0 font-mono text-[13px] text-[#8a96ab]">{n.date}</span>
+                <span className="ml-3 shrink-0 font-mono text-[13px] text-muted">{n.date}</span>
               </Link>
             ))}
           </div>
@@ -165,7 +176,8 @@ export default async function Home() {
           <div className="flex flex-col gap-2.5">
             <Link
               href={safeContentHref(contactCta.primaryHref)}
-              className="cursor-pointer rounded-[10px] bg-[#4f74e6] px-6 py-3.5 text-center text-[15px] font-bold text-white transition-opacity hover:opacity-90"
+              prefetch={false}
+              className="cursor-pointer rounded-[10px] bg-brand px-6 py-3.5 text-center text-[15px] font-bold text-white transition-opacity hover:opacity-90"
             >
               {contactCta.primaryLabel}
             </Link>

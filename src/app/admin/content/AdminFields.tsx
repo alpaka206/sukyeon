@@ -19,7 +19,7 @@ export type FormFieldProps = {
 };
 
 export const controlClassName =
-  "min-h-11 w-full rounded-xl border border-[#d4dae4] bg-white px-3.5 py-2.5 text-[15px] text-[#0a1b33] outline-none transition-[background,border-color,box-shadow] duration-150 placeholder:text-[#8a96ab] hover:border-[#b8c5da] focus:border-[#22409b] focus:bg-white focus:ring-2 focus:ring-[#eef2fc]";
+  "min-h-11 w-full rounded-xl border border-[#d4dae4] bg-white px-3.5 py-2.5 text-[15px] text-[#0a1b33] outline-none transition-[background,border-color,box-shadow] duration-150 placeholder:text-muted hover:border-[#b8c5da] focus:border-[#22409b] focus:bg-white focus:ring-2 focus:ring-[#eef2fc]";
 
 function combinedDescribedBy(
   descriptionId: string | undefined,

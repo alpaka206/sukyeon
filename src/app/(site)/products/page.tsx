@@ -15,7 +15,14 @@ export const metadata: Metadata = { title: "제품소개" };
 
 const eyebrowCls = "mb-3.5 font-mono text-[13px] tracking-[2px] text-[#22409b]";
 const h2Cls = "m-0 mb-4 fs-3 font-extrabold tracking-[-0.8px] text-navy";
-const pCls = "m-0 mb-6 text-[16px] leading-[1.8] text-[#5a6680]";
+const pCls = "m-0 mb-6 break-keep text-pretty text-[16px] leading-[1.8] text-[#5a6680]";
+
+function keepTogether(text: string): string {
+  return ["우수한 이형성과", "고온 안정성", "작업 환경", "피막 형성"].reduce(
+    (result, phrase) => result.replaceAll(phrase, phrase.replaceAll(" ", "\u00a0")),
+    text,
+  );
+}
 
 function MsdsLink() {
   return (
@@ -31,18 +38,19 @@ function MsdsLink() {
 
 // ‘ — ’ 앞부분을 굵게
 function Bullet({ text }: { readonly text: string }) {
-  const i = text.indexOf(" — ");
+  const wrappedText = keepTogether(text);
+  const i = wrappedText.indexOf(" — ");
   const body: ReactNode =
-    i === -1 ? text : (
+    i === -1 ? wrappedText : (
       <>
-        <strong className="text-navy">{text.slice(0, i)}</strong>
-        {text.slice(i)}
+        <strong className="text-navy">{wrappedText.slice(0, i)}</strong>
+        {wrappedText.slice(i)}
       </>
     );
   return (
     <div className="flex items-start gap-2.5">
       <span className="mt-0.5 font-extrabold text-[#22409b]">·</span>
-      <span className="text-[15px] text-[#42526b]">{body}</span>
+      <span className="break-keep text-pretty text-[15px] text-[#42526b]">{body}</span>
     </div>
   );
 }
@@ -82,7 +90,7 @@ function LineupSection({ lineup, id, gray }: { readonly lineup: ProductLineup; r
         <h2 className={h2Cls}>
           {lineup.title} {lineup.brand ? <span className="text-[18px] font-bold text-[#22409b]">{lineup.brand}</span> : null}
         </h2>
-        <p className={pCls}>{lineup.intro}</p>
+        <p className={pCls}>{keepTogether(lineup.intro)}</p>
         {lineup.bullets.length > 0 && (
           <div className="mb-7 flex flex-col gap-3">
             {lineup.bullets.map((b) => (
@@ -149,7 +157,7 @@ export default async function ProductsPage() {
             </div>
             <Link
               href="/contact"
-              className="shrink-0 cursor-pointer rounded-[10px] bg-[#4f74e6] px-7.5 py-3.75 text-[16px] font-bold text-white transition-opacity hover:opacity-90"
+              className="shrink-0 cursor-pointer rounded-[10px] bg-brand px-7.5 py-3.75 text-[16px] font-bold text-white transition-opacity hover:opacity-90"
             >
               맞춤 견적 받기
             </Link>

@@ -21,26 +21,32 @@ export default async function LoginPage({
         </p>
       )}
       {sp?.error && (
-        <p className="mb-4 rounded-lg bg-[#fdecec] px-3 py-2 text-[13px] text-[#b3261e]">
+        <p role="alert" aria-live="polite" className="mb-4 rounded-lg bg-[#fdecec] px-3 py-2 text-[13px] text-[#b3261e]">
           아이디 또는 비밀번호가 올바르지 않습니다.
         </p>
       )}
       <form action={loginAction} className="flex flex-col gap-3">
-        <input
-          name="username"
-          placeholder="아이디"
-          autoComplete="username"
-          required
-          className="rounded-lg border border-[#d4dae4] px-3 py-2.5 text-[15px]"
-        />
-        <input
-          name="password"
-          type="password"
-          placeholder="비밀번호"
-          autoComplete="current-password"
-          required
-          className="rounded-lg border border-[#d4dae4] px-3 py-2.5 text-[15px]"
-        />
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="admin-username" className="text-[13px] font-bold text-[#42526b]">아이디</label>
+          <input
+            id="admin-username"
+            name="username"
+            autoComplete="username"
+            required
+            className="rounded-lg border border-[#d4dae4] px-3 py-2.5 text-[15px]"
+          />
+        </div>
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="admin-password" className="text-[13px] font-bold text-[#42526b]">비밀번호</label>
+          <input
+            id="admin-password"
+            name="password"
+            type="password"
+            autoComplete="current-password"
+            required
+            className="rounded-lg border border-[#d4dae4] px-3 py-2.5 text-[15px]"
+          />
+        </div>
         <button
           type="submit"
           className="mt-1 rounded-lg bg-[#22409b] px-4 py-2.5 text-[15px] font-bold text-white hover:bg-[#18306f]"
