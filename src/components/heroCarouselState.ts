@@ -1,3 +1,6 @@
+export const HERO_CAROUSEL_AUTOPLAY_MS = 4000;
+export const HERO_CAROUSEL_FADE_MS = 700;
+
 export function nextSlideIndex(active: number, slideCount: number): number {
   return slideCount > 0 ? (active + 1) % slideCount : 0;
 }
@@ -6,8 +9,8 @@ export function previousSlideIndex(active: number, slideCount: number): number {
   return slideCount > 0 ? (active - 1 + slideCount) % slideCount : 0;
 }
 
-export function shouldAnimateSlide(hasInteracted: boolean): boolean {
-  return hasInteracted;
+export function shouldAutoplaySlides(slideCount: number, paused: boolean): boolean {
+  return slideCount > 1 && !paused;
 }
 
 export function optimizedSanitySource(

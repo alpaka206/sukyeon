@@ -233,13 +233,18 @@ function ProductModal({ items, index, groupLabel, onClose, onIndexChange }: Moda
                 aria-label={it.title}
                 aria-pressed={i === index}
                 onClick={() => onIndexChange(i)}
-                className={`relative h-14 w-16 shrink-0 cursor-pointer rounded-[10px] border transition-colors ${
+                className={`flex h-22 w-24 shrink-0 cursor-pointer flex-col items-center justify-between rounded-[10px] border px-1.5 py-1.5 transition-colors ${
                   i === index
                     ? "border-[#22409b] bg-brand-soft"
                     : "border-[#eaeef3] bg-[#fbfcfe] hover:border-[#b8c5da]"
                 }`}
               >
-                <Image src={it.image} alt={it.title} fill sizes="64px" className="object-contain p-1.5" />
+                <span className="relative h-12 w-full shrink-0">
+                  <Image src={it.image} alt={it.title} fill sizes="80px" className="object-contain" />
+                </span>
+                <span className={`line-clamp-2 text-center text-[11px] font-bold leading-[1.25] ${i === index ? "text-[#18306f]" : "text-[#42526b]"}`}>
+                  {it.title}
+                </span>
               </button>
             ))}
           </div>

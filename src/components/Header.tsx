@@ -23,19 +23,19 @@ export default function Header({ settings }: { readonly settings: SiteSettings |
   return (
     <header className="sticky top-0 z-50">
       {/* utility bar */}
-      <div className="hidden h-10 items-center justify-between bg-ink wide-shell text-[13px] text-[#9fb0c9] sm:flex">
+      <div className="hidden h-10 items-center justify-between bg-brand wide-shell text-[13px] text-white/90 sm:flex">
         <span className="font-mono tracking-[1px] truncate pr-4">
           {settings?.footerTagline}
         </span>
         <div className="flex shrink-0 items-center gap-5.5">
           <span className="flex items-center gap-1.5">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#4f74e6" strokeWidth="2">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.08 4.18 2 2 0 0 1 5 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" />
             </svg>
             {company?.tel}
           </span>
           <span className="flex items-center gap-1.5">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#4f74e6" strokeWidth="2">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M6 9V2h12v7" />
               <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
               <path d="M6 14h12v8H6z" />
@@ -195,7 +195,7 @@ export default function Header({ settings }: { readonly settings: SiteSettings |
               href="/contact"
               prefetch={false}
               onClick={() => setMobileOpen(false)}
-              className="flex flex-1 items-center justify-center rounded-[9px] bg-[#22409b] py-3 text-[15px] font-bold text-white"
+              className="flex flex-1 items-center justify-center rounded-[9px] bg-brand py-3 text-[15px] font-bold text-white"
             >
               견적 문의
             </Link>
