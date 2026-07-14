@@ -283,8 +283,8 @@ async function prepareContentAssets(type: ContentType, formData: FormData): Prom
   for (const [name, raw] of formData.entries()) {
     if (!name.startsWith("asset.")) continue;
     const path = name.slice("asset.".length);
-    if (!(raw instanceof File) || (!raw.name && raw.size === 0)) continue;
-    if (!raw.name || raw.size === 0) return { assets: [], error: "빈 파일은 업로드할 수 없습니다." };
+    if (!(raw instanceof File) || raw.size === 0) continue;
+    if (!raw.name) return { assets: [], error: "빈 파일은 업로드할 수 없습니다." };
     if (raw.size > MAX_ASSET_SIZE_BYTES) return { assets: [], error: "파일은 20MB 이하여야 합니다." };
     if (paths.has(path)) return { assets: [], error: "같은 파일 입력이 두 번 전송되었습니다." };
 
