@@ -18,9 +18,11 @@ import {
   StickySaveBar,
   TextAreaField,
   TextField,
+  revealAndFocusField,
 } from "./FormPrimitives";
 import { saveContentAction as saveContentActionWithState } from "../actions";
 import { EMPTY_CONTENT_ACTION_STATE } from "./ContentActionState";
+import { readStringList } from "./stringList";
 
 type FieldSpec = {
   readonly key: string;
@@ -116,7 +118,6 @@ function schemaFor(
         key: "productsHeading",
         label: "제품 소개 제목",
         fields: [
-          { key: "eyebrow", label: "영문 레이블" },
           { key: "title", label: "제목" },
           { key: "moreLabel", label: "더보기 문구" },
           { key: "moreHref", label: "더보기 링크", kind: "url" },
@@ -150,10 +151,7 @@ function schemaFor(
       {
         key: "whyHeading",
         label: "선택 이유 제목",
-        fields: [
-          { key: "eyebrow", label: "영문 레이블" },
-          { key: "title", label: "제목" },
-        ],
+        fields: [{ key: "title", label: "제목" }],
       },
       {
         key: "whyItems",
@@ -480,22 +478,34 @@ function ArrayEditor({
   spec,
   path,
   value,
+  onDirty,
 }: {
   readonly spec: FieldSpec;
   readonly path: string;
   readonly value: unknown;
+  readonly onDirty: () => void;
 }) {
+  // 문단·연혁 내용처럼 배열 원소가 문자열 자체인 leaf 배열은 {item} 행으로 승격해
+  // 편집할 수 있게 한다(레코드만 남기면 기존 문자열 데이터가 전부 사라진 채 저장된다).
+  const leafArray = Boolean(spec.array && !spec.array.fields);
   const [rows, setRows] = useState<readonly Row[]>(() =>
-    rowsAt(value).map((entry) => ({
-      clientId: crypto.randomUUID(),
-      value: entry,
-    })),
+    leafArray
+      ? readStringList(value).map((entry) => ({
+          clientId: crypto.randomUUID(),
+          value: { item: entry },
+        }))
+      : rowsAt(value).map((entry) => ({
+          clientId: crypto.randomUUID(),
+          value: entry,
+        })),
   );
+  const [newRowIds] = useState(() => new Set<string>());
   const [draftTitles, setDraftTitles] = useState<Record<string, string>>({});
   const [draggingId, setDraggingId] = useState<string | null>(null);
   useArrayMarker(path);
   const reorderRows = (sourceId: string, targetId: string) => {
     if (!sourceId || sourceId === targetId) return;
+    onDirty();
     setRows((current) => {
       const from = current.findIndex((entry) => entry.clientId === sourceId);
       const target = current.findIndex((entry) => entry.clientId === targetId);
@@ -514,11 +524,12 @@ function ArrayEditor({
   };
   const item = spec.array;
   if (!item) return null;
-  const addRow = () =>
-    setRows((current) => [
-      ...current,
-      { clientId: crypto.randomUUID(), value: {} },
-    ]);
+  const addRow = () => {
+    const clientId = crypto.randomUUID();
+    newRowIds.add(clientId);
+    setRows((current) => [...current, { clientId, value: {} }]);
+    onDirty();
+  };
   return (
     <div className="grid gap-4 rounded-2xl border border-[#e2e6ed] bg-[#fbfcfe] p-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
@@ -551,11 +562,13 @@ function ArrayEditor({
                 ? `${index + 1}. ${titleValue}`
                 : `${item.label} ${index + 1}`
             }
-            onRemove={() =>
+            defaultOpen={newRowIds.has(row.clientId)}
+            onRemove={() => {
               setRows((current) =>
                 current.filter((entry) => entry.clientId !== row.clientId),
-              )
-            }
+              );
+              onDirty();
+            }}
             onDragStart={(event) => beginDrag(event, row.clientId)}
             onDragOver={(event) => {
               event.preventDefault();
@@ -601,9 +614,14 @@ function ArrayEditor({
                   specs={item.fields}
                   path={`${path}.${index}`}
                   value={row.value}
+                  onDirty={onDirty}
                 />
               ) : (
-                <Leaf spec={item} path={`${path}.${index}`} value={row.value} />
+                <Leaf
+                  spec={item}
+                  path={`${path}.${index}`}
+                  value={row.value["item"]}
+                />
               )}
             </div>
           </RepeaterCard>
@@ -617,10 +635,12 @@ function Fields({
   specs,
   path,
   value,
+  onDirty,
 }: {
   readonly specs: readonly FieldSpec[];
   readonly path: string;
   readonly value: ContentRecord;
+  readonly onDirty: () => void;
 }) {
   return (
     <div className="grid gap-4 md:grid-cols-2">
@@ -630,7 +650,12 @@ function Fields({
         if (spec.array)
           return (
             <div key={nextPath} className="md:col-span-2">
-              <ArrayEditor spec={spec} path={nextPath} value={nextValue} />
+              <ArrayEditor
+                spec={spec}
+                path={nextPath}
+                value={nextValue}
+                onDirty={onDirty}
+              />
             </div>
           );
         if (spec.fields)
@@ -641,6 +666,7 @@ function Fields({
                   specs={spec.fields}
                   path={nextPath}
                   value={objectAt(nextValue)}
+                  onDirty={onDirty}
                 />
               </FormSection>
             </div>
@@ -665,7 +691,7 @@ export function SingletonEditor({
   readonly documentText: string;
 }) {
   const formRef = useRef<HTMLFormElement>(null);
-  const [state, formAction] = useActionState(
+  const [state, formAction, isPending] = useActionState(
     saveContentActionWithState,
     EMPTY_CONTENT_ACTION_STATE,
   );
@@ -674,9 +700,6 @@ export function SingletonEditor({
   const document = initialDocument(documentText);
   const preview =
     type === "homePage" ? "/" : type === "aboutPage" ? "/about" : "/";
-  async function saveContentAction(formData: FormData): Promise<void> {
-    startTransition(() => formAction(formData));
-  }
   useEffect(() => {
     const warn = (event: BeforeUnloadEvent) => {
       if (dirty) event.preventDefault();
@@ -692,23 +715,31 @@ export function SingletonEditor({
     if (!firstError) return;
     const summary = window.document.createElement("section");
     summary.dataset.actionFeedback = "true";
+    // 필드를 특정하지 못한 오류는 배너 자신이 fallback 앵커(form-error-summary)가 된다.
+    summary.id = "form-error-summary";
+    summary.tabIndex = -1;
     summary.setAttribute("role", "alert");
     summary.className =
       "rounded-xl border border-[#f0c9c9] bg-[#fff5f5] p-4 text-[#7f1d1d]";
     const title = window.document.createElement("h2");
     title.className = "m-0 text-[16px] font-extrabold";
     title.textContent = "저장 내용을 확인해 주세요";
-    const link = window.document.createElement("a");
-    link.href = `#${firstError.field}`;
-    link.className = "mt-2 block text-[14px] font-semibold underline";
-    link.textContent = firstError.message;
-    summary.append(title, link);
+    const generic = firstError.field === "form-error-summary";
+    const message = window.document.createElement(generic ? "p" : "a");
+    message.className = `mt-2 block text-[14px] font-semibold${generic ? "" : " underline"}`;
+    message.textContent = firstError.message;
+    if (message instanceof HTMLAnchorElement) {
+      message.href = `#${firstError.field}`;
+      message.onclick = () => revealAndFocusField(form, firstError.field);
+    }
+    summary.append(title, message);
     form.prepend(summary);
-    window.document.getElementById(firstError.field)?.focus();
+    revealAndFocusField(form, firstError.field);
   }, [state.errors]);
   function discard() {
     if (!dirty || window.confirm("변경한 내용을 버리시겠습니까?")) {
       formRef.current?.reset();
+      formRef.current?.querySelector("[data-action-feedback]")?.remove();
       setResetVersion((current) => current + 1);
       setDirty(false);
     }
@@ -717,8 +748,15 @@ export function SingletonEditor({
     <form
       ref={formRef}
       id="singleton-content-form"
-      action={saveContentAction}
+      // action prop 대신 직접 dispatch: React 19는 form action이 에러 상태를 반환해도
+      // 폼을 자동 reset해 사용자의 미저장 입력을 전부 날려버린다.
+      onSubmit={(event) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        startTransition(() => formAction(formData));
+      }}
       onInput={() => setDirty(true)}
+      onChange={() => setDirty(true)}
       className="grid gap-5"
     >
       <input type="hidden" name="type" value={type} />
@@ -733,9 +771,11 @@ export function SingletonEditor({
         specs={schemaFor(type)}
         path=""
         value={document}
+        onDirty={() => setDirty(true)}
       />
       <StickySaveBar
         formId="singleton-content-form"
+        saving={isPending}
         changed={dirty}
         onCancel={discard}
       />

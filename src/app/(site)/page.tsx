@@ -62,7 +62,7 @@ export default async function Home() {
     <>
       {/* hero */}
       <section className="wide-shell grid grid-cols-1 lg:min-h-140 lg:grid-cols-[minmax(0,1.6fr)_minmax(360px,1fr)]">
-        <div className="flex flex-col justify-center bg-[#fbfcfe] py-15 lg:py-22.5 lg:pr-8 xl:pr-10">
+        <div className="flex flex-col justify-center py-15 lg:py-22.5 lg:pr-8 xl:pr-10">
           <h1 className="m-0 mb-6.5 fs-hero font-bold leading-[1.32] tracking-[-1px] text-navy">
             <span className="hero-title-line">{hero.titleLine1}</span>
             <span className="hero-title-line text-[#22409b]">{hero.titleLine2}</span>
@@ -96,10 +96,7 @@ export default async function Home() {
       {/* products preview */}
       <section className="bg-white shell py-16 lg:py-22">
         <div className="mb-12 flex items-end justify-between">
-          <div>
-            <div className="mb-3.5 text-[13px] font-bold tracking-[1px] text-[#22409b]">{productsHeading.eyebrow}</div>
-            <h2 className="m-0 fs-2 font-extrabold tracking-[-1px] text-navy">{productsHeading.title}</h2>
-          </div>
+          <h2 className="m-0 fs-2 font-extrabold tracking-[-1px] text-navy">{productsHeading.title}</h2>
           <Link href={safeContentHref(productsHeading.moreHref)} prefetch={false} className="link-teal shrink-0 cursor-pointer text-[15px] font-bold text-[#22409b]">
             {productsHeading.moreLabel}
           </Link>
@@ -126,7 +123,6 @@ export default async function Home() {
 
       {/* why us */}
       <section className="bg-[#f6f9fb] shell py-16 lg:py-22">
-        <div className="mb-3.5 text-[13px] font-bold tracking-[1px] text-[#22409b]">{whyHeading.eyebrow}</div>
         <h2 className="m-0 mb-12 fs-2 font-extrabold tracking-[-1px] text-navy">{whyHeading.title}</h2>
         <div className="grid grid-cols-2 gap-3.5 sm:gap-5 lg:grid-cols-4">
           {whyItems.map((f) => (

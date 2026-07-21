@@ -16,5 +16,6 @@ export {
   FormSection,
   RepeaterCard,
   StickySaveBar,
+  revealAndFocusField,
   type InlineError,
 } from "./AdminFormControls";

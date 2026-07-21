@@ -3,10 +3,10 @@ import type { AboutPage, HomePage, SiteSettings } from "./types";
 
 const HOME_Q = `*[_type=="homePage"][0]{
   hero{titleLine1,titleLine2,copyLine1,copyLine2,primaryLabel,primaryHref,secondaryLabel,secondaryHref,slides[]{"desktop":desktopImage.asset->url,"mobile":mobileImage.asset->url,alt}},
-  productsHeading,
+  productsHeading{title,moreLabel,moreHref},
   productCards[]{"image":image.asset->url,title,tag,desc,href},
   productsCta,
-  whyHeading,
+  whyHeading{title},
   whyItems[]{icon,title,desc},
   contactCta
 }`;

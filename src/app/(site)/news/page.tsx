@@ -28,7 +28,7 @@ export default async function NewsPage({ searchParams }: Props) {
 
   return (
     <>
-      <PageHeader eyebrow="NEWS" title="공지사항" />
+      <PageHeader title="공지사항" />
       <div className="shell py-16 pb-20">
         <div className="border-t-2 border-navy">
           {visibleItems.map((n) => (

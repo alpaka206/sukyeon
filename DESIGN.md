@@ -11,7 +11,7 @@ Sukyeon MRO should feel like a dependable manufacturing partner: technical, dire
 | Role              | Token                    | Light     | Dark      | Usage                                                                          |
 | ----------------- | ------------------------ | --------- | --------- | ------------------------------------------------------------------------------ |
 | Surface/primary   | `--surface-primary`      | `#ffffff` | N/A       | Main page background                                                           |
-| Surface/secondary | `--surface-secondary`    | `#fbfcfe` | N/A       | Hero text side                                                                 |
+| Surface/secondary | `--surface-secondary`    | `#fbfcfe` | N/A       | Section LNB aside and admin form panels (the hero text side is transparent)    |
 | Surface/muted     | `--surface-muted`        | `#f6f9fb` | N/A       | Alternating sections                                                           |
 | Surface/tint      | `--surface-tint`         | `#eef2fc` | N/A       | Icon and accent backgrounds                                                    |
 | Text/primary      | `--text-primary`         | `#0a1b33` | N/A       | Headlines, important copy                                                      |
@@ -23,7 +23,7 @@ Sukyeon MRO should feel like a dependable manufacturing partner: technical, dire
 | Accent/primary    | `--accent-primary`       | `#22409b` | N/A       | Links, active accents, brand emphasis                                          |
 | Accent/deep       | `--accent-deep`          | `#18306f` | N/A       | Hover and deep emphasis                                                        |
 | Accent/bright     | `--accent-bright`        | `#4f74e6` | N/A       | Decorative blue that is not used for normal text or white-text CTA backgrounds |
-| Accent/on-dark    | `--color-accent-on-dark` | N/A       | `#89a7ff` | Eyebrows, links, and hover text on navy                                        |
+| Accent/on-dark    | `--color-accent-on-dark` | N/A       | `#89a7ff` | Links, hover text, and the catalog cover mock label on navy                    |
 
 ### Rules
 
@@ -130,7 +130,7 @@ All spacing derives from a base of 4px.
 
 - **Structure**: public subpages use a full-width title band through `PageHeader`.
 - **Color**: the title band background matches the home hero primary CTA (`--accent-primary` / `bg-brand`) for consistent top-level navigation context.
-- **Typography**: the eyebrow stays white at reduced opacity; the page title stays white and extra-bold.
+- **Typography**: the page title stays white and extra-bold; no English eyebrow labels are shown.
 
 ### Hero Carousel
 

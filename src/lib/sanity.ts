@@ -11,6 +11,8 @@ export const sanityClient: SanityClient | null = projectId
       projectId,
       dataset,
       apiVersion: "2024-01-01",
-      useCdn: true, // 공개 콘텐츠 → CDN 캐시 사용(읽기 토큰 불필요)
+      // 조회는 전부 서버 재검증 시점에 일어나므로 CDN 캐시를 쓰면
+      // 저장 직후 낡은 콘텐츠가 페이지에 다시 캐시된다 → 항상 라이브 API 사용.
+      useCdn: false,
     })
   : null;

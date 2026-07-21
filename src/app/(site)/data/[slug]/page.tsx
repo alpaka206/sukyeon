@@ -37,7 +37,7 @@ export default async function DataDetailPage({ params }: Props) {
 
   return (
     <>
-      <PageHeader eyebrow="DATA / MSDS (GHS)" title="자료실" />
+      <PageHeader title="자료실" />
       <main className="shell py-16 pb-20">
         <article className="mx-auto max-w-240 border-t-2 border-navy pt-10">
           <div className="mb-5 flex flex-wrap items-center gap-3">

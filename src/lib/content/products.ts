@@ -6,8 +6,8 @@ import type {
   ProductLineup,
 } from "./types";
 
-const LINEUPS_Q = `*[_type=="productLineup"]|order(order asc){key,eyebrow,title,brand,intro,bullets,"items":items[visible != false]{code,"image":image.asset->url,summary,points,documents[]{"label":coalesce(label,doc->name),"url":coalesce(doc->file.asset->url,href)}}}`;
-const GALLERIES_Q = `*[_type=="productGallery"]|order(order asc){key,eyebrow,title,intro,"items":items[visible != false]{"image":image.asset->url,title,summary}}`;
+const LINEUPS_Q = `*[_type=="productLineup"]|order(order asc){key,title,brand,intro,bullets,"items":items[visible != false]{code,"image":image.asset->url,summary,points,documents[]{"label":coalesce(label,doc->name),"url":coalesce(doc->file.asset->url,href)}}}`;
+const GALLERIES_Q = `*[_type=="productGallery"]|order(order asc){key,title,intro,"items":items[visible != false]{"image":image.asset->url,title,summary}}`;
 
 export async function readProductLineups(
   request: ContentRequest<readonly unknown[] | null> | null,
@@ -95,7 +95,6 @@ function productLineup(value: unknown): ProductLineup {
   const lineup = objectAt(value);
   return {
     key: stringAt(lineup.key),
-    eyebrow: stringAt(lineup.eyebrow),
     title: stringAt(lineup.title),
     brand: stringAt(lineup.brand),
     intro: stringAt(lineup.intro),
@@ -108,7 +107,6 @@ function productGallery(value: unknown): ProductGallery {
   const gallery = objectAt(value);
   return {
     key: stringAt(gallery.key),
-    eyebrow: stringAt(gallery.eyebrow),
     title: stringAt(gallery.title),
     intro: stringAt(gallery.intro),
     items: galleryItems(gallery.items),

@@ -10,7 +10,7 @@ export default async function CatalogPage() {
   const catalogHref = safeContentHref(catalog.file);
   return (
     <>
-      <PageHeader eyebrow="CATALOG" title="카탈로그" />
+      <PageHeader title="카탈로그" />
 
       <div className="grid grid-cols-1 items-center gap-10 shell py-16 pb-20 lg:grid-cols-[0.8fr_1.2fr] lg:gap-14">
         <div className="relative mx-auto flex aspect-[3/4] w-full max-w-90 flex-col justify-between overflow-hidden rounded-[18px] bg-[linear-gradient(160deg,#13294a,#0a1b33)] p-9.5 text-white shadow-[0_30px_60px_-25px_rgba(10,27,51,0.55)]">
@@ -25,7 +25,6 @@ export default async function CatalogPage() {
         </div>
 
         <div>
-          <div className="mb-3.5 font-mono text-[13px] tracking-[2px] text-[#22409b]">DOWNLOAD</div>
           <h2 className="m-0 mb-4.5 fs-3 font-extrabold tracking-[-0.7px] text-navy">
             {catalog.title}
           </h2>

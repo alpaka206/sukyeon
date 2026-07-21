@@ -17,7 +17,6 @@ export default defineType({
       ] },
       validation: (r) => r.required(),
     }),
-    defineField({ name: "eyebrow", title: "영문 라벨", type: "string", description: "예: INJECTION PARTS" }),
     defineField({ name: "title", title: "제목", type: "string", validation: (r) => r.required() }),
     defineField({ name: "intro", title: "소개 문단", type: "text", rows: 3, description: "줄바꿈이 그대로 반영됩니다" }),
     defineField({

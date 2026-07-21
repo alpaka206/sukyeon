@@ -24,7 +24,9 @@ import {
   FormSection,
   RepeaterCard,
   StickySaveBar,
+  revealAndFocusField,
 } from "./AdminFormControls";
+import { readStringList } from "./stringList";
 
 type RecordValue = Record<string, unknown>;
 type DocumentOption = { readonly id: string; readonly title: string };
@@ -141,11 +143,7 @@ function Strings({
   readonly value: unknown;
   readonly onDirty?: () => void;
 }) {
-  const initial = Array.isArray(value)
-    ? value
-        .filter((item): item is string => typeof item === "string")
-        .map((item) => row({ item }))
-    : [];
+  const initial = readStringList(value).map((item) => row({ item }));
   const [rows, setRows] = useState<readonly Row[]>(initial);
   useArrayMarker(path);
   return (
@@ -170,6 +168,7 @@ function Strings({
       {rows.map((entry, index) => (
         <div key={entry.clientId} className="flex gap-2">
           <input
+            id={`${path}.${index}`}
             aria-label={`${label} ${index + 1}`}
             name={name(`${path}.${index}`)}
             defaultValue={text(entry.value.item)}
@@ -263,7 +262,7 @@ function RelatedDocument({
         </FormField>
       ) : (
         <TextField
-          id={`${path}-href`}
+          id={`${path}.href`}
           label="직접 링크"
           name={name(`${path}.href`)}
           type="text"
@@ -341,7 +340,7 @@ function RelatedDocuments({
           </div>
           <div className="grid gap-4 md:grid-cols-2">
             <TextField
-              id={`${path}-${index}-label`}
+              id={`${path}.${index}.label`}
               label="표시 이름"
               name={name(`${path}.${index}.label`)}
               defaultValue={text(entry.value.label)}
@@ -372,6 +371,7 @@ function ProductItems({
   const [rows, setRows] = useState<readonly Row[]>(() =>
     values(value).map(row),
   );
+  const [newRowIds] = useState(() => new Set<string>());
   const [draftTitles, setDraftTitles] = useState<Record<string, string>>({});
   const [draggingId, setDraggingId] = useState<string | null>(null);
   useArrayMarker("items");
@@ -396,7 +396,10 @@ function ProductItems({
     setDraggingId(clientId);
   }
   const addRow = () => {
-    setRows((current) => [...current, row()]);
+    const created = row();
+    // 새 카드가 접힌 채 생성되면 required 입력이 hidden 상태로 남아 저장이 조용히 막힌다.
+    newRowIds.add(created.clientId);
+    setRows((current) => [...current, created]);
     onDirty();
   };
   return (
@@ -430,6 +433,7 @@ function ProductItems({
             <RepeaterCard
               key={entry.clientId}
               title={cardTitle}
+              defaultOpen={newRowIds.has(entry.clientId)}
               onRemove={() => {
                 setRows((current) =>
                   current.filter((item) => item.clientId !== entry.clientId),
@@ -474,7 +478,7 @@ function ProductItems({
               <div className="grid gap-4 md:grid-cols-2">
                 {gallery ? (
                   <TextField
-                    id={`${path}-title`}
+                    id={`${path}.title`}
                     label="항목명"
                     name={name(`${path}.title`)}
                     defaultValue={text(entry.value.title)}
@@ -489,7 +493,7 @@ function ProductItems({
                   />
                 ) : (
                   <TextField
-                    id={`${path}-code`}
+                    id={`${path}.code`}
                     label="제품명·코드"
                     name={name(`${path}.code`)}
                     defaultValue={text(entry.value.code)}
@@ -504,8 +508,8 @@ function ProductItems({
                   />
                 )}
                 <TextField
-                  id={`${path}-summary`}
-                  label={gallery ? "설명" : "요약"}
+                  id={`${path}.summary`}
+                  label={gallery ? "설명" : "제품 상세 설명"}
                   name={name(`${path}.summary`)}
                   defaultValue={text(entry.value.summary)}
                 />
@@ -517,7 +521,7 @@ function ProductItems({
                 {!gallery && (
                   <Strings
                     path={`${path}.points`}
-                    label="특징"
+                    label="제품 특징"
                     value={entry.value.points}
                     onDirty={onDirty}
                   />
@@ -600,12 +604,6 @@ function Lineup({
             defaultValue={text(document.title)}
             required
           />
-          <TextField
-            id="eyebrow"
-            label="영문 아이브로"
-            name={name("eyebrow")}
-            defaultValue={text(document.eyebrow)}
-          />
           {type === "productLineup" && (
             <TextField
               id="brand"
@@ -626,8 +624,9 @@ function Lineup({
           <div className="mt-5">
             <Strings
               path="bullets"
-              label="특징 목록"
+              label="라인업 특징"
               value={document.bullets}
+              onDirty={onDirty}
             />
           </div>
         )}
@@ -684,12 +683,6 @@ function Cert({ document }: { readonly document: RecordValue }) {
           name={name("title")}
           defaultValue={text(document.title)}
           required
-        />
-        <TextField
-          id="eyebrow"
-          label="영문 아이브로"
-          name={name("eyebrow")}
-          defaultValue={text(document.eyebrow)}
         />
         <TextField
           id="standard"
@@ -757,18 +750,16 @@ export function CollectionEditor({
   readonly documentOptions: readonly DocumentOption[];
 }) {
   const formRef = useRef<HTMLFormElement>(null);
-  const [state, formAction] = useActionState(
+  const [state, formAction, isPending] = useActionState(
     saveContentActionWithState,
     EMPTY_CONTENT_ACTION_STATE,
   );
   const [dirty, setDirty] = useState(false);
-  const [resetVersion] = useState(0);
+  // 취소로 나갈 때는 이미 확인을 받았으므로 beforeunload 경고를 한 번 더 띄우지 않는다.
+  const leavingRef = useRef(false);
   const document = parseDocument(documentText);
   const preview =
     type === "catalog" ? "/catalog" : type === "cert" ? "/cert" : "/products";
-  async function saveContentAction(formData: FormData): Promise<void> {
-    startTransition(() => formAction(formData));
-  }
   useEffect(() => {
     formRef.current
       ?.querySelector('[name="content.key"]')
@@ -776,7 +767,7 @@ export function CollectionEditor({
   }, []);
   useEffect(() => {
     const warn = (event: BeforeUnloadEvent) => {
-      if (dirty) event.preventDefault();
+      if (dirty && !leavingRef.current) event.preventDefault();
     };
     window.addEventListener("beforeunload", warn);
     return () => window.removeEventListener("beforeunload", warn);
@@ -789,39 +780,40 @@ export function CollectionEditor({
     if (!firstError) return;
     const summary = window.document.createElement("section");
     summary.dataset.actionFeedback = "true";
+    // 필드를 특정하지 못한 오류는 배너 자신이 fallback 앵커(form-error-summary)가 된다.
+    summary.id = "form-error-summary";
+    summary.tabIndex = -1;
     summary.setAttribute("role", "alert");
     summary.className =
       "rounded-xl border border-[#f0c9c9] bg-[#fff5f5] p-4 text-[#7f1d1d]";
     const title = window.document.createElement("h2");
     title.className = "m-0 text-[16px] font-extrabold";
     title.textContent = "저장 내용을 확인해 주세요";
-    const link = window.document.createElement("a");
-    link.href = `#${firstError.field}`;
-    link.className = "mt-2 block text-[14px] font-semibold underline";
-    link.textContent = firstError.message;
-    summary.append(title, link);
+    const generic = firstError.field === "form-error-summary";
+    const message = window.document.createElement(generic ? "p" : "a");
+    message.className = `mt-2 block text-[14px] font-semibold${generic ? "" : " underline"}`;
+    message.textContent = firstError.message;
+    if (message instanceof HTMLAnchorElement) {
+      message.href = `#${firstError.field}`;
+      message.onclick = () => revealAndFocusField(form, firstError.field);
+    }
+    summary.append(title, message);
     form.prepend(summary);
-    window.document.getElementById(firstError.field)?.focus();
+    revealAndFocusField(form, firstError.field);
   }, [state.errors]);
-  useEffect(() => {
-    const cancel = formRef.current?.querySelector<HTMLButtonElement>(
-      ".sticky button[type=button]",
-    );
-    if (!cancel) return;
-    const discardForm = (event: MouseEvent) => {
-      event.stopImmediatePropagation();
-      if (!dirty || window.confirm("변경한 내용을 버리시겠습니까?"))
-        window.location.reload();
-    };
-    cancel.addEventListener("click", discardForm, true);
-    return () => cancel.removeEventListener("click", discardForm, true);
-  }, [dirty, resetVersion]);
   return (
     <form
       ref={formRef}
       id="collection-content-form"
-      action={saveContentAction}
+      // action prop 대신 직접 dispatch: React 19는 form action이 에러 상태를 반환해도
+      // 폼을 자동 reset해 사용자의 미저장 입력을 전부 날려버린다.
+      onSubmit={(event) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        startTransition(() => formAction(formData));
+      }}
       onInput={() => setDirty(true)}
+      onChange={() => setDirty(true)}
       className="grid gap-5"
     >
       <input type="hidden" name="type" value={type} />
@@ -846,10 +838,13 @@ export function CollectionEditor({
       )}
       <StickySaveBar
         formId="collection-content-form"
+        saving={isPending}
         changed={dirty}
         onCancel={() => {
-          if (!dirty || window.confirm("변경한 내용을 버리시겠습니까?"))
+          if (!dirty || window.confirm("변경한 내용을 버리시겠습니까?")) {
+            leavingRef.current = true;
             window.location.assign(`/admin/content/${type}`);
+          }
         }}
       />
     </form>

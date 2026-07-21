@@ -31,7 +31,7 @@ type DocRecord = {
 const NEWS_Q = `*[_type=="newsPost"]|order(date desc){category,title,date,accent,"slug":coalesce(slug.current,slug),summary,body}`;
 const DOCS_Q = `*[_type=="doc"]|order(date desc){name,category,date,"file":coalesce(file.asset->url,""),"slug":coalesce(slug.current,slug),summary,body,notice,attachments[]{name,"file":coalesce(file.asset->url,file)}}`;
 const CATALOG_Q = `*[_type=="catalog"]|order(_updatedAt desc)[0]{title,tagline,"file":coalesce(file.asset->url,"")}`;
-const CERTS_Q = `*[_type=="cert"]|order(order asc){eyebrow,title,standard,desc,issuer,number,scope,validity,"imageKo":coalesce(imageKo.asset->url,""),"imageEn":coalesce(imageEn.asset->url,"")}`;
+const CERTS_Q = `*[_type=="cert"]|order(order asc){title,standard,desc,issuer,number,scope,validity,"imageKo":coalesce(imageKo.asset->url,""),"imageEn":coalesce(imageEn.asset->url,"")}`;
 
 export const EMPTY_CATALOG: Catalog = { title: "제품 카탈로그", tagline: "", file: "" };
 

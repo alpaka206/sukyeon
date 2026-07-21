@@ -5,14 +5,13 @@ import { useEffect, useState, useCallback } from "react";
 export type SectionNavItem = { id: string; label: string };
 
 type Props = {
-  readonly eyebrow: string;
   readonly title: string;
   readonly items: SectionNavItem[];
   readonly children: React.ReactNode;
   readonly wide?: boolean;
 };
 
-export default function SectionLayout({ eyebrow, title, items, children, wide = false }: Props) {
+export default function SectionLayout({ title, items, children, wide = false }: Props) {
   const [active, setActive] = useState(items[0]?.id ?? "");
 
   useEffect(() => {
@@ -66,9 +65,6 @@ export default function SectionLayout({ eyebrow, title, items, children, wide = 
         {/* desktop vertical LNB */}
         <aside className="hidden border-r border-[#eaeef3] bg-[#fbfcfe] lg:block">
           <div className="sticky top-19.5 py-9.5">
-            <div className="px-8 pb-1.5 font-mono text-[12px] tracking-[2px] text-[#22409b]">
-              {eyebrow}
-            </div>
             <div className="px-8 pb-5.5 text-[21px] font-extrabold text-navy">{title}</div>
             <div className="flex flex-col">
               {items.map((it) => {

@@ -13,7 +13,6 @@ import {
 
 export const metadata: Metadata = { title: "제품소개" };
 
-const eyebrowCls = "mb-3.5 font-mono text-[13px] tracking-[2px] text-[#22409b]";
 const h2Cls = "m-0 mb-4 fs-3 font-extrabold tracking-[-0.8px] text-navy";
 const pCls = "m-0 mb-6 break-keep text-pretty text-[16px] leading-[1.8] text-[#5a6680]";
 
@@ -86,7 +85,6 @@ function LineupSection({ lineup, id, gray }: { readonly lineup: ProductLineup; r
       className={`spy-section grid grid-cols-1 items-start gap-10 wide-shell py-16 lg:grid-cols-[0.86fr_1.14fr] lg:gap-14 lg:py-20 ${gray ? "bg-[#f6f9fb]" : ""}`}
     >
       <div>
-        <div className={eyebrowCls}>{lineup.eyebrow}</div>
         <h2 className={h2Cls}>
           {lineup.title} {lineup.brand ? <span className="text-[18px] font-bold text-[#22409b]">{lineup.brand}</span> : null}
         </h2>
@@ -109,7 +107,6 @@ function GallerySection({ gallery, id, gray }: { readonly gallery: GalleryData; 
   return (
     <section id={id} className={`spy-section wide-shell py-16 lg:py-20 ${gray ? "bg-[#f6f9fb]" : ""}`}>
       <div className="mb-9 max-w-220">
-        <div className={eyebrowCls}>{gallery.eyebrow}</div>
         <h2 className={h2Cls}>{gallery.title}</h2>
         <p className={pCls}>
           <MultiLine text={gallery.intro} />
@@ -141,8 +138,8 @@ export default async function ProductsPage() {
 
   return (
     <>
-      <PageHeader eyebrow="PRODUCTS" title="제품소개" wide />
-      <SectionLayout eyebrow="PRODUCTS" title="제품소개" items={navItems} wide>
+      <PageHeader title="제품소개" wide />
+      <SectionLayout title="제품소개" items={navItems} wide>
         {release && <LineupSection lineup={release} id="p-release" />}
         {pranza && <LineupSection lineup={pranza} id="p-pranza" gray />}
         {machineParts && <GallerySection gallery={machineParts} id="p-machine-parts" />}

@@ -13,6 +13,7 @@ import {
   verifyCredentials,
 } from "@/lib/adminAuth";
 import { isAdmin } from "@/lib/adminSession";
+import { applyContentClears, compactContentArrays } from "@/lib/adminContentClears";
 import {
   SINGLETON_DOCUMENT_IDS,
   contentValidationErrors,
@@ -86,11 +87,9 @@ function fileRef(assetId: string) {
 }
 
 function revalidateAll() {
-  for (const p of ["/", "/news", "/data", "/catalog", "/cert", "/about", "/products", "/admin/news", "/admin/docs", "/admin/content"]) {
-    revalidatePath(p);
-  }
-  revalidatePath("/news/[slug]", "page");
-  revalidatePath("/data/[slug]", "page");
+  // 사이트 설정(로고·푸터·메뉴)은 모든 페이지에 얹히므로 경로를 골라서 갱신하지 않고
+  // 루트 레이아웃 기준으로 전체 캐시를 무효화한다.
+  revalidatePath("/", "layout");
 }
 
 function isPdfBuffer(buffer: Buffer): boolean {
@@ -221,6 +220,36 @@ async function requireLegacyRevision(
 
 function isRevisionConflict(error: unknown): boolean {
   return error instanceof Error && /revision|conflict/i.test(error.message);
+}
+
+function isReferencedError(error: unknown): boolean {
+  return error instanceof Error && /referen/i.test(error.message);
+}
+
+type ReferencingLineup = {
+  readonly _id: string;
+  readonly _rev: string;
+  readonly items: unknown;
+};
+
+// 삭제할 자료(doc)를 가리키는 제품 라인업의 연결 항목을 걷어낸다.
+// 직접 링크(href)가 함께 있으면 링크는 남기고 자료 참조만 제거한다.
+function withoutDocumentLinks(items: unknown, docId: string): unknown {
+  if (!Array.isArray(items)) return items;
+  return items.map((item) => {
+    if (!isRecord(item) || !Array.isArray(item.documents)) return item;
+    const documents = item.documents.flatMap((link) => {
+      if (!isRecord(link)) return [link];
+      const reference = link.doc;
+      if (!isRecord(reference) || reference._ref !== docId) return [link];
+      const href = typeof link.href === "string" ? link.href.trim() : "";
+      if (!href) return [];
+      const rest = { ...link };
+      delete rest.doc;
+      return [rest];
+    });
+    return { ...item, documents };
+  });
 }
 
 async function safelyCheckLoginRateLimit(limiter: AdminLoginRateLimiter, key: string): Promise<boolean> {
@@ -477,9 +506,22 @@ export async function deleteDocAction(formData: FormData) {
   const revision = str(formData.get("_rev"));
   if (id) {
     const existing = await requireLegacyRevision(client, "doc", id, revision, null);
+    const referencing = await client.fetch<readonly ReferencingLineup[]>(
+      `*[_type=="productLineup" && references($id)]{_id,_rev,items}`,
+      { id },
+    );
     try {
-      await client.transaction().patch(id, { ifRevisionID: existing._rev }).delete(id).commit();
+      let transaction = client.transaction();
+      for (const lineup of referencing) {
+        transaction = transaction.patch(lineup._id, (patch) =>
+          patch.ifRevisionId(lineup._rev).set({ items: withoutDocumentLinks(lineup.items, id) }),
+        );
+      }
+      await transaction.patch(id, { ifRevisionID: existing._rev }).delete(id).commit();
     } catch (error) {
+      if (isReferencedError(error)) {
+        redirect(legacyErrorPath("doc", null, "이 자료를 참조하는 콘텐츠가 남아 있어 삭제하지 못했습니다. 제품 관리에서 연결을 해제한 뒤 다시 시도해 주세요."));
+      }
       if (isRevisionConflict(error)) redirect(legacyErrorPath("doc", null, STALE_REVISION_MESSAGE));
       throw error;
     }
@@ -524,16 +566,20 @@ export async function removeAttachmentAction(formData: FormData) {
   const id = str(formData.get("_id"));
   const key = str(formData.get("_key"));
   const revision = str(formData.get("_rev"));
-  if (id && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(key)) {
-    const existing = await requireLegacyRevision(client, "doc", id, revision);
-    try {
-      await client.patch(id).ifRevisionId(existing._rev).unset([`attachments[_key=="${key}"]`]).commit();
-    } catch (error) {
-      if (isRevisionConflict(error)) redirect(legacyErrorPath("doc", id, STALE_REVISION_MESSAGE));
-      throw error;
-    }
-    revalidateAll();
+  if (!id) redirect("/admin/docs");
+  // GROQ 경로에 그대로 들어가므로 따옴표·역슬래시가 못 섞이는 안전한 문자만 허용한다.
+  // (기존 UUID 강제는 마이그레이션된 "att-0"류·Studio 키를 전부 거부해 삭제가 조용히 무시됐다.)
+  if (!/^[A-Za-z0-9_-]{1,128}$/.test(key)) {
+    redirect(legacyErrorPath("doc", id, "첨부 키 형식이 올바르지 않아 삭제하지 못했습니다."));
   }
+  const existing = await requireLegacyRevision(client, "doc", id, revision);
+  try {
+    await client.patch(id).ifRevisionId(existing._rev).unset([`attachments[_key=="${key}"]`]).commit();
+  } catch (error) {
+    if (isRevisionConflict(error)) redirect(legacyErrorPath("doc", id, STALE_REVISION_MESSAGE));
+    throw error;
+  }
+  revalidateAll();
   redirect(`/admin/docs/${id}`);
 }
 
@@ -579,13 +625,15 @@ export async function saveContentAction(
     if (assetUpload.error) return contentError(assetUpload.error);
     const merged = assignContentArrayKeys(mergeContentFormFields(editableContentFields(current ?? {}), parsed.fields));
     if (typeValue === "productLineup") normalizeProductDocumentLinks(merged, parsed.fields);
-    const errors = contentValidationErrors(typeValue, merged);
+    const topLevelUnsets = applyContentClears(merged, parsed.unset);
+    const finalDocument = compactContentArrays(merged);
+    const errors = contentValidationErrors(typeValue, finalDocument);
     if (errors.length > 0) {
       const assetsRemoved = await cleanupUploadedAssets(client, assetUpload.assetIds);
       return contentError(withCleanupStatus(errors[0] ?? "입력을 확인해 주세요.", assetsRemoved));
     }
     try {
-      await client.patch(existing._id).ifRevisionId(existing._rev).set(merged).unset([...parsed.unset]).commit();
+      await client.patch(existing._id).ifRevisionId(existing._rev).set(finalDocument).unset(topLevelUnsets).commit();
     } catch (error: unknown) {
       const assetsRemoved = await cleanupUploadedAssets(client, assetUpload.assetIds);
       if (error instanceof Error && /revision|conflict/i.test(error.message)) return contentError(withCleanupStatus("다른 수정이 저장되었습니다. 입력한 내용은 유지됩니다. 페이지를 새로고침한 뒤 다시 시도해 주세요.", assetsRemoved));
@@ -598,7 +646,7 @@ export async function saveContentAction(
     }
     const assetUpload = await uploadContentFormAssets(client, typeValue, formData, parsed);
     if (assetUpload.error) return contentError(assetUpload.error);
-    const created = assignContentArrayKeys(parsed.fields);
+    const created = compactContentArrays(assignContentArrayKeys(parsed.fields));
     if (typeValue === "productLineup" || typeValue === "productGallery" || typeValue === "cert") {
       const nextOrder = await client.fetch<number>(`count(*[_type==$type])`, { type: typeValue });
       created.order = nextOrder;
@@ -628,6 +676,9 @@ export async function deleteContentAction(formData: FormData) {
   const id = str(formData.get("id"));
   const revision = str(formData.get("revision"));
   if (!isContentType(typeValue) || !id) redirect("/admin/content");
+  // 공지·자료는 참조 정리와 오류 안내가 있는 전용 삭제 액션만 사용한다.
+  if (typeValue === "newsPost") redirect("/admin/news");
+  if (typeValue === "doc") redirect("/admin/docs");
   if (SINGLETON_DOCUMENT_IDS[typeValue] || typeValue === "catalog") redirect(contentListPath(typeValue));
 
   const existing = await getContentDocument(client, typeValue, id);

@@ -43,11 +43,11 @@ export default async function AboutPage() {
 
   return (
     <>
-      <PageHeader eyebrow="COMPANY" title="회사소개" wide />
-      <SectionLayout eyebrow="COMPANY" title="회사소개" items={navItems} wide>
+      <PageHeader title="회사소개" wide />
+      <SectionLayout title="회사소개" items={navItems} wide>
         {/* 인사말 */}
         <section id="sec-greeting" className="spy-section border-b border-[#eef1f5] wide-shell py-16 lg:py-18.5">
-          <div className="mb-4 font-mono text-[13px] tracking-[2px] text-[#22409b]">GREETING · 인사말</div>
+          <div className="mb-4 font-mono text-[13px] tracking-[2px] text-[#22409b]">인사말</div>
           <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-13">
             <div>
               <h2 className="m-0 mb-6.5 fs-4 font-extrabold leading-[1.32] tracking-[-0.7px] text-navy">
@@ -75,7 +75,7 @@ export default async function AboutPage() {
 
         {/* 회사소개 */}
         <section id="sec-info" className="spy-section border-b border-[#eef1f5] bg-[#fbfcfe] wide-shell py-16 lg:py-18.5">
-          <div className="mb-4 font-mono text-[13px] tracking-[2px] text-[#22409b]">INFORMATION · 소개</div>
+          <div className="mb-4 font-mono text-[13px] tracking-[2px] text-[#22409b]">소개</div>
           <div className="mb-14 grid grid-cols-1 items-start gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-13">
             <div>
               <h2 className="m-0 mb-6 fs-4 font-extrabold leading-[1.32] tracking-[-0.7px] text-navy">
@@ -106,7 +106,6 @@ export default async function AboutPage() {
 
         {/* 설비현황 */}
         <section id="sec-equipment" className="spy-section border-b border-[#eef1f5] wide-shell py-16 lg:py-18.5">
-          <div className="mb-4 font-mono text-[13px] tracking-[2px] text-[#22409b]">EQUIPMENT · 설비현황</div>
           <h2 className="m-0 mb-2 fs-4 font-extrabold leading-[1.3] tracking-[-0.7px] text-navy">설비현황</h2>
           <p className="m-0 mb-11 text-[15px] leading-[1.7] text-muted">{equipment.desc}</p>
           <div className="overflow-x-auto rounded-2xl border border-[#eaeef3] bg-white">
@@ -136,7 +135,6 @@ export default async function AboutPage() {
 
         {/* 연혁 */}
         <section id="sec-history" className="spy-section wide-shell py-16 lg:py-18.5">
-          <div className="mb-4 font-mono text-[13px] tracking-[2px] text-[#22409b]">HISTORY · 연혁</div>
           <h2 className="m-0 mb-2 fs-4 font-extrabold leading-[1.3] tracking-[-0.7px] text-navy">걸어온 길</h2>
           <p className="m-0 mb-11 text-[15px] leading-[1.7] text-muted">{history.desc}</p>
           <div className="max-w-170 border-l-2 border-[#eaeef3] pl-9">
@@ -164,7 +162,6 @@ export default async function AboutPage() {
 
         {/* 오시는 길 */}
         <section id="sec-location" className="spy-section border-t border-[#eef1f5] wide-shell py-16 lg:py-18.5">
-          <div className="mb-4 font-mono text-[13px] tracking-[2px] text-[#22409b]">LOCATION · 오시는 길</div>
           <h2 className="m-0 mb-7.5 fs-4 font-extrabold tracking-[-0.7px] text-navy">오시는 길</h2>
           <div className="relative mb-6 flex h-75 items-center justify-center overflow-hidden rounded-[18px] border border-[#e2e6ed] bg-[#eef2f6] lg:h-95">
             <div className="absolute inset-0 bg-[linear-gradient(#dde4ec_1px,transparent_1px),linear-gradient(90deg,#dde4ec_1px,transparent_1px)] bg-size-[40px_40px]" />

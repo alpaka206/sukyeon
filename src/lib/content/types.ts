@@ -32,7 +32,6 @@ export type Catalog = {
 };
 
 export type CertItem = {
-  eyebrow: string;
   title: string;
   standard: string;
   desc: string;
@@ -54,7 +53,6 @@ export type LineupItem = {
 };
 export type ProductLineup = {
   readonly key: string;
-  readonly eyebrow: string;
   readonly title: string;
   readonly brand: string;
   readonly intro: string;
@@ -68,7 +66,6 @@ export type GalleryProduct = {
 };
 export type ProductGallery = {
   readonly key: string;
-  readonly eyebrow: string;
   readonly title: string;
   readonly intro: string;
   readonly items: readonly GalleryProduct[];
@@ -96,14 +93,13 @@ export type HomePage = {
     readonly slides: readonly HeroSlide[];
   };
   readonly productsHeading: {
-    readonly eyebrow: string;
     readonly title: string;
     readonly moreLabel: string;
     readonly moreHref: string;
   };
   readonly productCards: readonly HomeCard[];
   readonly productsCta: { readonly title: string; readonly desc: string; readonly label: string; readonly href: string };
-  readonly whyHeading: { readonly eyebrow: string; readonly title: string };
+  readonly whyHeading: { readonly title: string };
   readonly whyItems: readonly HomeWhy[];
   readonly contactCta: {
     readonly title: string;

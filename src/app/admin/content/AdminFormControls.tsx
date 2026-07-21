@@ -93,7 +93,10 @@ export function FormSection({
   const [open, setOpen] = useState(defaultOpen);
 
   return (
-    <section className="overflow-hidden rounded-2xl border border-[#d8e0ec] bg-white shadow-[0_18px_44px_-36px_rgba(10,27,51,0.26)]">
+    <section
+      onInvalidCapture={() => setOpen(true)}
+      className="overflow-hidden rounded-2xl border border-[#d8e0ec] bg-white shadow-[0_18px_44px_-36px_rgba(10,27,51,0.26)]"
+    >
       <div className="flex min-h-17 w-full items-center justify-between gap-4 bg-[#f8fafc] px-4 py-4 sm:px-5">
         <div className="flex min-w-0 items-start gap-3">
           <button
@@ -163,14 +166,21 @@ export function RepeaterCard({
 }) {
   const contentId = useId();
   const [open, setOpen] = useState(defaultOpen);
+  // 카드 전체가 항상 draggable이면 입력칸의 마우스 텍스트 선택이 드래그로 먹힌다.
+  // 그립을 누르고 있는 동안에만 드래그를 허용한다.
+  const [dragArmed, setDragArmed] = useState(false);
 
   return (
     <article
-      draggable
+      draggable={dragArmed}
       onDragStart={onDragStart}
       onDragOver={onDragOver}
       onDrop={onDrop}
-      onDragEnd={onDragEnd}
+      onDragEnd={(event) => {
+        setDragArmed(false);
+        onDragEnd?.(event);
+      }}
+      onInvalidCapture={() => setOpen(true)}
       className={`rounded-2xl border border-[#cfd8e6] bg-white shadow-[0_14px_34px_-30px_rgba(10,27,51,0.35)] transition-[border-color,box-shadow,opacity,transform] duration-150 focus-within:border-[#22409b] hover:border-[#b8c5da] hover:shadow-[0_18px_44px_-32px_rgba(10,27,51,0.42)] ${dragging ? "scale-[0.99] opacity-55" : ""}`}
     >
       <div
@@ -188,6 +198,9 @@ export function RepeaterCard({
             <ChevronIcon open={open} />
           </button>
           <span
+            onPointerDown={() => setDragArmed(true)}
+            onPointerUp={() => setDragArmed(false)}
+            onPointerCancel={() => setDragArmed(false)}
             className="inline-flex size-8 shrink-0 cursor-grab items-center justify-center rounded-lg bg-white ring-1 ring-[#d8e0ec] active:cursor-grabbing"
             title="잡아서 순서 변경"
           >
@@ -306,6 +319,28 @@ export function EditorNotice({
       </a>
     </div>
   );
+}
+
+// 서버 액션이 돌려준 에러 필드로 이동한다. 대상이 접힌 섹션/카드의 hidden 컨테이너
+// 안에 있으면 aria-controls 토글을 눌러 펼친 뒤 포커스한다.
+export function revealAndFocusField(form: HTMLFormElement, field: string): void {
+  const target = form.ownerDocument.getElementById(field);
+  if (!target) return;
+  let ancestor = target.parentElement;
+  while (ancestor && ancestor !== form.parentElement) {
+    if (ancestor.hasAttribute("hidden") && ancestor.id) {
+      form
+        .querySelector<HTMLButtonElement>(
+          `[aria-controls="${CSS.escape(ancestor.id)}"][aria-expanded="false"]`,
+        )
+        ?.click();
+    }
+    ancestor = ancestor.parentElement;
+  }
+  window.requestAnimationFrame(() => {
+    target.scrollIntoView({ block: "center" });
+    target.focus({ preventScroll: true });
+  });
 }
 
 export function StickySaveBar({

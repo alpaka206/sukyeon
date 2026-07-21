@@ -33,7 +33,7 @@ export default async function NewsDetailPage({ params }: Props) {
 
   return (
     <>
-      <PageHeader eyebrow="NEWS" title="공지사항" />
+      <PageHeader title="공지사항" />
       <main className="shell py-16 pb-20">
         <article className="mx-auto max-w-230 border-t-2 border-navy pt-10">
           <div className="mb-5 flex flex-wrap items-center gap-3">

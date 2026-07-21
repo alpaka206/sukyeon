@@ -30,7 +30,7 @@ export default async function DataPage({ searchParams }: Props) {
 
   return (
     <>
-      <PageHeader eyebrow="DATA / MSDS (GHS)" title="자료실" />
+      <PageHeader title="자료실" />
       <div className="shell py-16">
         <section aria-label="자료 목록" className="grid gap-3 sm:hidden">
           {visibleRows.map((r, i) => (

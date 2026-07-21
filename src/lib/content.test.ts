@@ -92,7 +92,6 @@ test("Given product lineups with object-array text items, when lineups are read,
   const request = async () => [
     {
       key: "release",
-      eyebrow: "RELEASE",
       title: "이형제",
       brand: "RELEASE",
       intro: "우수한 이형성과 고온 안정성",

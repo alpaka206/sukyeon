@@ -6,7 +6,6 @@ export default defineType({
   type: "document",
   fields: [
     defineField({ name: "title", title: "인증명", type: "string", validation: (r) => r.required() }),
-    defineField({ name: "eyebrow", title: "영문 라벨", type: "string", description: "예: QUALITY / ENVIRONMENT" }),
     defineField({ name: "standard", title: "표준규격", type: "string" }),
     defineField({ name: "desc", title: "설명", type: "text", rows: 3 }),
     defineField({ name: "issuer", title: "인증기관", type: "string" }),

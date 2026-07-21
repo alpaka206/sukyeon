@@ -51,7 +51,6 @@ export default defineType({
       type: "object",
       options: { collapsible: true, collapsed: true },
       fields: [
-        { name: "eyebrow", title: "영문 라벨", type: "string" },
         { name: "title", title: "제목", type: "string" },
         { name: "moreLabel", title: "더보기 텍스트", type: "string" },
         { name: "moreHref", title: "더보기 링크", type: "string" },
@@ -92,7 +91,6 @@ export default defineType({
       type: "object",
       options: { collapsible: true, collapsed: true },
       fields: [
-        { name: "eyebrow", title: "영문 라벨", type: "string" },
         { name: "title", title: "제목", type: "string" },
       ],
     }),

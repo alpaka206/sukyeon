@@ -50,9 +50,6 @@ function CertCard({ cert }: { cert: CertItem }) {
       </div>
 
       <div className="p-5.5 sm:p-7">
-        <div className="mb-2.5 text-[12px] font-bold tracking-[2px] text-[#22409b]">
-          {cert.eyebrow}
-        </div>
         <h2 className="m-0 mb-1.5 text-[22px] font-extrabold tracking-[-0.5px] text-navy">
           {cert.title}
         </h2>
@@ -76,7 +73,7 @@ export default async function CertPage() {
   const certs = await getCerts();
   return (
     <>
-      <PageHeader eyebrow="CERTIFICATION" title="인증·특허" />
+      <PageHeader title="인증·특허" />
       <div className="shell py-16 lg:py-18">
         <p className="m-0 mb-9 max-w-190 text-[16px] leading-[1.7] text-[#5a6680]">
           석연MRO는 국제 표준 품질·환경 경영시스템 인증과 자체 기술 특허를 바탕으로 신뢰할 수 있는

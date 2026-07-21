@@ -5,9 +5,16 @@ import { isAdmin } from "@/lib/adminSession";
 import { writeConfigured } from "@/lib/sanityWrite";
 import { deleteContentAction } from "../../actions";
 
-export default async function ContentListPage({ params }: { readonly params: Promise<{ type: string }> }) {
+export default async function ContentListPage({
+  params,
+  searchParams,
+}: {
+  readonly params: Promise<{ type: string }>;
+  readonly searchParams: Promise<{ error?: string }>;
+}) {
   if (!(await isAdmin())) redirect("/admin/login");
   const { type: typeParam } = await params;
+  const { error } = await searchParams;
   if (typeParam === "newsPost") redirect("/admin/news");
   if (typeParam === "doc") redirect("/admin/docs");
   if (!writeConfigured) redirect("/admin/content");
@@ -21,6 +28,11 @@ export default async function ContentListPage({ params }: { readonly params: Pro
 
   return (
     <div>
+      {error && (
+        <p role="alert" className="mb-4 rounded-lg border border-[#f0c9c9] bg-[#fff7f7] p-3 text-[14px] font-semibold text-[#b3261e]">
+          {error}
+        </p>
+      )}
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <div>
           <h1 className="m-0 text-[26px] font-extrabold">{CONTENT_TYPE_LABELS[type]}</h1>

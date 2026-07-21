@@ -11,7 +11,7 @@ export default async function ContactPage() {
   const c = (await getSiteSettings())?.company;
   return (
     <>
-      <PageHeader eyebrow="CONTACT" title="온라인 견적·문의" />
+      <PageHeader title="온라인 견적·문의" />
       <div className="grid grid-cols-1 items-start gap-12 shell py-16 pb-20 lg:grid-cols-[1.3fr_0.7fr]">
         <ContactForm />
 
