@@ -641,38 +641,6 @@ function Lineup({
   );
 }
 
-function Catalog({ document }: { readonly document: RecordValue }) {
-  return (
-    <FormSection
-      title="활성 카탈로그"
-      description="카탈로그는 한 개의 활성 문서만 관리합니다."
-    >
-      <div className="grid gap-4 md:grid-cols-2">
-        <TextField
-          id="title"
-          label="제목"
-          name={name("title")}
-          defaultValue={text(document.title)}
-          required
-        />
-        <TextField
-          id="tagline"
-          label="표지 부제"
-          name={name("tagline")}
-          defaultValue={text(document.tagline)}
-        />
-        <div className="md:col-span-2">
-          <AssetPicker
-            path="file"
-            value={document.file}
-            label="카탈로그 PDF"
-            pdf
-          />
-        </div>
-      </div>
-    </FormSection>
-  );
-}
 function Cert({ document }: { readonly document: RecordValue }) {
   return (
     <FormSection title="인증·특허 정보">
@@ -743,7 +711,7 @@ export function CollectionEditor({
   documentText,
   documentOptions,
 }: {
-  readonly type: "productLineup" | "productGallery" | "catalog" | "cert";
+  readonly type: "productLineup" | "productGallery" | "cert";
   readonly id?: string;
   readonly revision?: string;
   readonly documentText: string;
@@ -758,8 +726,7 @@ export function CollectionEditor({
   // 취소로 나갈 때는 이미 확인을 받았으므로 beforeunload 경고를 한 번 더 띄우지 않는다.
   const leavingRef = useRef(false);
   const document = parseDocument(documentText);
-  const preview =
-    type === "catalog" ? "/catalog" : type === "cert" ? "/cert" : "/products";
+  const preview = type === "cert" ? "/cert" : "/products";
   useEffect(() => {
     formRef.current
       ?.querySelector('[name="content.key"]')
@@ -831,8 +798,6 @@ export function CollectionEditor({
           options={documentOptions}
           onDirty={() => setDirty(true)}
         />
-      ) : type === "catalog" ? (
-        <Catalog document={document} />
       ) : (
         <Cert document={document} />
       )}

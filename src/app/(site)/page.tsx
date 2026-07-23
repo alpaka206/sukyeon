@@ -3,7 +3,7 @@ import Link from "next/link";
 import HeroCarousel from "@/components/HeroCarousel";
 import { ProductImageCard } from "@/components/ProductCards";
 import { safeContentHref } from "@/lib/adminUrl";
-import { getHomePage, getNews } from "@/lib/content";
+import { getHomePage } from "@/lib/content";
 
 const WHY_ICONS: Record<string, ReactNode> = {
   manufacturing: (
@@ -52,11 +52,10 @@ function keepTogether(text: string): string {
 }
 
 export default async function Home() {
-  const [home, news] = await Promise.all([getHomePage(), getNews()]);
+  const home = await getHomePage();
   if (!home) return null;
   const { hero, productsHeading, productCards, productsCta, whyHeading, whyItems, contactCta } = home;
   const slides = hero.slides.map((s) => ({ src: s.desktop, mobileSrc: s.mobile, alt: s.alt }));
-  const latestNews = news.slice(0, 3);
 
   return (
     <>
@@ -141,30 +140,8 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* news + cta */}
-      <section className="grid grid-cols-1 items-start gap-10 bg-white shell py-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14 lg:py-22">
-        <div>
-          <div className="mb-7 flex items-end justify-between">
-            <h2 className="m-0 fs-4 font-extrabold tracking-[-0.6px] text-navy">공지사항</h2>
-            <Link href="/news" prefetch={false} className="link-teal cursor-pointer text-[14px] font-bold text-[#22409b]">
-              전체 보기 →
-            </Link>
-          </div>
-          <div className="border-t border-[#eaeef3]">
-            {latestNews.map((n) => (
-              <Link
-                key={n.title}
-                href={`/news/${n.slug}`}
-                prefetch={false}
-                className="row-link flex items-center justify-between border-b border-[#eaeef3] px-2 py-5"
-              >
-                <span className="text-[15px] font-semibold text-navy sm:text-[16px]">{n.title}</span>
-                <span className="ml-3 shrink-0 font-mono text-[13px] text-muted">{n.date}</span>
-              </Link>
-            ))}
-          </div>
-        </div>
-        <div className="overflow-hidden rounded-[18px] bg-navy p-10 text-white">
+      <section className="bg-white shell py-16 lg:py-22">
+        <div className="mx-auto max-w-160 overflow-hidden rounded-[18px] bg-navy p-10 text-white">
           <h3 className="m-0 mb-3.5 text-[26px] font-extrabold leading-[1.35]">
             <MultiLine text={contactCta.title} />
           </h3>

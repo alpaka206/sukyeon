@@ -34,22 +34,11 @@ export const structure: StructureResolver = (S) =>
 
       S.divider(),
 
-      // 고객지원
-      S.listItem()
-        .id("newsPost")
-        .title("공지사항")
-        .schemaType("newsPost")
-        .child(S.documentTypeList("newsPost").title("공지사항")),
       S.listItem()
         .id("doc")
         .title("자료실 문서 (PDF)")
         .schemaType("doc")
         .child(S.documentTypeList("doc").title("자료실 문서")),
-      S.listItem()
-        .id("catalog")
-        .title("카탈로그")
-        .schemaType("catalog")
-        .child(S.documentTypeList("catalog").title("카탈로그")),
       S.listItem()
         .id("cert")
         .title("인증·특허")

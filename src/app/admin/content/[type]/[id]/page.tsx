@@ -30,7 +30,6 @@ export default async function ContentEditPage({
 }) {
   if (!(await isAdmin())) redirect("/admin/login");
   const { type: typeParam, id } = await params;
-  if (typeParam === "newsPost") redirect("/admin/news");
   if (typeParam === "doc") redirect("/admin/docs");
   if (!writeConfigured) redirect("/admin/content");
   if (!isContentType(typeParam)) notFound();
@@ -39,11 +38,6 @@ export default async function ContentEditPage({
   const type = typeParam;
   const singletonId = SINGLETON_DOCUMENT_IDS[type];
   if (singletonId && id !== singletonId) notFound();
-
-  if (type === "catalog" && id === "new") {
-    const activeCatalog = (await adminGetContentDocuments("catalog"))[0];
-    if (activeCatalog) redirect(`/admin/content/catalog/${activeCatalog.id}`);
-  }
 
   const existing =
     id === "new" ? null : await adminGetContentDocument(type, id);

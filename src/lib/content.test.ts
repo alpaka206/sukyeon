@@ -1,12 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import {
-  EMPTY_CATALOG,
-  readCatalog,
-  readCerts,
-  readDocs,
-  readNews,
-} from "./content/newsDocs";
+import { readCerts, readDocs } from "./content/docs";
 import { readAboutPage, readHomePage, readSiteSettings } from "./content/pages";
 import { readProductGalleries, readProductLineups } from "./content/products";
 
@@ -24,7 +18,6 @@ test("Given no configured request, when list content is read, then every exact e
 
   // When
   const results = await Promise.all([
-    readNews(request),
     readDocs(request),
     readCerts(request),
     readProductLineups(request),
@@ -32,18 +25,7 @@ test("Given no configured request, when list content is read, then every exact e
   ]);
 
   // Then
-  assert.deepEqual(results, [[], [], [], [], []]);
-});
-
-test("Given no configured request, when catalog content is read, then the exact catalog fallback is returned", async () => {
-  // Given
-  const request = null;
-
-  // When
-  const catalog = await readCatalog(request);
-
-  // Then
-  assert.deepEqual(catalog, EMPTY_CATALOG);
+  assert.deepEqual(results, [[], [], [], []]);
 });
 
 test("Given no configured request, when singleton content is read, then every exact null fallback is returned", async () => {
@@ -59,32 +41,6 @@ test("Given no configured request, when singleton content is read, then every ex
 
   // Then
   assert.deepEqual(results, [null, null, null]);
-});
-
-test("Given configured news records, when news is read, then normalized content is returned", async () => {
-  // Given
-  const request = async () => [
-    {
-      title: "서비스 공지",
-      body: ["첫 문단", 7, "둘째 문단"],
-    },
-  ];
-
-  // When
-  const news = await readNews(request);
-
-  // Then
-  assert.deepEqual(news, [
-    {
-      category: "공지",
-      title: "서비스 공지",
-      date: "",
-      accent: false,
-      slug: "notice-1",
-      summary: "첫 문단",
-      body: ["첫 문단", "둘째 문단"],
-    },
-  ]);
 });
 
 test("Given product lineups with object-array text items, when lineups are read, then text arrays are normalized", async () => {
@@ -123,10 +79,10 @@ test("Given configured list requests returning legitimate empty values, when con
   const request = async () => null;
 
   // When
-  const news = await readNews(request);
+  const docs = await readDocs(request);
 
   // Then
-  assert.deepEqual(news, []);
+  assert.deepEqual(docs, []);
 });
 
 test("Given a configured singleton request returning legitimate null, when content is read, then null is preserved", async () => {
@@ -140,17 +96,6 @@ test("Given a configured singleton request returning legitimate null, when conte
   assert.equal(homePage, null);
 });
 
-test("Given a configured catalog request returning legitimate null, when content is read, then its fallback is preserved", async () => {
-  // Given
-  const request = async () => null;
-
-  // When
-  const catalog = await readCatalog(request);
-
-  // Then
-  assert.deepEqual(catalog, EMPTY_CATALOG);
-});
-
 test("Given a configured request rejection, when content is read, then the exact rejection propagates", async () => {
   // Given
   const outage = new SanityTestOutage();
@@ -161,9 +106,7 @@ test("Given a configured request rejection, when content is read, then the exact
   // When / Then
   await Promise.all(
     [
-      readNews(request),
       readDocs(request),
-      readCatalog(request),
       readCerts(request),
       readProductLineups(request),
       readProductGalleries(request),

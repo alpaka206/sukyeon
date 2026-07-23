@@ -25,7 +25,7 @@ export default async function ContentHomePage() {
         {CONTENT_TYPES.map((type) => (
           <Link
             key={type}
-            href={type === "newsPost" ? "/admin/news" : type === "doc" ? "/admin/docs" : `/admin/content/${type}`}
+            href={type === "doc" ? "/admin/docs" : `/admin/content/${type}`}
             className="rounded-2xl border border-[#e2e6ed] bg-white p-5 transition-colors hover:border-[#22409b]"
           >
             <div className="text-[15px] font-bold">{CONTENT_TYPE_LABELS[type]}</div>

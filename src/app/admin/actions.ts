@@ -187,33 +187,32 @@ type LegacyDocumentRecord = {
 
 const STALE_REVISION_MESSAGE = "다른 수정이 먼저 저장되었습니다. 페이지를 새로고침한 뒤 다시 시도해 주세요.";
 
-function legacyListPath(type: "newsPost" | "doc"): string {
-  return type === "newsPost" ? "/admin/news" : "/admin/docs";
+function legacyListPath(): string {
+  return "/admin/docs";
 }
 
-function legacyEditPath(type: "newsPost" | "doc", id: string): string {
-  return `${legacyListPath(type)}/${encodeURIComponent(id)}`;
+function legacyEditPath(id: string): string {
+  return `${legacyListPath()}/${encodeURIComponent(id)}`;
 }
 
-function legacyErrorPath(type: "newsPost" | "doc", id: string | null, message: string): string {
-  const path = id ? legacyEditPath(type, id) : legacyListPath(type);
+function legacyErrorPath(id: string | null, message: string): string {
+  const path = id ? legacyEditPath(id) : legacyListPath();
   return `${path}?error=${encodeURIComponent(message)}`;
 }
 
 async function requireLegacyRevision(
   client: SanityClient,
-  type: "newsPost" | "doc",
   id: string,
   submittedRevision: string,
   errorId: string | null = id,
 ): Promise<LegacyDocumentRecord> {
   const document = await client.fetch<LegacyDocumentRecord | null>(
-    `*[_id==$id && _type==$type][0]{_id,_rev}`,
-    { id, type },
+    `*[_id==$id && _type=="doc"][0]{_id,_rev}`,
+    { id },
   );
-  if (!document) redirect(legacyListPath(type));
+  if (!document) redirect(legacyListPath());
   if (!submittedRevision || submittedRevision !== document._rev) {
-    redirect(legacyErrorPath(type, errorId, STALE_REVISION_MESSAGE));
+    redirect(legacyErrorPath(errorId, STALE_REVISION_MESSAGE));
   }
   return document;
 }
@@ -402,53 +401,6 @@ export async function logoutAction() {
   redirect("/admin/login");
 }
 
-// ---- 공지사항(newsPost) -------------------------------------------------------
-
-export async function saveNewsAction(formData: FormData) {
-  const client = await requireAdmin();
-  const id = str(formData.get("_id"));
-  const revision = str(formData.get("_rev"));
-  const title = str(formData.get("title"));
-  const fields = {
-    title,
-    category: str(formData.get("category")) || "일반",
-    date: str(formData.get("date")),
-    accent: formData.get("accent") === "on",
-    slug: slugField(str(formData.get("slug")), title),
-    summary: str(formData.get("summary")),
-    body: parseBody(formData.get("body")),
-  };
-  if (id) {
-    const existing = await requireLegacyRevision(client, "newsPost", id, revision);
-    try {
-      await client.patch(id).ifRevisionId(existing._rev).set(fields).commit();
-    } catch (error) {
-      if (isRevisionConflict(error)) redirect(legacyErrorPath("newsPost", id, STALE_REVISION_MESSAGE));
-      throw error;
-    }
-  }
-  else await client.create({ _type: "newsPost", ...fields });
-  revalidateAll();
-  redirect("/admin/news");
-}
-
-export async function deleteNewsAction(formData: FormData) {
-  const client = await requireAdmin();
-  const id = str(formData.get("_id"));
-  const revision = str(formData.get("_rev"));
-  if (id) {
-    const existing = await requireLegacyRevision(client, "newsPost", id, revision, null);
-    try {
-      await client.transaction().patch(id, { ifRevisionID: existing._rev }).delete(id).commit();
-    } catch (error) {
-      if (isRevisionConflict(error)) redirect(legacyErrorPath("newsPost", null, STALE_REVISION_MESSAGE));
-      throw error;
-    }
-  }
-  revalidateAll();
-  redirect("/admin/news");
-}
-
 // ---- 자료실(doc) --------------------------------------------------------------
 
 export async function saveDocAction(formData: FormData) {
@@ -468,7 +420,7 @@ export async function saveDocAction(formData: FormData) {
 
   let docId = id;
   if (id) {
-    const existing = await requireLegacyRevision(client, "doc", id, revision);
+    const existing = await requireLegacyRevision(client, id, revision);
     const file = formData.get("file");
     const uploadedAsset = file instanceof File && file.size > 0 ? await uploadPdf(client, file) : null;
     if (uploadedAsset) fields.file = fileRef(uploadedAsset._id);
@@ -480,7 +432,7 @@ export async function saveDocAction(formData: FormData) {
         const message = assetRemoved
           ? STALE_REVISION_MESSAGE
           : `${STALE_REVISION_MESSAGE} 업로드된 파일 정리에 실패했습니다.`;
-        redirect(legacyErrorPath("doc", id, message));
+        redirect(legacyErrorPath(id, message));
       }
       throw error;
     }
@@ -505,7 +457,7 @@ export async function deleteDocAction(formData: FormData) {
   const id = str(formData.get("_id"));
   const revision = str(formData.get("_rev"));
   if (id) {
-    const existing = await requireLegacyRevision(client, "doc", id, revision, null);
+    const existing = await requireLegacyRevision(client, id, revision, null);
     const referencing = await client.fetch<readonly ReferencingLineup[]>(
       `*[_type=="productLineup" && references($id)]{_id,_rev,items}`,
       { id },
@@ -520,9 +472,9 @@ export async function deleteDocAction(formData: FormData) {
       await transaction.patch(id, { ifRevisionID: existing._rev }).delete(id).commit();
     } catch (error) {
       if (isReferencedError(error)) {
-        redirect(legacyErrorPath("doc", null, "이 자료를 참조하는 콘텐츠가 남아 있어 삭제하지 못했습니다. 제품 관리에서 연결을 해제한 뒤 다시 시도해 주세요."));
+        redirect(legacyErrorPath(null, "이 자료를 참조하는 콘텐츠가 남아 있어 삭제하지 못했습니다. 제품 관리에서 연결을 해제한 뒤 다시 시도해 주세요."));
       }
-      if (isRevisionConflict(error)) redirect(legacyErrorPath("doc", null, STALE_REVISION_MESSAGE));
+      if (isRevisionConflict(error)) redirect(legacyErrorPath(null, STALE_REVISION_MESSAGE));
       throw error;
     }
   }
@@ -537,7 +489,7 @@ export async function addAttachmentAction(formData: FormData) {
   const name = str(formData.get("name")) || "첨부 PDF";
   const file = formData.get("file");
   if (id && file instanceof File && file.size > 0) {
-    const existing = await requireLegacyRevision(client, "doc", id, revision);
+    const existing = await requireLegacyRevision(client, id, revision);
     const asset = await uploadPdf(client, file);
     try {
       await client
@@ -552,7 +504,7 @@ export async function addAttachmentAction(formData: FormData) {
         const message = assetRemoved
           ? STALE_REVISION_MESSAGE
           : `${STALE_REVISION_MESSAGE} 업로드된 파일 정리에 실패했습니다.`;
-        redirect(legacyErrorPath("doc", id, message));
+        redirect(legacyErrorPath(id, message));
       }
       throw error;
     }
@@ -570,13 +522,13 @@ export async function removeAttachmentAction(formData: FormData) {
   // GROQ 경로에 그대로 들어가므로 따옴표·역슬래시가 못 섞이는 안전한 문자만 허용한다.
   // (기존 UUID 강제는 마이그레이션된 "att-0"류·Studio 키를 전부 거부해 삭제가 조용히 무시됐다.)
   if (!/^[A-Za-z0-9_-]{1,128}$/.test(key)) {
-    redirect(legacyErrorPath("doc", id, "첨부 키 형식이 올바르지 않아 삭제하지 못했습니다."));
+    redirect(legacyErrorPath(id, "첨부 키 형식이 올바르지 않아 삭제하지 못했습니다."));
   }
-  const existing = await requireLegacyRevision(client, "doc", id, revision);
+  const existing = await requireLegacyRevision(client, id, revision);
   try {
     await client.patch(id).ifRevisionId(existing._rev).unset([`attachments[_key=="${key}"]`]).commit();
   } catch (error) {
-    if (isRevisionConflict(error)) redirect(legacyErrorPath("doc", id, STALE_REVISION_MESSAGE));
+    if (isRevisionConflict(error)) redirect(legacyErrorPath(id, STALE_REVISION_MESSAGE));
     throw error;
   }
   revalidateAll();
@@ -609,11 +561,8 @@ export async function saveContentAction(
   const suppliedExisting = collectionType && id ? await getContentDocument(client, typeValue, id) : null;
   const requestedId = collectionType
     ? suppliedExisting?._id ?? deterministicDocumentId(typeValue, key)
-    : typeValue === "catalog" ? "" : id;
-  const activeCatalog = typeValue === "catalog"
-    ? await client.fetch<{ readonly _id: string } | null>(`*[_type=="catalog"][0]{_id}`)
-    : null;
-  const documentId = singletonId || activeCatalog?._id || requestedId || (typeValue === "catalog" ? "catalog-active" : `${typeValue}-${crypto.randomUUID()}`);
+    : id;
+  const documentId = singletonId || requestedId || `${typeValue}-${crypto.randomUUID()}`;
   const existing = suppliedExisting ?? await getContentDocument(client, typeValue, documentId);
   if (existing) {
     if (!revision || revision !== existing._rev) return contentError("다른 수정이 저장되었습니다. 입력한 내용은 유지됩니다. 페이지를 새로고침한 뒤 다시 시도해 주세요.");
@@ -640,7 +589,6 @@ export async function saveContentAction(
       throw error;
     }
   } else {
-    if (typeValue === "catalog" && activeCatalog) return contentError("활성 카탈로그를 불러오지 못했습니다.");
     if (typeValue === "productLineup" || typeValue === "productGallery") {
       if (await collectionKeyExists(client, typeValue, key, documentId)) return contentError("이미 사용 중인 구분 키입니다.", "key");
     }
@@ -676,10 +624,8 @@ export async function deleteContentAction(formData: FormData) {
   const id = str(formData.get("id"));
   const revision = str(formData.get("revision"));
   if (!isContentType(typeValue) || !id) redirect("/admin/content");
-  // 공지·자료는 참조 정리와 오류 안내가 있는 전용 삭제 액션만 사용한다.
-  if (typeValue === "newsPost") redirect("/admin/news");
   if (typeValue === "doc") redirect("/admin/docs");
-  if (SINGLETON_DOCUMENT_IDS[typeValue] || typeValue === "catalog") redirect(contentListPath(typeValue));
+  if (SINGLETON_DOCUMENT_IDS[typeValue]) redirect(contentListPath(typeValue));
 
   const existing = await getContentDocument(client, typeValue, id);
   if (!existing) redirect(contentListPath(typeValue));

@@ -30,7 +30,7 @@ npm run dev
 
 ## Sanity 동작 및 장애 처리
 
-`NEXT_PUBLIC_SANITY_PROJECT_ID`를 설정하지 않으면 Sanity 읽기 기능이 의도적으로 비활성화됩니다. 이 경우 목록은 빈 배열, 단일 페이지는 `null`, 카탈로그는 빈 기본 객체를 반환합니다. 로컬 JSON 콘텐츠로 대체하지 않습니다.
+`NEXT_PUBLIC_SANITY_PROJECT_ID`를 설정하지 않으면 Sanity 읽기 기능이 의도적으로 비활성화됩니다. 이 경우 목록은 빈 배열, 단일 페이지는 `null`을 반환합니다. 로컬 JSON 콘텐츠로 대체하지 않습니다.
 
 프로젝트 ID가 설정되어 Sanity가 활성화된 상태에서 네트워크, 권한 또는 Sanity API 오류가 발생하면 오류를 빈 콘텐츠로 바꾸지 않고 호출자와 빌드에 그대로 전달합니다. 따라서 Sanity가 구성된 운영 빌드의 실패를 정상적인 빈 사이트로 간주하면 안 됩니다. 읽기 이미지 최적화까지 사용하려면 `NEXT_PUBLIC_SANITY_PROJECT_ID`와 `NEXT_PUBLIC_SANITY_DATASET`을 모두 설정합니다.
 

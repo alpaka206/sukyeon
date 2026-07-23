@@ -18,7 +18,7 @@ const pub = createClient({
 });
 
 const counts = await pub.fetch(
-  `{"공지":count(*[_type=="newsPost"]),"자료":count(*[_type=="doc"]),"카탈로그":count(*[_type=="catalog"]),"인증":count(*[_type=="cert"])}`,
+  `{"자료":count(*[_type=="doc"]),"인증":count(*[_type=="cert"])}`,
 );
 console.log("토큰 없이 공개 읽기 카운트:", counts);
 

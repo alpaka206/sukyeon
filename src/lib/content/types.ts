@@ -1,13 +1,3 @@
-export type NewsItem = {
-  readonly category: string;
-  readonly title: string;
-  readonly date: string;
-  readonly accent: boolean;
-  readonly slug: string;
-  readonly summary: string;
-  readonly body: readonly string[];
-};
-
 export type DocAttachment = {
   readonly name: string;
   readonly file: string;
@@ -23,12 +13,6 @@ export type DocItem = {
   readonly body: readonly string[];
   readonly attachments: readonly DocAttachment[];
   readonly notice: boolean;
-};
-
-export type Catalog = {
-  title: string;
-  tagline: string;
-  file: string;
 };
 
 export type CertItem = {

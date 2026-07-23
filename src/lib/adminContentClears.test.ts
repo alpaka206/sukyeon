@@ -25,7 +25,7 @@ test("Given an asset clear inside an array item, when clears are applied, then t
 test("Given a top-level clear, when clears are applied, then the field is dropped from set and returned for unset", () => {
   // Given
   const merged: Record<string, unknown> = {
-    title: "카탈로그",
+    title: "제품 안내",
     file: { _type: "file", asset: { _ref: "file-1" } },
   };
 
@@ -34,7 +34,7 @@ test("Given a top-level clear, when clears are applied, then the field is droppe
 
   // Then
   assert.deepEqual(topLevel, ["file"]);
-  assert.deepEqual(merged, { title: "카탈로그" });
+  assert.deepEqual(merged, { title: "제품 안내" });
 });
 
 test("Given cleared array elements, when clears are applied, then later indexes are removed first so earlier removals cannot shift them", () => {

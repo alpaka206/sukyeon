@@ -16,7 +16,6 @@ type FormField = {
 const stringField: FormField = { kind: "string" };
 const urlField: FormField = { kind: "url" };
 const imageField: FormField = { kind: "image" };
-const fileField: FormField = { kind: "file" };
 const numberField: FormField = { kind: "number" };
 const boolField: FormField = { kind: "boolean" };
 const object = (fields: Readonly<Record<string, FormField>>): FormField => ({ kind: "object", fields });
@@ -57,7 +56,6 @@ const formSchemas: Readonly<Record<string, FormField>> = {
     key: required({ kind: "string", values: ["machine-parts", "spray", "crucible"] }), title: required(stringField), intro: stringField,
     items: array(object({ visible: boolField, image: imageField, title: required(stringField), summary: stringField })), order: numberField,
   }),
-  catalog: object({ title: required(stringField), tagline: stringField, file: fileField }),
   cert: object({ title: required(stringField), standard: stringField, desc: stringField, issuer: stringField, number: stringField, scope: stringField, validity: stringField, imageKo: imageField, imageEn: imageField, order: numberField }),
 };
 
@@ -351,9 +349,7 @@ export const CONTENT_TYPES = [
   "siteSettings",
   "productLineup",
   "productGallery",
-  "newsPost",
   "doc",
-  "catalog",
   "cert",
 ] as const;
 
@@ -365,7 +361,6 @@ export const FORM_CONTENT_TYPES = [
   "siteSettings",
   "productLineup",
   "productGallery",
-  "catalog",
   "cert",
 ] as const satisfies readonly ContentType[];
 
@@ -380,9 +375,7 @@ export const CONTENT_TYPE_LABELS: Record<ContentType, string> = {
   siteSettings: "사이트 설정",
   productLineup: "제품 라인업",
   productGallery: "제품 갤러리",
-  newsPost: "공지사항",
   doc: "자료실",
-  catalog: "카탈로그",
   cert: "인증·특허",
 };
 

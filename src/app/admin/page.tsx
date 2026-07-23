@@ -2,15 +2,13 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { isAdmin } from "@/lib/adminSession";
 import { writeConfigured } from "@/lib/sanityWrite";
-import { adminGetNews, adminGetDocs } from "@/lib/adminData";
+import { adminGetDocs } from "@/lib/adminData";
 
 export default async function AdminHome() {
   if (!(await isAdmin())) redirect("/admin/login");
 
   const ready = writeConfigured;
-  const [news, docs] = ready
-    ? await Promise.all([adminGetNews(), adminGetDocs()])
-    : [[], []];
+  const docs = ready ? await adminGetDocs() : [];
 
   return (
     <div>
@@ -27,17 +25,7 @@ export default async function AdminHome() {
           className="rounded-2xl border border-[#e2e6ed] bg-white p-6 transition-colors hover:border-[#22409b]"
         >
           <div className="text-[15px] font-semibold text-muted">전체 콘텐츠</div>
-          <div className="mt-1 text-[18px] font-extrabold">홈·회사·제품·카탈로그·인증 관리</div>
-        </Link>
-        <Link
-          href="/admin/news"
-          className="rounded-2xl border border-[#e2e6ed] bg-white p-6 transition-colors hover:border-[#22409b]"
-        >
-          <div className="text-[15px] font-semibold text-muted">공지사항</div>
-          <div className="mt-1 text-[32px] font-extrabold">
-            {news.length}
-            <span className="text-[16px] font-semibold text-muted"> 건</span>
-          </div>
+          <div className="mt-1 text-[18px] font-extrabold">홈·회사·제품·인증 관리</div>
         </Link>
         <Link
           href="/admin/docs"

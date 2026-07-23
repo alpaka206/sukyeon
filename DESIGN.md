@@ -23,7 +23,7 @@ Sukyeon MRO should feel like a dependable manufacturing partner: technical, dire
 | Accent/primary    | `--accent-primary`       | `#22409b` | N/A       | Links, active accents, brand emphasis                                          |
 | Accent/deep       | `--accent-deep`          | `#18306f` | N/A       | Hover and deep emphasis                                                        |
 | Accent/bright     | `--accent-bright`        | `#4f74e6` | N/A       | Decorative blue that is not used for normal text or white-text CTA backgrounds |
-| Accent/on-dark    | `--color-accent-on-dark` | N/A       | `#89a7ff` | Links, hover text, and the catalog cover mock label on navy                    |
+| Accent/on-dark    | `--color-accent-on-dark` | N/A       | `#89a7ff` | Links and hover text on navy                                                   |
 
 ### Rules
 

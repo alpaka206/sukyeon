@@ -115,21 +115,6 @@ export default function Header({ settings }: { readonly settings: SiteSettings |
           )}
         </nav>
 
-        {/* desktop buttons */}
-        <div className="hidden items-center gap-2.5 lg:flex">
-          <Link
-            href="/catalog"
-            prefetch={false}
-            className="btn-outline inline-flex items-center gap-1.75 rounded-[9px] border-[1.5px] border-[#d4dae4] px-4 py-2.25 text-[14px] font-bold text-navy"
-          >
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-              <path d="M14 2v6h6" />
-            </svg>
-            카탈로그
-          </Link>
-        </div>
-
         {/* mobile hamburger */}
         <button
           type="button"
@@ -182,20 +167,12 @@ export default function Header({ settings }: { readonly settings: SiteSettings |
               </div>
             ))}
           </nav>
-          <div className="mt-4 flex gap-2.5">
-            <Link
-              href="/catalog"
-              prefetch={false}
-              onClick={() => setMobileOpen(false)}
-              className="flex flex-1 items-center justify-center rounded-[9px] border-[1.5px] border-[#d4dae4] py-3 text-[14px] font-bold text-navy"
-            >
-              카탈로그
-            </Link>
+          <div className="mt-4">
             <Link
               href="/contact"
               prefetch={false}
               onClick={() => setMobileOpen(false)}
-              className="flex flex-1 items-center justify-center rounded-[9px] bg-brand py-3 text-[15px] font-bold text-white"
+              className="flex w-full items-center justify-center rounded-[9px] bg-brand py-3 text-[15px] font-bold text-white"
             >
               견적 문의
             </Link>
