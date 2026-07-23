@@ -76,6 +76,21 @@ function GripIcon() {
   );
 }
 
+function MoveIcon({ direction }: { readonly direction: "up" | "down" }) {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 20 20" className="size-4">
+      <path
+        d={direction === "up" ? "m6 11 4-4 4 4" : "m6 9 4 4 4-4"}
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+      />
+    </svg>
+  );
+}
+
 export function FormSection({
   title,
   description,
@@ -151,6 +166,8 @@ export function RepeaterCard({
   onDragOver,
   onDrop,
   onDragEnd,
+  onMoveUp,
+  onMoveDown,
   defaultOpen = false,
   dragging = false,
 }: {
@@ -161,6 +178,8 @@ export function RepeaterCard({
   readonly onDragOver?: DragEventHandler<HTMLElement>;
   readonly onDrop?: DragEventHandler<HTMLElement>;
   readonly onDragEnd?: DragEventHandler<HTMLElement>;
+  readonly onMoveUp?: () => void;
+  readonly onMoveDown?: () => void;
   readonly defaultOpen?: boolean;
   readonly dragging?: boolean;
 }) {
@@ -209,6 +228,28 @@ export function RepeaterCard({
           <span className="truncate">{title}</span>
         </h3>
         <div className="flex flex-wrap gap-2">
+          {onMoveUp && (
+            <button
+              type="button"
+              onClick={onMoveUp}
+              aria-label="위로 이동"
+              title="위로 이동"
+              className="inline-flex size-11 items-center justify-center rounded-lg border border-[#c7d2e5] bg-white text-[#18306f] transition-[background,border-color,transform] duration-150 hover:-translate-y-px hover:border-[#22409b] hover:bg-[#eef2fc] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#22409b]"
+            >
+              <MoveIcon direction="up" />
+            </button>
+          )}
+          {onMoveDown && (
+            <button
+              type="button"
+              onClick={onMoveDown}
+              aria-label="아래로 이동"
+              title="아래로 이동"
+              className="inline-flex size-11 items-center justify-center rounded-lg border border-[#c7d2e5] bg-white text-[#18306f] transition-[background,border-color,transform] duration-150 hover:-translate-y-px hover:border-[#22409b] hover:bg-[#eef2fc] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#22409b]"
+            >
+              <MoveIcon direction="down" />
+            </button>
+          )}
           <button
             type="button"
             onClick={onRemove}

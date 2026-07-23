@@ -31,6 +31,7 @@ type FieldSpec = {
   readonly options?: readonly string[];
   readonly fields?: readonly FieldSpec[];
   readonly array?: FieldSpec;
+  readonly reorderControls?: boolean;
 };
 type ContentRecord = Record<string, unknown>;
 type Row = { readonly clientId: string; readonly value: ContentRecord };
@@ -263,7 +264,11 @@ function schemaFor(
                 {
                   key: "lines",
                   label: "내용",
-                  array: { key: "line", label: "내용" },
+                  array: {
+                    key: "line",
+                    label: "내용",
+                    reorderControls: true,
+                  },
                 },
               ],
             },
@@ -584,6 +589,24 @@ function ArrayEditor({
             }}
             onDragEnd={() => setDraggingId(null)}
             dragging={draggingId === row.clientId}
+            onMoveUp={
+              item.reorderControls && index > 0
+                ? () =>
+                    reorderRows(
+                      row.clientId,
+                      rows[index - 1]?.clientId ?? "",
+                    )
+                : undefined
+            }
+            onMoveDown={
+              item.reorderControls && index < rows.length - 1
+                ? () =>
+                    reorderRows(
+                      row.clientId,
+                      rows[index + 1]?.clientId ?? "",
+                    )
+                : undefined
+            }
           >
             {existingKey && (
               <input

@@ -142,8 +142,8 @@ export default async function AboutPage() {
               const last = idx === history.entries.length - 1;
               return (
                 <div key={h.year} className={`relative ${last ? "" : "mb-9"}`}>
-                  <div className="absolute -left-11 top-1 h-3 w-3 rounded-full" style={{ background: last ? "#0a1b33" : "#22409b" }} />
-                  <div className="mb-2.5 font-mono text-[22px] font-bold" style={{ color: last ? "#0a1b33" : "#22409b" }}>
+                  <div className="absolute -left-11 top-1 h-3 w-3 rounded-full" style={{ background: "#22409b" }} />
+                  <div className="mb-2.5 font-mono text-[22px] font-bold" style={{ color: "#22409b" }}>
                     {h.year}
                   </div>
                   <div className="text-[16px] leading-[1.95] text-[#42526b]">
