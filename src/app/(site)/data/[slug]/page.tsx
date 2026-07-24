@@ -53,8 +53,8 @@ export default async function DataDetailPage({ params }: Props) {
 
           {paragraphs.length > 0 && (
             <div className="space-y-5 border-y border-[#eaeef3] py-10">
-              {paragraphs.map((paragraph) => (
-                <p key={paragraph} className="m-0 text-[16px] leading-[1.9] text-[#42526b]">
+              {paragraphs.map((paragraph, index) => (
+                <p key={`${paragraph}-${index}`} className="m-0 text-[16px] leading-[1.9] text-[#42526b]">
                   {paragraph}
                 </p>
               ))}

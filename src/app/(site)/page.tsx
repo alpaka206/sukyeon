@@ -35,7 +35,7 @@ function MultiLine({ text }: { readonly text: string }) {
   return (
     <>
       {text.split("\n").map((line, i) => (
-        <span key={line}>
+        <span key={`${line}-${i}`}>
           {i > 0 && <br />}
           {line}
         </span>
@@ -66,7 +66,7 @@ export default async function Home() {
             <span className="hero-title-line">{hero.titleLine1}</span>
             <span className="hero-title-line text-[#22409b]">{hero.titleLine2}</span>
           </h1>
-          <p className="hero-copy m-0 mb-9.5 max-w-[300px] leading-[1.82] text-[#5a6680] text-pretty sm:max-w-190">
+          <p className="hero-copy m-0 mb-9.5 max-w-75 leading-[1.82] text-[#5a6680] text-pretty sm:max-w-190">
             <span className="hero-copy-line">{keepTogether(hero.copyLine1)}</span>
             <span className="hero-copy-line">{keepTogether(hero.copyLine2)}</span>
           </p>

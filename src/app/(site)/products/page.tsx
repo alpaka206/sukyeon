@@ -59,7 +59,7 @@ function MultiLine({ text }: { readonly text: string }) {
   return (
     <>
       {text.split("\n").map((line, idx) => (
-        <span key={line}>
+        <span key={`${line}-${idx}`}>
           {idx > 0 && <br />}
           {line}
         </span>

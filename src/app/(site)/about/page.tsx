@@ -3,6 +3,8 @@ import Image from "next/image";
 import PageHeader from "@/components/PageHeader";
 import SectionLayout from "@/components/SectionLayout";
 import { getAboutPage, getSiteSettings } from "@/lib/content";
+import KakaoRoughMap from "@/components/KakaoRoughMap";
+import { buildKakaoMapSearchHref } from "@/lib/maps";
 
 export const metadata: Metadata = { title: "회사소개" };
 
@@ -18,7 +20,7 @@ function MultiLine({ text }: { readonly text: string }) {
   return (
     <>
       {text.split("\n").map((line, i) => (
-        <span key={line}>
+        <span key={`${line}-${i}`}>
           {i > 0 && <br />}
           {line}
         </span>
@@ -30,8 +32,9 @@ function MultiLine({ text }: { readonly text: string }) {
 export default async function AboutPage() {
   const [about, settings] = await Promise.all([getAboutPage(), getSiteSettings()]);
   if (!about) return null;
-  const { greeting, info, equipment, history, location } = about;
+  const { greeting, info, equipment, history } = about;
   const c = settings?.company;
+  const mapHref = buildKakaoMapSearchHref(c?.address);
   const infoRows = [
     { k: "주소", v: c?.address ?? "" },
     { k: "전화", v: c?.tel ?? "" },
@@ -54,7 +57,7 @@ export default async function AboutPage() {
                 <MultiLine text={greeting.heading} />
               </h2>
               {greeting.paragraphs.map((p, i) => (
-                <p key={p} className={`m-0 text-[16px] leading-[1.9] text-[#5a6680] ${i < greeting.paragraphs.length - 1 ? "mb-4.5" : ""}`}>
+                <p key={`${p}-${i}`} className={`m-0 text-[16px] leading-[1.9] text-[#5a6680] ${i < greeting.paragraphs.length - 1 ? "mb-4.5" : ""}`}>
                   {p}
                 </p>
               ))}
@@ -82,7 +85,7 @@ export default async function AboutPage() {
                 <MultiLine text={info.heading} />
               </h2>
               {info.paragraphs.map((p, i) => (
-                <p key={p} className={`m-0 text-[16px] leading-[1.85] text-[#5a6680] ${i < info.paragraphs.length - 1 ? "mb-4.5" : ""}`}>
+                <p key={`${p}-${i}`} className={`m-0 text-[16px] leading-[1.85] text-[#5a6680] ${i < info.paragraphs.length - 1 ? "mb-4.5" : ""}`}>
                   {p}
                 </p>
               ))}
@@ -148,7 +151,7 @@ export default async function AboutPage() {
                   </div>
                   <div className="text-[16px] leading-[1.95] text-[#42526b]">
                     {h.lines.map((l, i) => (
-                      <span key={l}>
+                      <span key={`${l}-${i}`}>
                         – {l}
                         {i < h.lines.length - 1 && <br />}
                       </span>
@@ -163,16 +166,12 @@ export default async function AboutPage() {
         {/* 오시는 길 */}
         <section id="sec-location" className="spy-section border-t border-[#eef1f5] wide-shell py-16 lg:py-18.5">
           <h2 className="m-0 mb-7.5 fs-4 font-extrabold tracking-[-0.7px] text-navy">오시는 길</h2>
-          <div className="relative mb-6 flex h-75 items-center justify-center overflow-hidden rounded-[18px] border border-[#e2e6ed] bg-[#eef2f6] lg:h-95">
-            <div className="absolute inset-0 bg-[linear-gradient(#dde4ec_1px,transparent_1px),linear-gradient(90deg,#dde4ec_1px,transparent_1px)] bg-size-[40px_40px]" />
-            <div className="relative text-center">
-              <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#22409b" strokeWidth="2" className="mx-auto mb-3">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                <circle cx="12" cy="10" r="3" />
-              </svg>
-              <div className="text-[16px] font-bold text-navy">{c?.address}</div>
-              <div className="mt-1.5 font-mono text-[13px] text-muted">{location.mapNote}</div>
-            </div>
+          <div className="relative mb-6 h-75 overflow-hidden rounded-[18px] border border-[#e2e6ed] bg-[#eef2f6] lg:h-95">
+            <KakaoRoughMap
+              placeName="ㅤㅤㅤㅤ석연 MROㅤㅤㅤㅤ"
+              labelSearchText="인천 서해구 염곡로15번길 16"
+              fallbackHref={mapHref}
+            />
           </div>
           <div className="rounded-2xl border border-[#eaeef3] px-6 py-6 sm:px-9">
             <div className="grid grid-cols-1 gap-x-14 sm:grid-cols-2">

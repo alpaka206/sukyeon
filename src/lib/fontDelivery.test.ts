@@ -71,7 +71,7 @@ test("Given the self-hosted font assets, when provenance is audited, then the up
   assert.match(provenance, /node_modules\/pretendard\/dist\/web\/variable/);
 });
 
-test("Given React diagnostics, when source gates are inspected, then client instrumentation is development-only and disableable", () => {
+test("Given React diagnostics, when source gates are inspected, then client instrumentation is development-only and explicitly opt-in", () => {
   // Given
   assert.ok(existsSync(instrumentationPath));
   const layoutSource = readFileSync(layoutPath, "utf8");
@@ -84,7 +84,7 @@ test("Given React diagnostics, when source gates are inspected, then client inst
   assert.equal(existsSync(legacyDevToolsPath), false);
   assert.equal(layoutSource.includes("ReactDevTools"), false);
   assert.match(combinedSource, /process\.env\.NODE_ENV === "development"/);
-  assert.match(combinedSource, /NEXT_PUBLIC_DISABLE_REACT_DEVTOOLS !== "1"/);
+  assert.match(combinedSource, /NEXT_PUBLIC_ENABLE_REACT_DIAGNOSTICS === "1"/);
   assert.match(instrumentationSource, /import\("react-grab"\)/);
   assert.match(
     instrumentationSource,
