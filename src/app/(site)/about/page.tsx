@@ -40,7 +40,7 @@ export default async function AboutPage() {
     { k: "전화", v: c?.tel ?? "" },
     { k: "팩스", v: c?.fax ?? "" },
     { k: "이메일", v: c?.email ?? "" },
-    { k: "상호", v: c ? `${c.name} · 대표 ${c.ceo}` : "" },
+    { k: "상호", v: c ? `${c.name}` : "" },
     { k: "영업시간", v: c?.hours ?? "" },
   ];
 
