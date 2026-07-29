@@ -16,7 +16,7 @@ export default async function ContactPage() {
     <>
       <PageHeader title="온라인 견적·문의" />
       <div className="grid grid-cols-1 items-start gap-12 shell py-16 pb-20 lg:grid-cols-[1.3fr_0.7fr]">
-        <ContactForm recipientEmail={c?.email} />
+        <ContactForm />
 
         <div className="flex flex-col gap-4.5">
           <div className="relative overflow-hidden rounded-[18px] bg-navy p-8 text-white">

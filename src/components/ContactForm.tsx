@@ -1,94 +1,53 @@
 "use client";
 
-import { type FormEvent, useState } from "react";
+import { useActionState, useEffect, useRef } from "react";
+import { sendContactInquiry } from "@/app/(site)/contact/actions";
+import { CONTACT_PRODUCTS, EMPTY_CONTACT_FORM_STATE } from "@/lib/contactInquiry";
 
 const inputCls =
   "h-12 w-full rounded-[10px] border border-[#d4dae4] px-4 text-[15px] text-navy outline-none transition-colors focus:border-[#22409b]";
 
-const products = [
-  "이형제",
-  "프란자오일",
-  "작동유",
-  "습동면유",
-  "소모성 부자재",
-  "기타 / 복합 문의",
-];
+export default function ContactForm() {
+  const [state, formAction, isPending] = useActionState(
+    sendContactInquiry,
+    EMPTY_CONTACT_FORM_STATE,
+  );
+  const formRef = useRef<HTMLFormElement>(null);
 
-const DEFAULT_RECIPIENT = "sukyeonmro@naver.com";
-const SIMPLE_EMAIL_PATTERN = /^[^\s?&#]+@[^\s?&#]+\.[^\s?&#]+$/;
-
-function resolveRecipientEmail(value: string | null | undefined): string {
-  const candidate = value?.trim() ?? "";
-  return SIMPLE_EMAIL_PATTERN.test(candidate) ? candidate : DEFAULT_RECIPIENT;
-}
-
-type ContactFormProps = {
-  readonly recipientEmail?: string | null;
-};
-
-export default function ContactForm({ recipientEmail }: ContactFormProps) {
-  const [form, setForm] = useState({
-    company: "",
-    name: "",
-    phone: "",
-    email: "",
-    product: products[0],
-    message: "",
-    agree: false,
-  });
-  const [error, setError] = useState("");
-  const [sent, setSent] = useState(false);
-
-  const update = (key: keyof typeof form, value: string | boolean) =>
-    setForm((current) => ({ ...current, [key]: value }));
-
-  const submit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    if (!form.company.trim() || !form.name.trim() || !form.phone.trim() || !form.message.trim()) {
-      setError("회사명·담당자명·연락처·문의 내용은 필수 입력 항목입니다.");
-      return;
-    }
-    if (!form.agree) {
-      setError("개인정보 수집 및 이용에 동의해 주세요.");
-      return;
-    }
-
-    const recipient = resolveRecipientEmail(recipientEmail);
-    const subject = `[견적·문의] ${form.company.trim()}`;
-    const body = [
-      `회사명: ${form.company.trim()}`,
-      `담당자: ${form.name.trim()}`,
-      `연락처: ${form.phone.trim()}`,
-      `이메일: ${form.email.trim()}`,
-      `문의 제품: ${form.product}`,
-      "",
-      form.message.trim(),
-    ].join("\r\n");
-    const query = new URLSearchParams({ subject, body });
-
-    setError("");
-    setSent(true);
-    window.location.assign(`mailto:${recipient}?${query.toString()}`);
-  };
+  // React가 액션 종료 후 폼을 초기화하므로 입력값은 defaultValue(=서버가 돌려준 값)로 복원된다.
+  // 오류일 때는 작성 내용이 그대로 남고, 성공하면 서버가 빈 값을 돌려주어 폼이 비워진다.
+  useEffect(() => {
+    if (state.status !== "error" || !state.field) return;
+    formRef.current?.querySelector<HTMLElement>(`#${state.field}`)?.focus();
+  }, [state]);
 
   return (
-    <form onSubmit={submit} className="rounded-[18px] border border-[#eaeef3] p-6 sm:p-10">
+    <form
+      ref={formRef}
+      action={formAction}
+      className="rounded-[18px] border border-[#eaeef3] p-6 sm:p-10"
+    >
       <h2 className="m-0 mb-2 text-[24px] font-extrabold tracking-[-0.5px] text-navy">
         견적·문의 작성
       </h2>
       <p className="m-0 mb-7.5 text-[15px] text-[#5a6680]">
-        아래 항목을 작성하면 기본 메일 앱에 문의 내용이 입력됩니다.
+        아래 항목을 작성해 주시면 담당자에게 바로 전달되며, 확인 후 신속히 회신드립니다.
       </p>
 
-      {sent && (
+      {state.status === "sent" && (
         <div
           role="status"
           className="mb-5 rounded-[10px] bg-brand-soft px-4 py-3 text-[14px] font-semibold text-[#22409b]"
         >
-          메일 작성 창이 열렸습니다. 메일 앱에서 전송을 완료해 주세요.
+          문의가 정상적으로 접수되었습니다. 담당자가 확인 후 연락드리겠습니다.
         </div>
       )}
+
+      {/* 봇 감지용 허니팟. 화면에도, 보조 기기에도 노출되지 않아야 한다. */}
+      <div aria-hidden="true" className="absolute left-[-9999px] top-0 h-0 w-0 overflow-hidden">
+        <label htmlFor="contact-website">홈페이지</label>
+        <input id="contact-website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+      </div>
 
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
         <Field id="contact-company" label="회사명" required>
@@ -97,10 +56,10 @@ export default function ContactForm({ recipientEmail }: ContactFormProps) {
             name="company"
             autoComplete="organization"
             required
+            maxLength={100}
             className={inputCls}
             placeholder="회사명을 입력하세요"
-            value={form.company}
-            onChange={(event) => update("company", event.target.value)}
+            defaultValue={state.values.company}
           />
         </Field>
         <Field id="contact-name" label="담당자명" required>
@@ -109,10 +68,10 @@ export default function ContactForm({ recipientEmail }: ContactFormProps) {
             name="name"
             autoComplete="name"
             required
+            maxLength={50}
             className={inputCls}
             placeholder="이름을 입력하세요"
-            value={form.name}
-            onChange={(event) => update("name", event.target.value)}
+            defaultValue={state.values.name}
           />
         </Field>
         <Field id="contact-phone" label="연락처" required>
@@ -123,10 +82,10 @@ export default function ContactForm({ recipientEmail }: ContactFormProps) {
             inputMode="tel"
             autoComplete="tel"
             required
+            maxLength={40}
             className={inputCls}
             placeholder="010-0000-0000"
-            value={form.phone}
-            onChange={(event) => update("phone", event.target.value)}
+            defaultValue={state.values.phone}
           />
         </Field>
         <Field id="contact-email" label="이메일">
@@ -136,10 +95,10 @@ export default function ContactForm({ recipientEmail }: ContactFormProps) {
             type="email"
             inputMode="email"
             autoComplete="email"
+            maxLength={254}
             className={inputCls}
             placeholder="email@company.com"
-            value={form.email}
-            onChange={(event) => update("email", event.target.value)}
+            defaultValue={state.values.email}
           />
         </Field>
       </div>
@@ -150,10 +109,9 @@ export default function ContactForm({ recipientEmail }: ContactFormProps) {
             id="contact-product"
             name="product"
             className={`${inputCls} bg-white`}
-            value={form.product}
-            onChange={(event) => update("product", event.target.value)}
+            defaultValue={state.values.product}
           >
-            {products.map((product) => (
+            {CONTACT_PRODUCTS.map((product) => (
               <option key={product}>{product}</option>
             ))}
           </select>
@@ -166,37 +124,37 @@ export default function ContactForm({ recipientEmail }: ContactFormProps) {
             id="contact-message"
             name="message"
             required
+            maxLength={4000}
             className="h-35 w-full resize-y rounded-[10px] border border-[#d4dae4] p-4 text-[15px] leading-[1.6] text-navy outline-none transition-colors focus:border-[#22409b]"
             placeholder="합금 종류, 금형, 생산 사이클 등 공정 정보를 알려주시면 더 정확한 견적이 가능합니다."
-            value={form.message}
-            onChange={(event) => update("message", event.target.value)}
+            defaultValue={state.values.message}
           />
         </Field>
       </div>
 
       <label className="mt-4.5 flex cursor-pointer items-center gap-2.5">
         <input
+          id="contact-agree"
           name="agree"
           type="checkbox"
           required
           className="h-4.5 w-4.5 accent-[#22409b]"
-          checked={form.agree}
-          onChange={(event) => update("agree", event.target.checked)}
         />
         <span className="text-[14px] text-[#5a6680]">개인정보 수집 및 이용에 동의합니다.</span>
       </label>
 
-      {error && (
+      {state.status === "error" && state.message && (
         <p role="alert" aria-live="polite" className="mt-3 text-[14px] font-semibold text-[#d23b3b]">
-          {error}
+          {state.message}
         </p>
       )}
 
       <button
         type="submit"
-        className="mt-7 w-full cursor-pointer rounded-[10px] bg-navy py-4 text-center text-[16px] font-bold text-white transition-opacity hover:opacity-90"
+        disabled={isPending}
+        className="mt-7 w-full cursor-pointer rounded-[10px] bg-navy py-4 text-center text-[16px] font-bold text-white transition-opacity hover:opacity-90 disabled:cursor-progress disabled:opacity-60"
       >
-        메일 앱으로 견적 문의 작성
+        {isPending ? "전송 중..." : "견적 문의 보내기"}
       </button>
     </form>
   );
