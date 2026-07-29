@@ -48,14 +48,15 @@ export async function sendContactInquiry(
     return { status: "error", message: SEND_FAILED_MESSAGE, field: "", values };
   }
 
+  const receivedAt = new Date();
   try {
     const { error } = await resend.emails.send({
       from,
       to: resolveInquiryRecipient(contactMailTo()),
       replyTo: [...inquiryReplyTo(values)],
       subject: buildInquirySubject(values),
-      text: buildInquiryText(values),
-      html: buildInquiryHtml(values),
+      text: buildInquiryText(values, receivedAt),
+      html: buildInquiryHtml(values, receivedAt),
     });
     if (error) {
       console.error("[contact] Resend 발송 실패:", error);

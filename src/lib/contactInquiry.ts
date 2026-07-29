@@ -111,12 +111,37 @@ export function contactValidationError(
   return null;
 }
 
+const WEEKDAY_LABELS: Record<string, string> = {
+  Sun: "일", Mon: "월", Tue: "화", Wed: "수", Thu: "목", Fri: "금", Sat: "토",
+};
+
+// 서버(Vercel)는 UTC로 도니 접수 시각은 한국 시간으로 고정해 표기한다.
+// 로케일 데이터가 빈약한 런타임에서도 같은 문구가 나오도록 en-US 숫자 부품만 받아 직접 조립한다.
+export function formatKoreanTime(receivedAt: Date): string {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: "Asia/Seoul",
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    weekday: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
+  }).formatToParts(receivedAt);
+  const part = (type: Intl.DateTimeFormatPartTypes): string =>
+    parts.find((entry) => entry.type === type)?.value ?? "";
+  const weekday = WEEKDAY_LABELS[part("weekday")] ?? "";
+
+  return `${part("year")}년 ${part("month")}월 ${part("day")}일(${weekday}) ${part("hour")}:${part("minute")} (KST)`;
+}
+
 export function buildInquirySubject(inquiry: ContactInquiry): string {
   return `[홈페이지 견적·문의] ${inquiry.company} / ${inquiry.product}`;
 }
 
-export function buildInquiryText(inquiry: ContactInquiry): string {
+export function buildInquiryText(inquiry: ContactInquiry, receivedAt: Date): string {
   return [
+    `접수 시각: ${formatKoreanTime(receivedAt)}`,
     `회사명: ${inquiry.company}`,
     `담당자: ${inquiry.name}`,
     `연락처: ${inquiry.phone}`,
@@ -137,8 +162,9 @@ function escapeHtml(value: string): string {
     .replace(/"/g, "&quot;");
 }
 
-export function buildInquiryHtml(inquiry: ContactInquiry): string {
+export function buildInquiryHtml(inquiry: ContactInquiry, receivedAt: Date): string {
   const rows: readonly (readonly [string, string])[] = [
+    ["접수 시각", formatKoreanTime(receivedAt)],
     ["회사명", inquiry.company],
     ["담당자", inquiry.name],
     ["연락처", inquiry.phone],
