@@ -30,3 +30,24 @@ export function safeContentHref(input: unknown, fallback = "#"): string {
   if (typeof input !== "string") return fallback;
   return normalizeContentUrl(input) || fallback;
 }
+
+const SANITY_FILE_URL = /^https:\/\/cdn\.sanity\.io\/files\//;
+
+export type DownloadHref = {
+  readonly href: string;
+  /** 응답이 attachment로 내려오는지. false면 새 탭으로 열어 페이지 이탈을 막는다. */
+  readonly forced: boolean;
+};
+
+/**
+ * Sanity 파일 CDN은 기본이 `Content-Disposition: inline`이라 PDF가 브라우저에서 열린다.
+ * `?dl`을 붙이면 attachment로 내려오고 업로드 당시 원본 파일명이 그대로 유지된다.
+ */
+export function safeDownloadHref(input: unknown, fallback = "#"): DownloadHref {
+  const href = safeContentHref(input, fallback);
+  if (!SANITY_FILE_URL.test(href)) return { href, forced: false };
+
+  const url = new URL(href);
+  if (!url.searchParams.has("dl")) url.searchParams.set("dl", "");
+  return { href: url.href, forced: true };
+}

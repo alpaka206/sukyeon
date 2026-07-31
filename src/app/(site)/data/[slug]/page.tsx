@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import PageHeader from "@/components/PageHeader";
-import { safeContentHref } from "@/lib/adminUrl";
+import { safeDownloadHref } from "@/lib/adminUrl";
 import { getDocBySlug, getDocs } from "@/lib/content";
 
 type Props = {
@@ -32,7 +32,7 @@ export default async function DataDetailPage({ params }: Props) {
 
   const paragraphs = item.body.length > 0 ? item.body : item.summary ? [item.summary] : [];
   const attachments = item.attachments
-    .map((attachment) => ({ ...attachment, href: safeContentHref(attachment.file) }))
+    .map((attachment) => ({ ...attachment, ...safeDownloadHref(attachment.file) }))
     .filter((attachment) => attachment.href !== "#");
 
   return (
@@ -69,8 +69,9 @@ export default async function DataDetailPage({ params }: Props) {
                   <a
                     key={attachment.file}
                     href={attachment.href}
-                    target="_blank"
-                    rel="noopener"
+                    download
+                    target={attachment.forced ? undefined : "_blank"}
+                    rel={attachment.forced ? undefined : "noopener"}
                     className="flex flex-col gap-3 rounded-[10px] border border-[#eaeef3] bg-white p-4 text-navy transition-colors hover:border-[#22409b] sm:flex-row sm:items-center sm:justify-between"
                   >
                     <span className="min-w-0 text-[15px] font-semibold leading-[1.6]">{attachment.name}</span>

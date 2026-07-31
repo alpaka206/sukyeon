@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { safeContentHref } from "@/lib/adminUrl";
+import { safeDownloadHref } from "@/lib/adminUrl";
 
 export type GalleryItem = {
   readonly image: string;
@@ -132,7 +132,7 @@ function ProductModal({ items, index, groupLabel, onClose, onIndexChange }: Moda
   if (!item) return null;
 
   const documents = (item.documents ?? [])
-    .map((document) => ({ ...document, href: safeContentHref(document.url) }))
+    .map((document) => ({ ...document, ...safeDownloadHref(document.url) }))
     .filter((document) => document.href !== "#");
 
   return (
@@ -207,8 +207,9 @@ function ProductModal({ items, index, groupLabel, onClose, onIndexChange }: Moda
                     <a
                       key={document.url}
                       href={document.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      download
+                      target={document.forced ? undefined : "_blank"}
+                      rel={document.forced ? undefined : "noopener noreferrer"}
                       className="inline-flex items-center gap-1.5 rounded-md bg-brand-soft px-3 py-2 text-[13px] font-bold text-[#22409b] transition-colors hover:bg-[#dfe7fb]"
                     >
                       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
