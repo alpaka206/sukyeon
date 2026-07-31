@@ -1,12 +1,14 @@
 import { configuredRequest, type ContentRequest } from "./client";
+import { preferKoreanFile } from "./docs";
 import type {
+  DocAttachment,
   GalleryProduct,
   ProductDoc,
   ProductGallery,
   ProductLineup,
 } from "./types";
 
-const LINEUPS_Q = `*[_type=="productLineup"]|order(order asc){key,title,brand,intro,bullets,"items":items[visible != false]{code,"image":image.asset->url,summary,points,documents[]{"label":coalesce(label,doc->name),"url":coalesce(doc->file.asset->url,href)}}}`;
+const LINEUPS_Q = `*[_type=="productLineup"]|order(order asc){key,title,brand,intro,bullets,"items":items[visible != false]{code,"image":image.asset->url,summary,points,documents[]{"label":coalesce(label,doc->name),"url":coalesce(doc->file.asset->url,href),"docAttachments":doc->attachments[]{name,"file":coalesce(file.asset->url,file)}}}}`;
 const GALLERIES_Q = `*[_type=="productGallery"]|order(order asc){key,title,intro,"items":items[visible != false]{"image":image.asset->url,title,summary}}`;
 
 export async function readProductLineups(
@@ -54,13 +56,22 @@ function textItems(value: unknown): readonly string[] {
   });
 }
 
+function docAttachments(value: unknown): readonly DocAttachment[] {
+  if (!Array.isArray(value)) return [];
+  return value.map((item) => {
+    const attachment = objectAt(item);
+    return { name: stringAt(attachment.name), file: stringAt(attachment.file) };
+  });
+}
+
 function documents(value: unknown): readonly ProductDoc[] {
   if (!Array.isArray(value)) return [];
   return value.map((item) => {
     const document = objectAt(item);
     return {
       label: stringAt(document.label),
-      url: stringAt(document.url),
+      // 자료실의 대표 PDF가 영문으로 지정돼 있어도 국문 첨부가 있으면 그쪽으로 연결한다.
+      url: preferKoreanFile(docAttachments(document.docAttachments), stringAt(document.url)),
     };
   });
 }

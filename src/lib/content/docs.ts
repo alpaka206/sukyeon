@@ -1,5 +1,13 @@
 import { configuredRequest, type ContentRequest } from "./client";
-import type { CertItem, DocItem } from "./types";
+import type { CertItem, DocAttachment, DocItem } from "./types";
+
+/** 국문·영문이 함께 올라온 자료는 기본 링크가 국문을 가리켜야 한다. */
+const KOREAN_ATTACHMENT = /국문|한글|\bkor(ean)?\b/i;
+
+export function preferKoreanFile(attachments: readonly DocAttachment[], fallback: string): string {
+  const korean = attachments.find((attachment) => attachment.file && KOREAN_ATTACHMENT.test(attachment.name));
+  return korean?.file ?? fallback;
+}
 
 type DocAttachmentRecord = {
   readonly name?: string;
@@ -27,7 +35,7 @@ function normalizeDocItem(item: DocRecord, index: number): DocItem {
       ? [{ name: attachment.name ?? "첨부 PDF", file: attachment.file }]
       : [],
   );
-  const file = item.file ?? attachments[0]?.file ?? "";
+  const file = preferKoreanFile(attachments, item.file ?? attachments[0]?.file ?? "");
   const finalAttachments = attachments.length > 0 ? attachments : file ? [{ name: "PDF 다운로드", file }] : [];
   const name = item.name ?? "자료";
   const body = item.body?.filter((entry) => typeof entry === "string") ?? [];

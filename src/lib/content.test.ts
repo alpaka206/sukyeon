@@ -74,6 +74,81 @@ test("Given product lineups with object-array text items, when lineups are read,
   assert.deepEqual(lineups[0]?.items[0]?.points, ["피막 형성"]);
 });
 
+test("Given a lineup document whose 대표 PDF is 영문, when lineups are read, then the 국문 attachment is linked instead", async () => {
+  // Given — 자료실에서 대표 PDF가 영문으로 지정된 MSDS를 참조하는 제품
+  const request = async () => [
+    {
+      key: "release",
+      items: [
+        {
+          code: "SR-800",
+          documents: [
+            {
+              label: "CAST ONE 시리즈 MSDS",
+              url: "https://cdn.sanity.io/files/p/production/eng.pdf",
+              docAttachments: [
+                { name: "CAST ONE SR 시리즈 MSDS(GHS)국문", file: "https://cdn.sanity.io/files/p/production/kor.pdf" },
+                { name: "CAST ONE SR 시리즈 MSDS(GHS) 영문", file: "https://cdn.sanity.io/files/p/production/eng.pdf" },
+              ],
+            },
+            {
+              label: "SR-800 카탈로그",
+              url: "https://cdn.sanity.io/files/p/production/catalog.pdf",
+              docAttachments: [
+                { name: "CAST ONE SR-800 카탈로그.pdf", file: "https://cdn.sanity.io/files/p/production/catalog.pdf" },
+              ],
+            },
+            { label: "외부 안내", url: "/data/notice" },
+          ],
+        },
+      ],
+    },
+  ];
+
+  // When
+  const lineups = await readProductLineups(request);
+
+  // Then — 국문이 있으면 국문, 없으면 원래 대표 PDF나 링크가 그대로 유지된다
+  assert.deepEqual(lineups[0]?.items[0]?.documents, [
+    { label: "CAST ONE 시리즈 MSDS", url: "https://cdn.sanity.io/files/p/production/kor.pdf" },
+    { label: "SR-800 카탈로그", url: "https://cdn.sanity.io/files/p/production/catalog.pdf" },
+    { label: "외부 안내", url: "/data/notice" },
+  ]);
+});
+
+test("Given a doc whose 대표 PDF is 영문, when docs are read, then the 국문 attachment becomes the primary file", async () => {
+  // Given
+  const request = async () => [
+    {
+      name: "이형제(캐스트원) 시리즈 MSDS 자료",
+      slug: "cast-one-msds",
+      date: "2025-01-01",
+      file: "https://cdn.sanity.io/files/p/production/eng.pdf",
+      attachments: [
+        { name: "CAST ONE SR 시리즈 MSDS(GHS)국문", file: "https://cdn.sanity.io/files/p/production/kor.pdf" },
+        { name: "CAST ONE SR 시리즈 MSDS(GHS) 영문", file: "https://cdn.sanity.io/files/p/production/eng.pdf" },
+      ],
+    },
+    {
+      name: "작동유·습동면유 MSDS(GHS)",
+      slug: "hydraulic-way-oil-msds",
+      date: "2024-01-01",
+      file: "https://cdn.sanity.io/files/p/production/bh46.pdf",
+      attachments: [
+        { name: "HYDRO BH-46 작동유 MSDS(GHS).pdf", file: "https://cdn.sanity.io/files/p/production/bh46.pdf" },
+        { name: "HYDRO BH-68 작동유 MSDS(GHS).pdf", file: "https://cdn.sanity.io/files/p/production/bh68.pdf" },
+      ],
+    },
+  ];
+
+  // When
+  const docs = await readDocs(request);
+
+  // Then — 국문 표기가 없는 자료는 기존 대표 PDF를 그대로 쓴다
+  assert.equal(docs[0]?.file, "https://cdn.sanity.io/files/p/production/kor.pdf");
+  assert.equal(docs[1]?.file, "https://cdn.sanity.io/files/p/production/bh46.pdf");
+});
+
 test("Given configured list requests returning legitimate empty values, when content is read, then emptiness is preserved", async () => {
   // Given
   const request = async () => null;
